@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+# FFT Algorithm Tester: React + TypeScript + Vite
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a React-based FFT Algorithm Tester built with TypeScript and Vite. Easily select an FFT algorithm, configure test parameters, and view results.
 
-## Available Scripts
+## Quick Start
 
-In the project directory, you can run:
+### Installation
 
-### `npm start`
+First, ensure you have [Node.js](https://nodejs.org/) and npm installed.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Then, clone the repository or download the code. Navigate to the root of the project in your terminal and run:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```bash
+npm install
+```
 
-### `npm test`
+This command will install all necessary dependencies.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Running Locally
 
-### `npm run build`
+To start the development server and view the app in your browser, simply run:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm run dev
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+This will launch the Vite development server. You can then open your browser to [http://localhost:3000/](http://localhost:3000/) to interact with the FFT Algorithm Tester.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Any changes you make to the source code will be reflected in real-time in the browser thanks to Vite's hot module reloading.
 
-### `npm run eject`
+### Building for Production
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+To create an optimized production build, use:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm run build
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Further Configuration and Expansion
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+The project comes with a minimal ESLint configuration to ensure code quality. For production applications, consider expanding the ESLint setup. Guidelines and suggestions for this are provided in the original template documentation.
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This revised README provides clear and concise instructions for anyone looking to run the FFT Algorithm Tester app on their local machine.
