@@ -46,6 +46,7 @@ const PSDPlot: React.FC<FFTProps> = memo(({ data }) => {
           legendPosition: "middle",
           legendOffset: -40,
         }}
+        pointSize={0}
       />
     </div>
   );
