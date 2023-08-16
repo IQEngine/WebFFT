@@ -1,21 +1,27 @@
-import React from 'react';
-import { TestResult } from '../types/componentTypes';
+import React from "react";
+import { TestResultsProps } from "../types/componentTypes";
+import Card from "./Card";
+import FFTScatterplot from "./FFTScatterPlot";
+import PSDPlot from "./PSDPlot";
 
-interface Props {
-  results: TestResult[];
-}
-
-const TestResults: React.FC<Props> = ({ results }) => {
+const TestResults: React.FC<TestResultsProps> = ({ results }) => {
   return (
     <div>
       <h2>Test Results</h2>
-      <ul>
-        {results.map((result) => (
-          <li key={result.id}>{result.value}</li>
+      <div className="card-container">
+        {results.map((result, index) => (
+          <React.Fragment key={index}>
+            <Card title={`${result.id} - Scatterplot`}>
+              <FFTScatterplot data={[result]} />
+            </Card>
+            <Card title={`${result.id} - Other Plot`}>
+              <PSDPlot data={[result]} />
+            </Card>
+          </React.Fragment>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
 
-export default React.memo(TestResults);
+export default TestResults;

@@ -1,6 +1,40 @@
-export type Algorithm = "FFT Algorithm 1" | "FFT Algorithm 2" | "FFT Algorithm 3";
+import { Complex } from "mathjs";
+
+export interface Algorithm {
+  name: string;
+  description?: string;
+}
 
 export interface TestResult {
-  id: number;
-  value: string;
+  id: string;
+  data: Complex[];
+}
+
+export interface TestResultsProps {
+  results: TestResult[];
+}
+
+export interface AlgorithmSelectorProps {
+  onAlgorithmChange: (selectedAlgorithm: string) => void;
+  algorithms?: Algorithm[];
+}
+
+export interface TestConfigProps {
+  onNumTestsChange: (testCount: number) => void;
+}
+
+export interface CardProps {
+  title?: string;
+  className?: string;
+  style?: React.CSSProperties;
+  children?: React.ReactNode;
+}
+
+export interface DataPoint {
+  id: string;
+  data: Complex[];
+}
+
+export interface FFTProps {
+  data: DataPoint[];
 }

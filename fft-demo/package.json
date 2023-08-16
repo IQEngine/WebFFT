@@ -10,7 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@nivo/core": "^0.83.0",
+    "@nivo/line": "^0.83.0",
+    "@nivo/scatterplot": "^0.83.0",
+    "chart.js": "^4.3.3",
+    "mathjs": "^11.9.1",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {

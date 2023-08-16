@@ -1,19 +1,18 @@
-import React from 'react';
+import React from "react";
+import { TestConfigProps } from "../types/componentTypes";
 
-interface Props {
-  onTestCountChange: (count: number) => void;
-}
-
-const TestConfig: React.FC<Props> = ({ onTestCountChange }) => {
+const TestConfig: React.FC<TestConfigProps> = ({ onNumTestsChange }) => {
   return (
     <div>
       <label>Number of Tests: </label>
-      <input 
-        type="number" 
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => onTestCountChange(parseInt(e.target.value, 10))}
+      <input
+        type="number"
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onNumTestsChange(parseInt(e.target.value, 10))
+        }
       />
     </div>
   );
 };
 
-export default React.memo(TestConfig);
+export default TestConfig;

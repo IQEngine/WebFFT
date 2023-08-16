@@ -39,7 +39,3 @@ npm run build
 ## Further Configuration and Expansion
 
 The project comes with a minimal ESLint configuration to ensure code quality. For production applications, consider expanding the ESLint setup. Guidelines and suggestions for this are provided in the original template documentation.
-
----
-
-This revised README provides clear and concise instructions for anyone looking to run the FFT Algorithm Tester app on their local machine.
