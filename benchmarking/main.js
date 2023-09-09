@@ -1,10 +1,9 @@
 // Adapted from https://github.com/j-funk/js-dsp-test
 // Nice comparison in https://thebreakfastpost.com/2015/10/18/ffts-in-javascript/
 
-
 var num_trials = 1000;
 var fftSize = 1024; //16384;
-const seed = 'this is a seed for rng!';
+const seed = "this is a seed for rng!";
 
 function genInputReal32(size) {
   let prng = isaacCSPRNG(seed);
@@ -143,12 +142,12 @@ function nockertJavascript(size) {
   var ci = genInputComplex32(size);
   var co = new Float32Array(2 * size); // output buffer
 
-  for (var i = 0; i < num_trials; ++i) fft.simple(co, ci, 'complex'); // Warmup
+  for (var i = 0; i < num_trials; ++i) fft.simple(co, ci, "complex"); // Warmup
 
   var start = performance.now();
   total = 0.0;
   for (var i = 0; i < num_trials; ++i) {
-    fft.simple(co, ci, 'complex'); // out, in, complex/real
+    fft.simple(co, ci, "complex"); // out, in, complex/real
     for (var j = 0; j < size; ++j) {
       total += Math.sqrt(co[j * 2] * co[j * 2] + co[j * 2 + 1] * co[j * 2 + 1]);
     }
@@ -189,7 +188,8 @@ function dntjJavascript(size) {
   for (var i = 0; i < num_trials; ++i) {
     var co = ci.FFT();
     for (var j = 0; j < size; ++j) {
-      total += scale * Math.sqrt(co.real[j] * co.real[j] + co.imag[j] * co.imag[j]);
+      total +=
+        scale * Math.sqrt(co.real[j] * co.real[j] + co.imag[j] * co.imag[j]);
     }
   }
   var end = performance.now();
@@ -216,51 +216,51 @@ function crossWasm(size) {
   return [end - start, total];
 }
 
-
 async function kissWasm(size) {
   return KissFFTModule({}).then((kissFFTModule) => {
+    fcfg = kissFFTModule._kiss_fft_alloc(size, false);
+    icfg = kissFFTModule._kiss_fft_alloc(size, true);
 
-  fcfg = kissFFTModule._kiss_fft_alloc(size, false);
-  icfg = kissFFTModule._kiss_fft_alloc(size, true);
+    inptr = kissFFTModule._malloc(size * 8 + size * 8); // allocate both input and output
+    outptr = inptr + size * 8;
 
-  inptr = kissFFTModule._malloc(size * 8 + size * 8); // allocate both input and output
-  outptr = inptr + size * 8;
-
-  // generate the input TODO: SWITCH TO USING CONVINIENCE FUNCTION
-  cin = new Float32Array(kissFFTModule.HEAPU8.buffer, inptr, size * 2);
-  let prng = isaacCSPRNG(seed);
-  for (var i = 0; i < size; i++) {
-    cin[i*2] = prng.random() / 2.0;
-    cin[i*2 + 1] = prng.random() / 2.0;
-  }
-
-  // warmup
-  var cout;
-  for (var i = 0; i < num_trials; ++i) {
-    cout = new Float32Array(kissFFTModule.HEAPU8.buffer, outptr, size * 2);
-    kissFFTModule._kiss_fft(fcfg, inptr, outptr);
-  }
-
-  var start = performance.now();
-  let total = 0.0
-  // 11k ffts per second initially in edge, 50k in chrome.  enabling SIMD makes it drop a little
-  for (var i = 0; i < num_trials; ++i) {
-    // forward 
-    cout = new Float32Array(kissFFTModule.HEAPU8.buffer, outptr, size * 2);
-    kissFFTModule._kiss_fft(fcfg, inptr, outptr);
-    for (var j = 0; j < size; ++j) {
-      total += Math.sqrt(cout[j * 2] * cout[j * 2] + cout[j * 2 + 1] * cout[j * 2 + 1]);
+    // generate the input TODO: SWITCH TO USING CONVINIENCE FUNCTION
+    cin = new Float32Array(kissFFTModule.HEAPU8.buffer, inptr, size * 2);
+    let prng = isaacCSPRNG(seed);
+    for (var i = 0; i < size; i++) {
+      cin[i * 2] = prng.random() / 2.0;
+      cin[i * 2 + 1] = prng.random() / 2.0;
     }
-  }
-  var end = performance.now();
 
-  //dispose 
-  kissFFTModule._free(inptr);
-  kissFFTModule._kiss_fft_free(fcfg);
-  kissFFTModule._kiss_fft_free(icfg);
+    // warmup
+    var cout;
+    for (var i = 0; i < num_trials; ++i) {
+      cout = new Float32Array(kissFFTModule.HEAPU8.buffer, outptr, size * 2);
+      kissFFTModule._kiss_fft(fcfg, inptr, outptr);
+    }
 
-  return [end - start, total];
-});
+    var start = performance.now();
+    let total = 0.0;
+    // 11k ffts per second initially in edge, 50k in chrome.  enabling SIMD makes it drop a little
+    for (var i = 0; i < num_trials; ++i) {
+      // forward
+      cout = new Float32Array(kissFFTModule.HEAPU8.buffer, outptr, size * 2);
+      kissFFTModule._kiss_fft(fcfg, inptr, outptr);
+      for (var j = 0; j < size; ++j) {
+        total += Math.sqrt(
+          cout[j * 2] * cout[j * 2] + cout[j * 2 + 1] * cout[j * 2 + 1]
+        );
+      }
+    }
+    var end = performance.now();
+
+    //dispose
+    kissFFTModule._free(inptr);
+    kissFFTModule._kiss_fft_free(fcfg);
+    kissFFTModule._kiss_fft_free(icfg);
+
+    return [end - start, total];
+  });
 }
 
 var tests = [
@@ -280,16 +280,16 @@ window.onload = async function () {
   let totals = [];
   let barColors = [];
   for (let i = 0; i < tests.length; i++) {
-    console.log('Starting', tests[i].name);
+    console.log("Starting", tests[i].name);
     const [elapsed, total] = await tests[i](fftSize);
     console.log(total);
     const ffts_per_second = 1000.0 / (elapsed / num_trials);
-    if (tests[i].name.includes('Javascript')) {
-      test_names.push(tests[i].name.split('Javascript')[0]);
-      barColors.push('rgba(255,0,0,0.7)');
+    if (tests[i].name.includes("Javascript")) {
+      test_names.push(tests[i].name.split("Javascript")[0]);
+      barColors.push("rgba(255,0,0,0.7)");
     } else {
-      test_names.push(tests[i].name.split('Wasm')[0]);
-      barColors.push('rgba(0,0,255,0.7)');
+      test_names.push(tests[i].name.split("Wasm")[0]);
+      barColors.push("rgba(0,0,255,0.7)");
     }
     results.push(ffts_per_second);
     totals.push(total);
@@ -303,18 +303,18 @@ window.onload = async function () {
     {
       x: xArray,
       y: yArray,
-      type: 'bar',
+      type: "bar",
       marker: { color: barColors },
     },
   ];
 
   const layout = {
-    title: 'Comparison of FFTs in Javascript and WebAssembly',
+    title: "Comparison of FFTs in Javascript and WebAssembly",
     yaxis: {
       title: {
-        text: 'FFTs per Second',
+        text: "FFTs per Second",
         font: {
-          family: 'sans serif',
+          family: "sans serif",
           size: 18,
         },
       },
@@ -323,27 +323,27 @@ window.onload = async function () {
       {
         x: 1,
         y: Math.max.apply(Math, yArray) * 1.2,
-        text: 'JavaScript',
+        text: "JavaScript",
         showarrow: false,
         font: {
-          family: 'sans serif',
+          family: "sans serif",
           size: 18,
-          color: 'rgba(255,0,0,1)',
+          color: "rgba(255,0,0,1)",
         },
       },
       {
         x: 1,
         y: Math.max.apply(Math, yArray) * 1.3,
-        text: 'WebAssembly',
+        text: "WebAssembly",
         showarrow: false,
         font: {
-          family: 'sans serif',
+          family: "sans serif",
           size: 18,
-          color: 'rgba(0,0,255,1)',
+          color: "rgba(0,0,255,1)",
         },
       },
     ],
   };
 
-  Plotly.newPlot('myPlot', data, layout);
+  Plotly.newPlot("myPlot", data, layout);
 };
