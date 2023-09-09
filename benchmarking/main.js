@@ -2,7 +2,6 @@
 // Nice comparison in https://thebreakfastpost.com/2015/10/18/ffts-in-javascript/
 
 
-
 var num_trials = 1000;
 var fftSize = 1024; //16384;
 const seed = 'this is a seed for rng!';
@@ -218,7 +217,7 @@ function crossWasm(size) {
 }
 
 
-async function kissWasmMarc(size) {
+async function kissWasm(size) {
   return KissFFTModule({}).then((kissFFTModule) => {
 
   fcfg = kissFFTModule._kiss_fft_alloc(size, false);
@@ -261,57 +260,14 @@ async function kissWasmMarc(size) {
   kissFFTModule._kiss_fft_free(icfg);
 
   return [end - start, total];
-
-
-
-/*
-  for (var i = 0; i < num_trials; ++i) fft.forward(cin); // Warmup
-
-  var start = performance.now();
-  total = 0.0;
-  for (var i = 0; i < num_trials; ++i) {
-    var out = fft.forward(cin);
-    for (var j = 0; j < size; ++j) {
-      total += Math.sqrt(out[j * 2] * out[j * 2] + out[j * 2 + 1] * out[j * 2 + 1]); // sum the magnitudes as a way to check if the result looks correct
-    }
-  }
-  var end = performance.now();
-  fft.dispose();
-  return [end - start, total];
-  */
-
 });
 }
-
-
-/*
-// wasm, single precision.  was at 7400 before marcs tweaks
-function kissWasm(size) {
-  var fft = new KissFFT(size);
-  var cin = genInputComplex32(size);
-
-  for (var i = 0; i < num_trials; ++i) fft.forward(cin); // Warmup
-
-  var start = performance.now();
-  total = 0.0;
-  for (var i = 0; i < num_trials; ++i) {
-    var out = fft.forward(cin);
-    for (var j = 0; j < size; ++j) {
-      total += Math.sqrt(out[j * 2] * out[j * 2] + out[j * 2 + 1] * out[j * 2 + 1]); // sum the magnitudes as a way to check if the result looks correct
-    }
-  }
-  var end = performance.now();
-  fft.dispose();
-  return [end - start, total];
-}
-*/
 
 var tests = [
   nayukiJavascript,
   nayuki2Javascript,
   nayuki3Wasm,
-  kissWasmMarc,
-  //kissWasm,
+  kissWasm,
   crossWasm,
   nockertJavascript,
   dntjJavascript,
