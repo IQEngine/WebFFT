@@ -1,6 +1,8 @@
 // Adapted from https://github.com/j-funk/js-dsp-test
 // Nice comparison in https://thebreakfastpost.com/2015/10/18/ffts-in-javascript/
 
+
+
 var num_trials = 1000;
 var fftSize = 1024; //16384;
 const seed = 'this is a seed for rng!';
@@ -215,6 +217,74 @@ function crossWasm(size) {
   return [end - start, total];
 }
 
+
+async function kissWasmMarc(size) {
+  return KissFFTModule({}).then((kissFFTModule) => {
+
+  fcfg = kissFFTModule._kiss_fft_alloc(size, false);
+  icfg = kissFFTModule._kiss_fft_alloc(size, true);
+
+  inptr = kissFFTModule._malloc(size * 8 + size * 8); // allocate both input and output
+  outptr = inptr + size * 8;
+
+  // generate the input TODO: SWITCH TO USING CONVINIENCE FUNCTION
+  cin = new Float32Array(kissFFTModule.HEAPU8.buffer, inptr, size * 2);
+  let prng = isaacCSPRNG(seed);
+  for (var i = 0; i < size; i++) {
+    cin[i*2] = prng.random() / 2.0;
+    cin[i*2 + 1] = prng.random() / 2.0;
+  }
+
+  // warmup
+  var cout;
+  for (var i = 0; i < num_trials; ++i) {
+    cout = new Float32Array(kissFFTModule.HEAPU8.buffer, outptr, size * 2);
+    kissFFTModule._kiss_fft(fcfg, inptr, outptr);
+  }
+
+  var start = performance.now();
+  let total = 0.0
+  // 11k ffts per second initially in edge, 50k in chrome.  enabling SIMD makes it drop a little
+  for (var i = 0; i < num_trials; ++i) {
+    // forward 
+    cout = new Float32Array(kissFFTModule.HEAPU8.buffer, outptr, size * 2);
+    kissFFTModule._kiss_fft(fcfg, inptr, outptr);
+    for (var j = 0; j < size; ++j) {
+      total += Math.sqrt(cout[j * 2] * cout[j * 2] + cout[j * 2 + 1] * cout[j * 2 + 1]);
+    }
+  }
+  var end = performance.now();
+
+  //dispose 
+  kissFFTModule._free(inptr);
+  kissFFTModule._kiss_fft_free(fcfg);
+  kissFFTModule._kiss_fft_free(icfg);
+
+  return [end - start, total];
+
+
+
+/*
+  for (var i = 0; i < num_trials; ++i) fft.forward(cin); // Warmup
+
+  var start = performance.now();
+  total = 0.0;
+  for (var i = 0; i < num_trials; ++i) {
+    var out = fft.forward(cin);
+    for (var j = 0; j < size; ++j) {
+      total += Math.sqrt(out[j * 2] * out[j * 2] + out[j * 2 + 1] * out[j * 2 + 1]); // sum the magnitudes as a way to check if the result looks correct
+    }
+  }
+  var end = performance.now();
+  fft.dispose();
+  return [end - start, total];
+  */
+
+});
+}
+
+
+/*
 // wasm, single precision.  was at 7400 before marcs tweaks
 function kissWasm(size) {
   var fft = new KissFFT(size);
@@ -234,26 +304,29 @@ function kissWasm(size) {
   fft.dispose();
   return [end - start, total];
 }
+*/
 
 var tests = [
   nayukiJavascript,
   nayuki2Javascript,
   nayuki3Wasm,
-  kissWasm,
+  kissWasmMarc,
+  //kissWasm,
   crossWasm,
   nockertJavascript,
   dntjJavascript,
   indutnyJavascript,
 ];
 
-window.onload = function () {
+window.onload = async function () {
   let test_names = [];
   let results = [];
   let totals = [];
   let barColors = [];
   for (let i = 0; i < tests.length; i++) {
     console.log('Starting', tests[i].name);
-    const [elapsed, total] = tests[i](fftSize);
+    const [elapsed, total] = await tests[i](fftSize);
+    console.log(total);
     const ffts_per_second = 1000.0 / (elapsed / num_trials);
     if (tests[i].name.includes('Javascript')) {
       test_names.push(tests[i].name.split('Javascript')[0]);
