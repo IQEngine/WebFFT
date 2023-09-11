@@ -22,15 +22,9 @@ class wrappedKissFFT {
     this.cout = new Float32Array(kissFFTModule.HEAPU8.buffer, this.outptr, size * 2);
   }
 
-  forward = function (cin) {
+  fft = function (cin) {
     this.cin.set(cin);
     kiss_fft(this.fcfg, this.inptr, this.outptr);
-    return new Float32Array(kissFFTModule.HEAPU8.buffer, this.outptr, this.size * 2);
-  };
-
-  inverse = function (cin) {
-    this.cin.set(cpx);
-    kiss_fft(this.icfg, this.inptr, this.outptr);
     return new Float32Array(kissFFTModule.HEAPU8.buffer, this.outptr, this.size * 2);
   };
 

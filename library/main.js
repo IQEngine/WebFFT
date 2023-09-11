@@ -217,17 +217,17 @@ function crossWasm(size) {
 
 async function kissWasm(size) {
   const kissfft = new wrappedKissFFT(size);
-  const cin = genInputComplex32(size);
+  const ci = genInputComplex32(size);
 
   // warmup
-  for (var i = 0; i < num_trials; ++i) kissfft.forward(cin);
+  for (var i = 0; i < num_trials; ++i) kissfft.fft(ci);
 
   var start = performance.now();
   let total = 0.0;
   for (var i = 0; i < num_trials; ++i) {
-    const cout = (out = kissfft.forward(cin));
+    const co = kissfft.fft(ci);
     for (var j = 0; j < size; ++j) {
-      total += Math.sqrt(cout[j * 2] * cout[j * 2] + cout[j * 2 + 1] * cout[j * 2 + 1]);
+      total += Math.sqrt(co[j * 2] * co[j * 2] + co[j * 2 + 1] * co[j * 2 + 1]);
     }
   }
   var end = performance.now();
