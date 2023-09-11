@@ -33,6 +33,9 @@ The Fastest Fourier Transform on the Web!
 - PulseFFT
   - https://github.com/AWSM-WASM/PulseFFT (last change in 2018)
   - KissFFT based
+- kissfft-wasm
+  - https://github.com/iVilja/kissfft-wasm (last change Oct 2022)
+  - KissFFT based
 - Mozilla's implementation used in webkit audio
   - appears to be a copy of kissFFT
   - https://github.com/mozilla/gecko-dev/tree/6dd16cb77552c7cec8ab7e4e3b74ca7d5e320339/media/kiss_fft
