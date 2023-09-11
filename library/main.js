@@ -1,8 +1,6 @@
 // Adapted from https://github.com/j-funk/js-dsp-test
 // Nice comparison in https://thebreakfastpost.com/2015/10/18/ffts-in-javascript/
 
-const kissFFTModule = KissFFTModule();
-
 var num_trials = 1000;
 var fftSize = 1024; //16384;
 const seed = "this is a seed for rng!";
@@ -190,8 +188,7 @@ function dntjJavascript(size) {
   for (var i = 0; i < num_trials; ++i) {
     var co = ci.FFT();
     for (var j = 0; j < size; ++j) {
-      total +=
-        scale * Math.sqrt(co.real[j] * co.real[j] + co.imag[j] * co.imag[j]);
+      total += scale * Math.sqrt(co.real[j] * co.real[j] + co.imag[j] * co.imag[j]);
     }
   }
   var end = performance.now();
@@ -219,46 +216,23 @@ function crossWasm(size) {
 }
 
 async function kissWasm(size) {
-  fcfg = kissFFTModule._kiss_fft_alloc(size, false);
-  icfg = kissFFTModule._kiss_fft_alloc(size, true);
-
-  inptr = kissFFTModule._malloc(size * 8 + size * 8); // allocate both input and output
-  outptr = inptr + size * 8;
-
-  // generate the input TODO: SWITCH TO USING CONVINIENCE FUNCTION
-  cin = new Float32Array(kissFFTModule.HEAPU8.buffer, inptr, size * 2);
-  let prng = isaacCSPRNG(seed);
-  for (var i = 0; i < size; i++) {
-    cin[i * 2] = prng.random() / 2.0;
-    cin[i * 2 + 1] = prng.random() / 2.0;
-  }
+  const kissfft = new wrappedKissFFT(size);
+  const ci = genInputComplex32(size);
 
   // warmup
-  var cout;
-  for (var i = 0; i < num_trials; ++i) {
-    cout = new Float32Array(kissFFTModule.HEAPU8.buffer, outptr, size * 2);
-    kissFFTModule._kiss_fft(fcfg, inptr, outptr);
-  }
+  for (var i = 0; i < num_trials; ++i) kissfft.fft(ci);
 
   var start = performance.now();
   let total = 0.0;
-  // 11k ffts per second initially in edge, 50k in chrome.  enabling SIMD makes it drop a little
   for (var i = 0; i < num_trials; ++i) {
-    // forward
-    cout = new Float32Array(kissFFTModule.HEAPU8.buffer, outptr, size * 2);
-    kissFFTModule._kiss_fft(fcfg, inptr, outptr);
+    const co = kissfft.fft(ci);
     for (var j = 0; j < size; ++j) {
-      total += Math.sqrt(
-        cout[j * 2] * cout[j * 2] + cout[j * 2 + 1] * cout[j * 2 + 1]
-      );
+      total += Math.sqrt(co[j * 2] * co[j * 2] + co[j * 2 + 1] * co[j * 2 + 1]);
     }
   }
   var end = performance.now();
 
-  //dispose
-  kissFFTModule._free(inptr);
-  kissFFTModule._kiss_fft_free(fcfg);
-  kissFFTModule._kiss_fft_free(icfg);
+  kissfft.dispose();
 
   return [end - start, total];
 }
@@ -271,7 +245,7 @@ var tests = [
   crossWasm,
   nockertJavascript,
   dntjJavascript,
-  indutnyJavascript,
+  indutnyJavascript
 ];
 
 window.onload = async function () {
@@ -304,8 +278,8 @@ window.onload = async function () {
       x: xArray,
       y: yArray,
       type: "bar",
-      marker: { color: barColors },
-    },
+      marker: { color: barColors }
+    }
   ];
 
   const layout = {
@@ -315,9 +289,9 @@ window.onload = async function () {
         text: "FFTs per Second",
         font: {
           family: "sans serif",
-          size: 18,
-        },
-      },
+          size: 18
+        }
+      }
     },
     annotations: [
       {
@@ -328,8 +302,8 @@ window.onload = async function () {
         font: {
           family: "sans serif",
           size: 18,
-          color: "rgba(255,0,0,1)",
-        },
+          color: "rgba(255,0,0,1)"
+        }
       },
       {
         x: 1,
@@ -339,10 +313,10 @@ window.onload = async function () {
         font: {
           family: "sans serif",
           size: 18,
-          color: "rgba(0,0,255,1)",
-        },
-      },
-    ],
+          color: "rgba(0,0,255,1)"
+        }
+      }
+    ]
   };
 
   Plotly.newPlot("myPlot", data, layout);
