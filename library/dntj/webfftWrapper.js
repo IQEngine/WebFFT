@@ -1,3 +1,5 @@
+import FFT from "./fft.js"
+
 class DntjWebFftWrapper {
     constructor(size) {
         this.size = size;
@@ -9,3 +11,5 @@ class DntjWebFftWrapper {
         return this.outputArr;
     }
 }
+
+export default DntjWebFftWrapper;

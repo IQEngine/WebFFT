@@ -109,3 +109,4 @@ function FFTNayuki(n) {
     }
 }
 
+export default FFTNayuki;

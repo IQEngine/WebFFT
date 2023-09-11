@@ -20,3 +20,5 @@ return{_malloc:za,_fftCross:xa,_memcpy:Da,_free:Aa,_memset:Ca,runPostSets:Ba,sta
 
   return Module;
 };
+
+export default CrossModule;

@@ -1,6 +1,17 @@
 // Adapted from https://github.com/j-funk/js-dsp-test
 // Nice comparison in https://thebreakfastpost.com/2015/10/18/ffts-in-javascript/
 
+import transform from "./nayuki/fft.js";
+import FFTNayuki from "./nayuki-obj/fft.js";
+import FFTNayukiC from "./nayukic/FFT.js";
+import FFT from "./nockert/complex.js";
+import isaacCSPRNG from "./isaacCSPRNG.js";
+import FFTCross from "./cross/FFT.js"
+import wrappedKissFFT from "./kissfft/webfftWrapper.js";
+import IndutnyFftWrapper from "./indutny/webfftWrapper.js";
+import DntjWebFftWrapper from "./dntj/webfftWrapper.js";
+import complex_array from "./dntj/complex_array.js";
+
 var num_trials = 1000;
 var fftSize = 1024; //16384;
 const seed = "this is a seed for rng!";
@@ -122,7 +133,7 @@ function nayuki3Wasm(size) {
   }
 
   var start = performance.now();
-  total = 0.0;
+  var total = 0.0;
   for (var i = 0; i < num_trials; ++i) {
     real.set(re);
     imag.set(im);
@@ -145,7 +156,7 @@ function nockertJavascript(size) {
   for (var i = 0; i < num_trials; ++i) fft.simple(co, ci, "complex"); // Warmup
 
   var start = performance.now();
-  total = 0.0;
+  var total = 0.0;
   for (var i = 0; i < num_trials; ++i) {
     fft.simple(co, ci, "complex"); // out, in, complex/real
     for (var j = 0; j < size; ++j) {
@@ -165,7 +176,7 @@ function indutnyJavascript(size) {
   for (var i = 0; i < num_trials; ++i) fft.fft(ci); // Warmup
 
   var start = performance.now();
-  total = 0.0;
+  var total = 0.0;
   for (var i = 0; i < num_trials; ++i) {
     co = fft.fft(ci);
     for (var j = 0; j < size; ++j) {
@@ -185,7 +196,7 @@ function dntjJavascript(size) {
 
   var start = performance.now();
   var scale = Math.sqrt(size) / 1.5;
-  total = 0.0;
+  var total = 0.0;
   for (var i = 0; i < num_trials; ++i) {
     var co = fft.fft(ci);
     for (var j = 0; j < size; ++j) {
@@ -204,7 +215,7 @@ function crossWasm(size) {
   for (var i = 0; i < num_trials; ++i) fft.transform(real, imag, false); // Warmup
 
   var start = performance.now();
-  total = 0.0;
+  var total = 0.0;
   for (var i = 0; i < num_trials; ++i) {
     var out = fft.transform(real, imag, false); // last arg is inverse
     for (var j = 0; j < size; ++j) {
@@ -216,7 +227,7 @@ function crossWasm(size) {
   return [end - start, total];
 }
 
-async function kissWasm(size) {
+function kissWasm(size) {
   const kissfft = new wrappedKissFFT(size);
   const ci = genInputComplex32(size);
 
@@ -249,14 +260,14 @@ var tests = [
   indutnyJavascript
 ];
 
-window.onload = async function () {
+window.onload = function () {
   let test_names = [];
   let results = [];
   let totals = [];
   let barColors = [];
   for (let i = 0; i < tests.length; i++) {
     console.log("Starting", tests[i].name);
-    const [elapsed, total] = await tests[i](fftSize);
+    const [elapsed, total] = tests[i](fftSize);
     console.log(total);
     const ffts_per_second = 1000.0 / (elapsed / num_trials);
     if (tests[i].name.includes("Javascript")) {

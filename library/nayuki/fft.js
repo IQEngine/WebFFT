@@ -213,3 +213,5 @@ function convolveComplex(xreal, ximag, yreal, yimag, outreal, outimag) {
         outimag[i] = ximag[i] / n;
     }
 }
+
+export default transform;
