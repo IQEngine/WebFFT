@@ -1,3 +1,5 @@
+import NayukiCModule from "./NayukiCFFT.js";
+
 'use strict';
 
 var nayukiCModule = NayukiCModule({});
@@ -44,4 +46,6 @@ function FFTNayukiC(n) {
     nayukiCModule._free(this.rptr);
     nc_dispose_f(this.tables);
   };
-}
+};
+
+export default FFTNayukiC;

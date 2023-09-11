@@ -290,3 +290,5 @@ void function (namespace) {
 	
 	namespace.complex = complex
 }(FFT)
+
+export default FFT;

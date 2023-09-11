@@ -1,3 +1,5 @@
+import CrossModule from "./Cross.js";
+
 "use strict";
 
 var crossModule = CrossModule({});
@@ -26,3 +28,5 @@ function FFTCross(size) {
     crossModule._free(this.ptr);
   };
 }
+
+export default FFTCross;

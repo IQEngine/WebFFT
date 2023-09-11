@@ -489,3 +489,5 @@ FFT_indutny.prototype._singleRealTransform4 = function _singleRealTransform4(out
   out[outOff + 6] = FDr;
   out[outOff + 7] = FDi;
 };
+
+export default FFT_indutny;

@@ -1,3 +1,5 @@
+import KissFFTModule from "./KissFFT.js";
+
 "use strict";
 
 var kissFFTModule = KissFFTModule({});
@@ -34,3 +36,5 @@ class wrappedKissFFT {
     kiss_fft_free(this.icfg);
   };
 }
+
+export default wrappedKissFFT;

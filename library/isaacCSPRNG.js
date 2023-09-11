@@ -12,7 +12,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 Original work copyright (c) 2012 Yves-Marie K. Rinquin, under MIT license.
 https://github.com/rubycon/isaac.js
 ///////////////////////////////////////////////////////////////////////////////////////////////////*/
-isaacCSPRNG = function (specifiedSeed) {
+const isaacCSPRNG = function (specifiedSeed) {
   return (function (userSeed) {
     "use strict";
 
@@ -478,3 +478,5 @@ isaacCSPRNG = function (specifiedSeed) {
     };
   })(specifiedSeed);
 };
+
+export default isaacCSPRNG;
