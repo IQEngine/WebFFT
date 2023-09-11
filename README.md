@@ -2,6 +2,55 @@
 
 The Fastest Fourier Transform on the Web!
 
+## API
+
+Our library is essentially a metalibrary containing many FFT libraries, both javascript and webassembly based. We'll refer to these as sub-libraries.
+
+There will be a default sub-library that is used, but if you run `profile()`, it will benchmark them all and use the best for future calls.
+
+As part of importing the library we will run a check to see if wasm is even supported, so the profiler and default can know which pool to pull from.
+
+### Basic Usage
+
+```javascript
+const webfft = require('webfft'); // or do we need something like https://github.com/AWSM-WASM/PulseFFT#instantiate-pulse
+
+// Instantiate
+const fftsize = 1024; // must be power of 2
+const fft = new webfft(fftsize); // provide size.  assumed to be complex
+
+// Profile
+fft.profile(); // optional params like number of trials or how long to spend profiling
+// or
+profileResults = fft.profile(); // profile results object can be used to make visualizations of the benchmarking results
+console.log("Best one:", profileResults[0]['SubLibraryName']);
+
+// (will likely be tweaked later) profileResults object/list, in order of speed:
+/*
+[{'SubLibraryName': 'indutny', 'fftsPerSecond': 10.34},
+ {'SubLibraryName': 'indutny', 'fftsPerSecond': 8.34} 
+...]
+*/
+
+// Create Input
+const input = new Float32Array(2048); // interleaved complex array (IQIQIQIQ...), so it's twice the size
+input.fill(0);
+
+// Run FFT
+const out = fft.fft(input); // out will be a Float32Array of size 2048
+// or
+const out = fft.fft(input, 'indutny');
+//or 
+const out = fft.fft(input, profileResults[0]['SubLibraryName']); // profileResults obj will likely be changed later
+
+```
+
+### Sub-Library API
+
+We'll use the same out = x.fft(in) approach for the API used internally, to call individual sub-libraries.  
+
+A file webfftWrapper.js will exist in all sub-library dirs, so that we can avoid modifying the actual sub-library code, making it easier to update them if need be.
+
 ## Existing web FFT libs
 
 ### Javascript-Based
@@ -27,6 +76,9 @@ The Fastest Fourier Transform on the Web!
   - https://github.com/drom/fourier (last changed 2021)
 - ml-fft
   - https://github.com/mljs/fft (last changed 2020)
+- Nockert
+  - https://github.com/auroranockert/fft.js
+  - not on npm
 
 ### WebAssembly-based
 
