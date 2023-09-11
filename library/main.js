@@ -160,16 +160,16 @@ function nockertJavascript(size) {
 
 // another fft.js (one used in iqengine) by indutny, pure javascript
 function indutnyJavascript(size) {
-  var fft = new FFT_indutny(size);
+  var fft = new IndutnyFftWrapper(size);
   var ci = genInputComplex32(size);
-  var co = new Float32Array(2 * size); // output buffer
+  var co;
 
-  for (var i = 0; i < num_trials; ++i) fft.transform(co, ci); // Warmup
+  for (var i = 0; i < num_trials; ++i) fft.fft(ci); // Warmup
 
   var start = performance.now();
   total = 0.0;
   for (var i = 0; i < num_trials; ++i) {
-    fft.transform(co, ci);
+    co = fft.fft(ci);
     for (var j = 0; j < size; ++j) {
       total += Math.sqrt(co[j * 2] * co[j * 2] + co[j * 2 + 1] * co[j * 2 + 1]);
     }
