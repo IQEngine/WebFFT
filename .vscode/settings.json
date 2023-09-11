@@ -20,6 +20,5 @@
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "prettier.printWidth": 120
-    //"prettier.prettierPath": "./client/node_modules/prettier"
   }
   
