@@ -178,15 +178,16 @@ function indutnyJavascript(size) {
 
 // jsfft by Nick Jones (dntj), javascript, single precision
 function dntjJavascript(size) {
+  var fft = new DntjWebFftWrapper(size);
   var ci = genComplexArryType(size);
 
-  for (var i = 0; i < num_trials; ++i) ci.FFT(); // Warmup
+  for (var i = 0; i < num_trials; ++i) fft.fft(ci); // Warmup
 
   var start = performance.now();
   var scale = Math.sqrt(size) / 1.5;
   total = 0.0;
   for (var i = 0; i < num_trials; ++i) {
-    var co = ci.FFT();
+    var co = fft.fft(ci);
     for (var j = 0; j < size; ++j) {
       total += scale * Math.sqrt(co.real[j] * co.real[j] + co.imag[j] * co.imag[j]);
     }
