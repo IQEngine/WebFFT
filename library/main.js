@@ -1,6 +1,8 @@
 // Adapted from https://github.com/j-funk/js-dsp-test
 // Nice comparison in https://thebreakfastpost.com/2015/10/18/ffts-in-javascript/
 
+const kissFFTModule = KissFFTModule();
+
 var num_trials = 1000;
 var fftSize = 1024; //16384;
 const seed = "this is a seed for rng!";
@@ -217,50 +219,48 @@ function crossWasm(size) {
 }
 
 async function kissWasm(size) {
-  return KissFFTModule({}).then((kissFFTModule) => {
-    fcfg = kissFFTModule._kiss_fft_alloc(size, false);
-    icfg = kissFFTModule._kiss_fft_alloc(size, true);
+  fcfg = kissFFTModule._kiss_fft_alloc(size, false);
+  icfg = kissFFTModule._kiss_fft_alloc(size, true);
 
-    inptr = kissFFTModule._malloc(size * 8 + size * 8); // allocate both input and output
-    outptr = inptr + size * 8;
+  inptr = kissFFTModule._malloc(size * 8 + size * 8); // allocate both input and output
+  outptr = inptr + size * 8;
 
-    // generate the input TODO: SWITCH TO USING CONVINIENCE FUNCTION
-    cin = new Float32Array(kissFFTModule.HEAPU8.buffer, inptr, size * 2);
-    let prng = isaacCSPRNG(seed);
-    for (var i = 0; i < size; i++) {
-      cin[i * 2] = prng.random() / 2.0;
-      cin[i * 2 + 1] = prng.random() / 2.0;
+  // generate the input TODO: SWITCH TO USING CONVINIENCE FUNCTION
+  cin = new Float32Array(kissFFTModule.HEAPU8.buffer, inptr, size * 2);
+  let prng = isaacCSPRNG(seed);
+  for (var i = 0; i < size; i++) {
+    cin[i * 2] = prng.random() / 2.0;
+    cin[i * 2 + 1] = prng.random() / 2.0;
+  }
+
+  // warmup
+  var cout;
+  for (var i = 0; i < num_trials; ++i) {
+    cout = new Float32Array(kissFFTModule.HEAPU8.buffer, outptr, size * 2);
+    kissFFTModule._kiss_fft(fcfg, inptr, outptr);
+  }
+
+  var start = performance.now();
+  let total = 0.0;
+  // 11k ffts per second initially in edge, 50k in chrome.  enabling SIMD makes it drop a little
+  for (var i = 0; i < num_trials; ++i) {
+    // forward
+    cout = new Float32Array(kissFFTModule.HEAPU8.buffer, outptr, size * 2);
+    kissFFTModule._kiss_fft(fcfg, inptr, outptr);
+    for (var j = 0; j < size; ++j) {
+      total += Math.sqrt(
+        cout[j * 2] * cout[j * 2] + cout[j * 2 + 1] * cout[j * 2 + 1]
+      );
     }
+  }
+  var end = performance.now();
 
-    // warmup
-    var cout;
-    for (var i = 0; i < num_trials; ++i) {
-      cout = new Float32Array(kissFFTModule.HEAPU8.buffer, outptr, size * 2);
-      kissFFTModule._kiss_fft(fcfg, inptr, outptr);
-    }
+  //dispose
+  kissFFTModule._free(inptr);
+  kissFFTModule._kiss_fft_free(fcfg);
+  kissFFTModule._kiss_fft_free(icfg);
 
-    var start = performance.now();
-    let total = 0.0;
-    // 11k ffts per second initially in edge, 50k in chrome.  enabling SIMD makes it drop a little
-    for (var i = 0; i < num_trials; ++i) {
-      // forward
-      cout = new Float32Array(kissFFTModule.HEAPU8.buffer, outptr, size * 2);
-      kissFFTModule._kiss_fft(fcfg, inptr, outptr);
-      for (var j = 0; j < size; ++j) {
-        total += Math.sqrt(
-          cout[j * 2] * cout[j * 2] + cout[j * 2 + 1] * cout[j * 2 + 1]
-        );
-      }
-    }
-    var end = performance.now();
-
-    //dispose
-    kissFFTModule._free(inptr);
-    kissFFTModule._kiss_fft_free(fcfg);
-    kissFFTModule._kiss_fft_free(icfg);
-
-    return [end - start, total];
-  });
+  return [end - start, total];
 }
 
 var tests = [
