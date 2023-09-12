@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config ./library/webpack.config.js --output-path ./library/dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo TODO",
+    "prepublishOnly": "git push --follow-tags && gh-release -y",
+    "version": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING CHANGE:' && git add CHANGELOG.md"
   },
   "repository": {
     "type": "git",
@@ -30,7 +32,9 @@
   },
   "homepage": "https://github.com/IQEngine/WebFFT#readme",
   "devDependencies": {
+    "auto-changelog": "^2.4.0",
     "fs": "^0.0.2",
+    "gh-release": "^7.0.2",
     "path-browserify": "^1.0.1",
     "prettier": "^3.0.3",
     "serve": "^14.2.1",
