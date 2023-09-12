@@ -15,6 +15,7 @@ module.exports = {
         "cyber-secondary": "hsl(200, 100%, 50%, 0.75)",
         "cyber-accent": "hsla(100, 60%, 40%, 0.7)",
         "cyber-text": "hsla(0, 0%, 80%, 0.9)",
+        "cyber-text-secondary": "hsla(50, 100%, 60%, 0.75)",
       },
       backgroundImage: (theme) => ({
         "cyber-gradient": `linear-gradient(45deg, ${theme("colors.cyber-background1")} 60%, ${theme(
