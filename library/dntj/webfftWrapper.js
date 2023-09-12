@@ -1,7 +1,7 @@
 import FFT from "./fft.js";
 import complex_array from "./complex_array.js";
 
-class DntjWebFftWrapper {
+class DntjWebFftWrapperJavascript {
   constructor(size) {
     this.size = size;
     this.outputArr = new Float32Array(2 * size);
@@ -23,4 +23,4 @@ class DntjWebFftWrapper {
   }
 }
 
-export default DntjWebFftWrapper;
+export default DntjWebFftWrapperJavascript;

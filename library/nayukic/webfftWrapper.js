@@ -1,6 +1,6 @@
 import FFTNayukiC from "./FFT.js";
 
-class NayukiWasmFftWrapper {
+class NayukiWasmFftWrapperWasm {
   constructor(size) {
     this.size = size;
     this.fftNayuki = new FFTNayukiC(size);
@@ -24,4 +24,4 @@ class NayukiWasmFftWrapper {
   }
 }
 
-export default NayukiWasmFftWrapper;
+export default NayukiWasmFftWrapperWasm;

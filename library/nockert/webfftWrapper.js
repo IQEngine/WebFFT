@@ -1,6 +1,6 @@
 import FFT from "./complex.js";
 
-class NockertFftWrapper {
+class NockertFftWrapperJavascript {
   constructor(size) {
     this.size = size;
     this.nockertfft = new FFT.complex(size, false); // 2nd arg is for inverse
@@ -13,4 +13,4 @@ class NockertFftWrapper {
   }
 }
 
-export default NockertFftWrapper;
+export default NockertFftWrapperJavascript;

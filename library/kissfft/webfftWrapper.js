@@ -10,7 +10,7 @@ var kiss_fft = kissFFTModule.cwrap("kiss_fft", "void", ["number", "number", "num
 
 var kiss_fft_free = kissFFTModule.cwrap("kiss_fft_free", "void", ["number"]);
 
-class wrappedKissFFT {
+class KissFftWrapperWasm {
   constructor(size) {
     this.size = size;
 
@@ -30,11 +30,12 @@ class wrappedKissFFT {
     return new Float32Array(kissFFTModule.HEAPU8.buffer, this.outptr, this.size * 2);
   };
 
-  dispose = function () {
-    kissFFTModule._free(this.inptr);
-    kiss_fft_free(this.fcfg);
-    kiss_fft_free(this.icfg);
-  };
+  // is this needed?
+  //dispose = function () {
+  //  kissFFTModule._free(this.inptr);
+  //  kiss_fft_free(this.fcfg);
+  //  kiss_fft_free(this.icfg);
+  //};
 }
 
-export default wrappedKissFFT;
+export default KissFftWrapperWasm;

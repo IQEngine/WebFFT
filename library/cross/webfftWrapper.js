@@ -1,6 +1,6 @@
 import FFTCross from "./FFT.js";
 
-class CrossFftWrapper {
+class CrossFftWrapperWasm {
   constructor(size) {
     this.size = size;
     this.fftcross = new FFTCross(size);
@@ -23,4 +23,4 @@ class CrossFftWrapper {
   }
 }
 
-export default CrossFftWrapper;
+export default CrossFftWrapperWasm;

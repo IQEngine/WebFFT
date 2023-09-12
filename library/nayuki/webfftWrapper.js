@@ -1,6 +1,6 @@
 import FFTNayuki from "./fft.js"; // this one has the sin/cos tables precomputed
 
-class NayukiFftWrapper {
+class NayukiFftWrapperJavascript {
   constructor(size) {
     this.size = size;
     this.fftNayuki = new FFTNayuki(size);
@@ -24,4 +24,4 @@ class NayukiFftWrapper {
   }
 }
 
-export default NayukiFftWrapper;
+export default NayukiFftWrapperJavascript;
