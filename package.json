@@ -4,9 +4,9 @@
   "description": "The fastest FFT on the web!",
   "main": "index.js",
   "scripts": {
-    "serve": "node ./library/utils/replaceStrings.js library/index.html \"benchmark\" \"dist/bundle\" && serve library -l 8080",
-    "serve_dev": "node ./library/utils/replaceStrings.js library/index.html \"dist/bundle\" \"benchmark\" && serve library -l 8080",
-    "build": "webpack --config ./library/webpack.config.js --output-path ./library/dist",
+    "serve": "node ./library/utils/replaceStrings.js library/index.html \"benchmark\" \"bundle\" && serve library -l 8080",
+    "serve_dev": "node ./library/utils/replaceStrings.js library/index.html \"bundle\" \"benchmark\" && serve library -l 8080",
+    "build": "webpack --config ./webpack.config.cjs --output-path ./library",
     "test": "echo TODO",
     "prepublishOnly": "git push --follow-tags && gh-release -y",
     "version": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING CHANGE:' && git add CHANGELOG.md"
@@ -42,5 +42,6 @@
     "serve": "^14.2.1",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
-  }
+  },
+  "type": "module"
 }

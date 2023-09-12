@@ -1,4 +1,4 @@
-const fs = require("fs");
+import fs from "fs";
 
 // Get command line arguments
 let filename = process.argv[2];
