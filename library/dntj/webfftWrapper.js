@@ -1,11 +1,11 @@
-import FFT from "./fft.js";
-import complex_array from "./complex_array.js";
+import { FFT } from "./fft.js";
+import { ComplexArray } from "./complex_array.js";
 
 class DntjWebFftWrapperJavascript {
   constructor(size) {
     this.size = size;
     this.outputArr = new Float32Array(2 * size);
-    this.cin = new complex_array.ComplexArray(size);
+    this.cin = new ComplexArray(size);
     this.scale = Math.sqrt(size);
   }
 
