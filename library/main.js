@@ -1,7 +1,6 @@
 // Adapted from https://github.com/j-funk/js-dsp-test
 // Nice comparison in https://thebreakfastpost.com/2015/10/18/ffts-in-javascript/
 
-import transform from "./nayuki/fft.js";
 import FFTNayuki from "./nayuki-obj/fft.js";
 import FFTNayukiC from "./nayukic/FFT.js";
 import FFT from "./nockert/complex.js";
@@ -10,6 +9,7 @@ import wrappedKissFFT from "./kissfft/webfftWrapper.js";
 import IndutnyFftWrapper from "./indutny/webfftWrapper.js";
 import DntjWebFftWrapper from "./dntj/webfftWrapper.js";
 import CrossFftWrapper from "./cross/webfftWrapper.js";
+import NayukiFftWrapper from "./nayuki/webfftWrapper.js";
 
 var num_trials = 1000;
 var fftSize = 1024; //16384;
@@ -43,25 +43,17 @@ function genInputComplex32(size) {
 
 // pure javascript, double precision, in-place, feeding it single seems to work fine
 function nayukiJavascript(size) {
-  const [re, im] = genInputReal32(size);
-  let real = new Float32Array(size); // will store input and output each call
-  let imag = new Float32Array(size);
+  var fft = new NayukiFftWrapper(size);
+  var ci = genInputComplex32(size);
 
-  // Warmup
-  for (var i = 0; i < num_trials; ++i) {
-    real.set(re);
-    imag.set(im);
-    transform(real, imag);
-  }
+  for (var i = 0; i < num_trials; ++i) fft.fft(ci); // Warmup
 
   var start = performance.now();
   var total = 0.0;
   for (var i = 0; i < num_trials; ++i) {
-    real.set(re);
-    imag.set(im);
-    transform(real, imag); // this does the FFT
+    const co = fft.fft(ci);
     for (var j = 0; j < size; ++j) {
-      total += Math.sqrt(real[j] * real[j] + imag[j] * imag[j]);
+      total += Math.sqrt(co[j * 2] * co[j * 2] + co[j * 2 + 1] * co[j * 2 + 1]);
     }
   }
   var end = performance.now();
@@ -149,14 +141,13 @@ function nockertJavascript(size) {
 function indutnyJavascript(size) {
   var fft = new IndutnyFftWrapper(size);
   var ci = genInputComplex32(size);
-  var co;
 
   for (var i = 0; i < num_trials; ++i) fft.fft(ci); // Warmup
 
   var start = performance.now();
   var total = 0.0;
   for (var i = 0; i < num_trials; ++i) {
-    co = fft.fft(ci);
+    const co = fft.fft(ci);
     for (var j = 0; j < size; ++j) {
       total += Math.sqrt(co[j * 2] * co[j * 2] + co[j * 2 + 1] * co[j * 2 + 1]);
     }
