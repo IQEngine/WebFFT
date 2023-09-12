@@ -99,6 +99,13 @@ A file webfftWrapper.js will exist in all sub-library dirs, so that we can avoid
   - https://github.com/JorenSix/pffft.wasm (last change June 2022)
   - SIMD support
 
+### How to build and run our benchmarks
+
+1. `npm install`
+2. `npm run build`
+3. `serve library -l 8080`
+4. Open your browser to http://localhost:8080 
+
 ### Other people's benchmarks and comparisons
 
 - https://github.com/j-funk/js-dsp-test
