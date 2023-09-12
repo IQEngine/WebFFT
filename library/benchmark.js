@@ -10,6 +10,13 @@ import NayukiFftWrapperJavascript from "./nayuki/webfftWrapper.js";
 import NayukiWasmFftWrapperWasm from "./nayukic/webfftWrapper.js";
 import NockertFftWrapperJavascript from "./nockert/webfftWrapper.js";
 
+import checkBrowserCapabilities from "./utils/checkCapabilities.js";
+
+// Check for Wasm and SIMD support
+checkBrowserCapabilities().then((capabilities) => {
+  console.log(`Capabilities: ${JSON.stringify(capabilities)}`);
+});
+
 const num_trials = 1000;
 const fftSize = 1024; //16384;
 
