@@ -3,15 +3,19 @@ import React from "react";
 function LinksSection() {
   return (
     <section className="mb-6 text-center">
-      <div className="grid md:grid-cols-2 gap-4 rounded-2xl p-4 w-full max-w-lg">
+      <div className="flex flex-col md:flex-row md:justify-center gap-4 rounded-2xl p-4 w-full max-w-lg mx-auto">
         <a
           href="https://npmjs.com/your-package"
-          className="rounded-lg font-bold gap-4 shadow-button text-center py-4 px-6"
+          target="_blank"
+          className="rounded-lg font-bold text-center py-4 px-6 border border-cyber-primary bg-cyber-background1 text-cyber-text shadow-button flex items-center justify-center min-w-[200px] min-h-[50px]"
         >
           NPM
         </a>
-        <br />
-        <a href="https://github.com/IQEngine/WebFFT/" className="text-blue-500 hover:underline">
+        <a
+          href="https://github.com/IQEngine/WebFFT/"
+          target="_blank"
+          className="rounded-lg font-bold text-center py-4 px-6 border border-cyber-primary bg-cyber-background1 text-cyber-text shadow-button flex items-center justify-center min-w-[200px] min-h-[50px]"
+        >
           GitHub
         </a>
       </div>
