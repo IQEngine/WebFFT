@@ -1,25 +1,25 @@
-const path = require('path');
-const TerserPlugin = require('terser-webpack-plugin');
+const path = require("path");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
-  entry: './library/main.js',
-  mode: 'production',
+  entry: "./library/main.js",
+  mode: "production",
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "dist")
   },
   resolve: {
     fallback: {
-      "path": require.resolve("path-browserify")
+      path: require.resolve("path-browserify")
     }
   },
   optimization: {
     minimizer: [
       new TerserPlugin({
         terserOptions: {
-          keep_fnames: true,
-        },
-      }),
-    ],
-  },
+          keep_fnames: true
+        }
+      })
+    ]
+  }
 };

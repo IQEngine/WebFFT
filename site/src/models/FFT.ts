@@ -13,8 +13,6 @@ export class FFT {
 
   powerSpectralDensity(): number[] {
     const fftValues = math.fft(this.computeFFT());
-    return fftValues.map(
-      (val: math.Complex) => 10 * math.log10(val.re ** 2 + val.im ** 2)
-    );
+    return fftValues.map((val: math.Complex) => 10 * math.log10(val.re ** 2 + val.im ** 2));
   }
 }

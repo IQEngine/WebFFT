@@ -1,6 +1,6 @@
-/* 
+/*
  * Free FFT and convolution (JavaScript)
- * 
+ *
  * Copyright (c) 2014 Project Nayuki
  * http://www.nayuki.io/page/free-small-fft-in-multiple-languages
  *
@@ -26,87 +26,83 @@
 
 "use strict";
 
-/* 
+/*
  * Construct an object for calculating the discrete Fourier transform (DFT) of size n, where n is a power of 2.
  */
 function FFTNayuki(n) {
-    
-    this.n = n;
-    this.levels = -1;
+  this.n = n;
+  this.levels = -1;
 
-    for (var i = 0; i < 32; i++) {
-        if (1 << i == n) {
-            this.levels = i;  // Equal to log2(n)
-	}
+  for (var i = 0; i < 32; i++) {
+    if (1 << i == n) {
+      this.levels = i; // Equal to log2(n)
     }
-    if (this.levels == -1) {
-        throw "Length is not a power of 2";
-    }
+  }
+  if (this.levels == -1) {
+    throw "Length is not a power of 2";
+  }
 
-    this.cosTable = new Array(n / 2);
-    this.sinTable = new Array(n / 2);
-    for (var i = 0; i < n / 2; i++) {
-        this.cosTable[i] = Math.cos(2 * Math.PI * i / n);
-        this.sinTable[i] = Math.sin(2 * Math.PI * i / n);
-    }
+  this.cosTable = new Array(n / 2);
+  this.sinTable = new Array(n / 2);
+  for (var i = 0; i < n / 2; i++) {
+    this.cosTable[i] = Math.cos((2 * Math.PI * i) / n);
+    this.sinTable[i] = Math.sin((2 * Math.PI * i) / n);
+  }
 
-    /* 
-     * Computes the discrete Fourier transform (DFT) of the given complex vector, storing the result back into the vector.
-     * The vector's length must be equal to the size n that was passed to the object constructor, and this must be a power of 2. Uses the Cooley-Tukey decimation-in-time radix-2 algorithm.
-     */
-    this.forward = function(real, imag) {
+  /*
+   * Computes the discrete Fourier transform (DFT) of the given complex vector, storing the result back into the vector.
+   * The vector's length must be equal to the size n that was passed to the object constructor, and this must be a power of 2. Uses the Cooley-Tukey decimation-in-time radix-2 algorithm.
+   */
+  this.forward = function (real, imag) {
+    var n = this.n;
 
-	var n = this.n;
-	
-	// Bit-reversed addressing permutation
-	for (var i = 0; i < n; i++) {
-            var j = reverseBits(i, this.levels);
-            if (j > i) {
-		var temp = real[i];
-		real[i] = real[j];
-		real[j] = temp;
-		temp = imag[i];
-		imag[i] = imag[j];
-		imag[j] = temp;
-            }
-	}
-    
-	// Cooley-Tukey decimation-in-time radix-2 FFT
-	for (var size = 2; size <= n; size *= 2) {
-            var halfsize = size / 2;
-            var tablestep = n / size;
-            for (var i = 0; i < n; i += size) {
-		for (var j = i, k = 0; j < i + halfsize; j++, k += tablestep) {
-                    var tpre =  real[j+halfsize] * this.cosTable[k] +
-			        imag[j+halfsize] * this.sinTable[k];
-                    var tpim = -real[j+halfsize] * this.sinTable[k] +
-			        imag[j+halfsize] * this.cosTable[k];
-                    real[j + halfsize] = real[j] - tpre;
-                    imag[j + halfsize] = imag[j] - tpim;
-                    real[j] += tpre;
-                    imag[j] += tpim;
-		}
-            }
-	}
-    
-	// Returns the integer whose value is the reverse of the lowest 'bits' bits of the integer 'x'.
-	function reverseBits(x, bits) {
-            var y = 0;
-            for (var i = 0; i < bits; i++) {
-		y = (y << 1) | (x & 1);
-		x >>>= 1;
-            }
-            return y;
-	}
+    // Bit-reversed addressing permutation
+    for (var i = 0; i < n; i++) {
+      var j = reverseBits(i, this.levels);
+      if (j > i) {
+        var temp = real[i];
+        real[i] = real[j];
+        real[j] = temp;
+        temp = imag[i];
+        imag[i] = imag[j];
+        imag[j] = temp;
+      }
     }
 
-    /* 
-     * Computes the inverse discrete Fourier transform (IDFT) of the given complex vector, storing the result back into the vector.
-     * The vector's length must be equal to the size n that was passed to the object constructor, and this must be a power of 2. This is a wrapper function. This transform does not perform scaling, so the inverse is not a true inverse.
-     */
-    this.inverse = function(real, imag) {
-	forward(imag, real);
+    // Cooley-Tukey decimation-in-time radix-2 FFT
+    for (var size = 2; size <= n; size *= 2) {
+      var halfsize = size / 2;
+      var tablestep = n / size;
+      for (var i = 0; i < n; i += size) {
+        for (var j = i, k = 0; j < i + halfsize; j++, k += tablestep) {
+          var tpre = real[j + halfsize] * this.cosTable[k] + imag[j + halfsize] * this.sinTable[k];
+          var tpim = -real[j + halfsize] * this.sinTable[k] + imag[j + halfsize] * this.cosTable[k];
+          real[j + halfsize] = real[j] - tpre;
+          imag[j + halfsize] = imag[j] - tpim;
+          real[j] += tpre;
+          imag[j] += tpim;
+        }
+      }
     }
+
+    // Returns the integer whose value is the reverse of the lowest 'bits' bits of the integer 'x'.
+    function reverseBits(x, bits) {
+      var y = 0;
+      for (var i = 0; i < bits; i++) {
+        y = (y << 1) | (x & 1);
+        x >>>= 1;
+      }
+      return y;
+    }
+  };
+
+  /*
+   * Computes the inverse discrete Fourier transform (IDFT) of the given complex vector, storing the result back into the vector.
+   * The vector's length must be equal to the size n that was passed to the object constructor, and this must be a power of 2. This is a wrapper function. This transform does not perform scaling, so the inverse is not a true inverse.
+   */
+  this.inverse = function (real, imag) {
+    forward(imag, real);
+  };
 }
 
 export default FFTNayuki;

@@ -13,14 +13,12 @@ const App: React.FC = () => {
 
   const mockAlgorithms: Algorithm[] = [
     { name: "Algorithm A", description: "This is Algorithm A." },
-    { name: "Algorithm B", description: "This is Algorithm B." },
+    { name: "Algorithm B", description: "This is Algorithm B." }
     // ... add other algorithms as needed
   ];
 
   const handleAlgorithmChange = (selectedAlgorithmName: string) => {
-    const selectedAlgorithm = mockAlgorithms.find(
-      (algo) => algo.name === selectedAlgorithmName
-    );
+    const selectedAlgorithm = mockAlgorithms.find((algo) => algo.name === selectedAlgorithmName);
     if (selectedAlgorithm) {
       setAlgorithm(selectedAlgorithm);
     }
@@ -38,8 +36,8 @@ const App: React.FC = () => {
     const mockResults: TestResult[] = [
       {
         id: "Mock FFT Result 1",
-        data: complexData.slice(0, 1000),
-      },
+        data: complexData.slice(0, 1000)
+      }
       // Add more mock results if needed
     ];
     setResults(mockResults);
@@ -48,10 +46,7 @@ const App: React.FC = () => {
   return (
     <div className="app">
       <h1>FFT Algorithm Tester</h1>
-      <AlgorithmSelector
-        onAlgorithmChange={handleAlgorithmChange}
-        algorithms={mockAlgorithms}
-      />
+      <AlgorithmSelector onAlgorithmChange={handleAlgorithmChange} algorithms={mockAlgorithms} />
       <TestConfig onNumTestsChange={handleNumTestsChange} />
       <button onClick={runTests}>Run Tests</button>
       {results.length > 0 && <TestResults results={results} />}
