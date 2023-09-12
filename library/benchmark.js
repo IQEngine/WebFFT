@@ -29,7 +29,6 @@ window.onload = function () {
   let totals = [];
   let barColors = [];
   for (let i = 0; i < subLibraries.length; i++) {
-    console.log(subLibraries[i]);
     console.log("Starting", subLibraries[i].name);
     const subLibrary = new subLibraries[i](fftSize);
 
