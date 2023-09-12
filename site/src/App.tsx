@@ -9,9 +9,9 @@ function App() {
   const [numIterations, setNumIterations] = useState(10);
 
   return (
-    <div className="App container flex flex-col items-center relative text-cyber-text bg-cyber-gradient min-h-screen">
+    <div className="App flex flex-col items-center text-cyber-text bg-cyber-gradient min-h-screen min-w-screen">
       <SiteHeader />
-      <main className="mx-auto">
+      <main className="container mx-auto text-center">
         <LinksSection />
         <BenchmarkSection
           fftSize={fftSize}
