@@ -1,7 +1,6 @@
 // Adapted from https://github.com/j-funk/js-dsp-test
 // Nice comparison in https://thebreakfastpost.com/2015/10/18/ffts-in-javascript/
 
-import FFTNayuki from "./nayuki-obj/fft.js";
 import FFTNayukiC from "./nayukic/FFT.js";
 import FFT from "./nockert/complex.js";
 import isaacCSPRNG from "./isaacCSPRNG.js";
@@ -41,8 +40,8 @@ function genInputComplex32(size) {
 // Start of FFTs
 //===============
 
-// pure javascript, double precision, in-place, feeding it single seems to work fine
-function nayukiJavascript(size) {
+// pure javascript but with sin/cos tables precomputed, double precision, in-place, feeding it single seems to work fine
+function nayuki1Javascript(size) {
   var fft = new NayukiFftWrapper(size);
   var ci = genInputComplex32(size);
 
@@ -60,36 +59,8 @@ function nayukiJavascript(size) {
   return [end - start, total];
 }
 
-// pure javascript but with sin/cos tables precomputed, double precision, in-place, feeding it single seems to work fine
-function nayuki2Javascript(size) {
-  var fft = new FFTNayuki(size);
-  let [re, im] = genInputReal32(size);
-  let real = new Float32Array(size); // will store input and output each call
-  let imag = new Float32Array(size);
-
-  // Warmup
-  for (var i = 0; i < num_trials; ++i) {
-    real.set(re);
-    imag.set(im);
-    fft.forward(real, imag);
-  }
-
-  var start = performance.now();
-  var total = 0.0;
-  for (var i = 0; i < num_trials; ++i) {
-    real.set(re);
-    imag.set(im);
-    fft.forward(real, imag);
-    for (var j = 0; j < size; ++j) {
-      total += Math.sqrt(real[j] * real[j] + imag[j] * imag[j]);
-    }
-  }
-  var end = performance.now();
-  return [end - start, total];
-}
-
 // wasm with sin/cos tables precomputed, SINGLE precision, in-place
-function nayuki3Wasm(size) {
+function nayuki2Wasm(size) {
   var fft = new FFTNayukiC(size);
   let [re, im] = genInputReal32(size);
   let real = new Float32Array(size); // will store input and output each call
@@ -217,16 +188,7 @@ function kissWasm(size) {
   return [end - start, total];
 }
 
-var tests = [
-  nayukiJavascript,
-  nayuki2Javascript,
-  nayuki3Wasm,
-  kissWasm,
-  crossWasm,
-  nockertJavascript,
-  dntjJavascript,
-  indutnyJavascript
-];
+var tests = [nayuki1Javascript, nayuki2Wasm, kissWasm, crossWasm, nockertJavascript, dntjJavascript, indutnyJavascript];
 
 window.onload = function () {
   let test_names = [];
