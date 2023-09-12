@@ -19,6 +19,10 @@ concurrency: # prevent concurrent releases
 
 jobs:
   version_and_release:
+    permissions:
+      contents: write
+      pull-requests: write
+      packages: write
     runs-on: ubuntu-latest
     outputs:
       tagName: ${{ steps.npm-bump.outputs.release_tag }}
