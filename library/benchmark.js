@@ -10,6 +10,7 @@ import NayukiFftWrapperJavascript from "./nayuki/webfftWrapper.js";
 import NayukiWasmFftWrapperWasm from "./nayukic/webfftWrapper.js";
 import NockertFftWrapperJavascript from "./nockert/webfftWrapper.js";
 
+import sortDescending from "./utils/sortPerformance.js";
 import checkBrowserCapabilities from "./utils/checkCapabilities.js";
 
 // Check for Wasm and SIMD support
@@ -127,5 +128,5 @@ window.onload = function () {
     ],
   };
 
-  Plotly.newPlot("myPlot", data, layout);
+  Plotly.newPlot("myPlot", sortDescending(data), layout);
 };
