@@ -1,7 +1,6 @@
 // Adapted from https://github.com/j-funk/js-dsp-test
 // Nice comparison in https://thebreakfastpost.com/2015/10/18/ffts-in-javascript/
 
-import FFT from "./nockert/complex.js";
 import isaacCSPRNG from "./isaacCSPRNG.js";
 import wrappedKissFFT from "./kissfft/webfftWrapper.js";
 import IndutnyFftWrapper from "./indutny/webfftWrapper.js";
@@ -9,6 +8,7 @@ import DntjWebFftWrapper from "./dntj/webfftWrapper.js";
 import CrossFftWrapper from "./cross/webfftWrapper.js";
 import NayukiFftWrapper from "./nayuki/webfftWrapper.js";
 import NayukiWasmFftWrapper from "./nayukic/webfftWrapper.js";
+import NockertFftWrapper from "./nockert/webfftWrapper.js";
 
 var num_trials = 1000;
 var fftSize = 1024; //16384;
@@ -69,16 +69,15 @@ function nayuki2Wasm(size) {
 
 // fft.js by Jens Nockert (nockert), pure javascript, double precision but feeding it single seems to work fine
 function nockertJavascript(size) {
-  var fft = new FFT.complex(size, false); // 2nd arg is for inverse
+  var fft = new NockertFftWrapper(size);
   var ci = genInputComplex32(size);
-  var co = new Float32Array(2 * size); // output buffer
 
-  for (var i = 0; i < num_trials; ++i) fft.simple(co, ci, "complex"); // Warmup
+  for (var i = 0; i < num_trials; ++i) fft.fft(ci); // Warmup
 
   var start = performance.now();
   var total = 0.0;
   for (var i = 0; i < num_trials; ++i) {
-    fft.simple(co, ci, "complex"); // out, in, complex/real
+    const co = fft.fft(ci);
     for (var j = 0; j < size; ++j) {
       total += Math.sqrt(co[j * 2] * co[j * 2] + co[j * 2 + 1] * co[j * 2 + 1]);
     }
