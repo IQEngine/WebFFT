@@ -1,7 +1,0 @@
-.plot-centered {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 400px; /* or any height you desire */
-  width: 600px;
-}

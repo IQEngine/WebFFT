@@ -1,41 +1,27 @@
-# FFT Algorithm Tester: React + TypeScript + Vite
+# React + TypeScript + Vite
 
-This project is a React-based FFT Algorithm Tester built with TypeScript and Vite. Easily select an FFT algorithm, configure test parameters, and view results.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Quick Start
+Currently, two official plugins are available:
 
-### Installation
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-First, ensure you have [Node.js](https://nodejs.org/) and npm installed.
+## Expanding the ESLint configuration
 
-Then, clone the repository or download the code. Navigate to the root of the project in your terminal and run:
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-```bash
-npm install
+- Configure the top-level `parserOptions` property like this:
+
+```js
+   parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname,
+   },
 ```
 
-This command will install all necessary dependencies.
-
-### Running Locally
-
-To start the development server and view the app in your browser, simply run:
-
-```bash
-npm run dev
-```
-
-This will launch the Vite development server. You can then open your browser to [http://localhost:3000/](http://localhost:3000/) to interact with the FFT Algorithm Tester.
-
-Any changes you make to the source code will be reflected in real-time in the browser thanks to Vite's hot module reloading.
-
-### Building for Production
-
-To create an optimized production build, use:
-
-```bash
-npm run build
-```
-
-## Further Configuration and Expansion
-
-The project comes with a minimal ESLint configuration to ensure code quality. For production applications, consider expanding the ESLint setup. Guidelines and suggestions for this are provided in the original template documentation.
+- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
+- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
