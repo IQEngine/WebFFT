@@ -1,6 +1,6 @@
 import CrossModule from "./Cross.js";
 
-"use strict";
+("use strict");
 
 var crossModule = CrossModule({});
 

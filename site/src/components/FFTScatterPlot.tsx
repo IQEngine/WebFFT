@@ -11,9 +11,9 @@ const FFTScatterPlot: React.FC<FFTProps> = memo(({ data }) => {
       data: dp.data.map((complexValue) => {
         return {
           x: complexValue.re, // real part for x-axis
-          y: complexValue.im, // imaginary part for y-axis
+          y: complexValue.im // imaginary part for y-axis
         };
-      }),
+      })
     };
   });
 
@@ -47,7 +47,7 @@ const FFTScatterPlot: React.FC<FFTProps> = memo(({ data }) => {
           tickValues: 10,
           legend: "I",
           legendPosition: "middle",
-          legendOffset: 40,
+          legendOffset: 40
         }}
         axisLeft={{
           tickSize: 5,
@@ -55,7 +55,7 @@ const FFTScatterPlot: React.FC<FFTProps> = memo(({ data }) => {
           tickValues: 10,
           legend: "Q",
           legendPosition: "middle",
-          legendOffset: -60,
+          legendOffset: -60
         }}
         useMesh={true}
       />

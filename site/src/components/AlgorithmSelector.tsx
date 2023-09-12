@@ -1,10 +1,7 @@
 import React from "react";
 import { AlgorithmSelectorProps } from "../types/componentTypes";
 
-const AlgorithmSelector: React.FC<AlgorithmSelectorProps> = ({
-  onAlgorithmChange,
-  algorithms = [],
-}) => {
+const AlgorithmSelector: React.FC<AlgorithmSelectorProps> = ({ onAlgorithmChange, algorithms = [] }) => {
   return (
     <div>
       <label>Select an Algorithm:</label>

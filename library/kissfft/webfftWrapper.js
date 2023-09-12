@@ -1,6 +1,6 @@
 import KissFFTModule from "./KissFFT.js";
 
-"use strict";
+("use strict");
 
 var kissFFTModule = KissFFTModule({});
 

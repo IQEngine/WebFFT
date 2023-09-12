@@ -6,7 +6,7 @@ import FFTNayuki from "./nayuki-obj/fft.js";
 import FFTNayukiC from "./nayukic/FFT.js";
 import FFT from "./nockert/complex.js";
 import isaacCSPRNG from "./isaacCSPRNG.js";
-import FFTCross from "./cross/FFT.js"
+import FFTCross from "./cross/FFT.js";
 import wrappedKissFFT from "./kissfft/webfftWrapper.js";
 import IndutnyFftWrapper from "./indutny/webfftWrapper.js";
 import DntjWebFftWrapper from "./dntj/webfftWrapper.js";

@@ -16,8 +16,8 @@ const PSDPlot: React.FC<FFTProps> = memo(({ data }) => {
       id: dataPoint.id,
       data: f.map((value, index) => ({
         x: value,
-        y: powerSpectralDensity[index],
-      })),
+        y: powerSpectralDensity[index]
+      }))
     };
   });
 
@@ -36,7 +36,7 @@ const PSDPlot: React.FC<FFTProps> = memo(({ data }) => {
           tickValues: 10,
           legend: "Frequency [Hz Normalized]",
           legendPosition: "middle",
-          legendOffset: 40,
+          legendOffset: 40
         }}
         axisLeft={{
           tickSize: 5,
@@ -44,7 +44,7 @@ const PSDPlot: React.FC<FFTProps> = memo(({ data }) => {
           tickValues: 5,
           legend: "PSD [dB]",
           legendPosition: "middle",
-          legendOffset: -40,
+          legendOffset: -40
         }}
         pointSize={0}
       />
