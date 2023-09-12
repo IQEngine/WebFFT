@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="App container flex flex-col items-center relative text-cyber-text bg-cyber-gradient min-h-screen">
       <SiteHeader />
-      <main className="mx-auto p-6">
+      <main className="mx-auto">
         <LinksSection />
         <BenchmarkSection
           fftSize={fftSize}
