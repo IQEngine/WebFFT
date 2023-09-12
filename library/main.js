@@ -10,7 +10,6 @@ import wrappedKissFFT from "./kissfft/webfftWrapper.js";
 import IndutnyFftWrapper from "./indutny/webfftWrapper.js";
 import DntjWebFftWrapper from "./dntj/webfftWrapper.js";
 import CrossFftWrapper from "./cross/webfftWrapper.js";
-import complex_array from "./dntj/complex_array.js";
 
 var num_trials = 1000;
 var fftSize = 1024; //16384;
@@ -47,16 +46,6 @@ function genInputReal64(size) {
     result_i[i] = prng.random() / 2.0;
   }
   return [result_r, result_i];
-}
-
-function genComplexArryType(size) {
-  let prng = isaacCSPRNG(seed);
-  var result = new complex_array.ComplexArray(size);
-  for (var i = 0; i < size; i++) {
-    result.real[i] = prng.random() / 2.0;
-    result.imag[i] = prng.random() / 2.0;
-  }
-  return result;
 }
 
 //===============
@@ -190,17 +179,16 @@ function indutnyJavascript(size) {
 // jsfft by Nick Jones (dntj), javascript, single precision
 function dntjJavascript(size) {
   var fft = new DntjWebFftWrapper(size);
-  var ci = genComplexArryType(size);
+  var ci = genInputComplex32(size);
 
   for (var i = 0; i < num_trials; ++i) fft.fft(ci); // Warmup
 
   var start = performance.now();
-  var scale = Math.sqrt(size) / 1.5;
   var total = 0.0;
   for (var i = 0; i < num_trials; ++i) {
     var co = fft.fft(ci);
     for (var j = 0; j < size; ++j) {
-      total += scale * Math.sqrt(co.real[j] * co.real[j] + co.imag[j] * co.imag[j]);
+      total += Math.sqrt(co[j * 2] * co[j * 2] + co[j * 2 + 1] * co[j * 2 + 1]);
     }
   }
   var end = performance.now();
