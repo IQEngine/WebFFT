@@ -21,8 +21,8 @@ function sortDescending(data) {
       x: sortedXArray,
       y: sortedYArray,
       type: "bar",
-      marker: { color: sortedBarColors },
-    },
+      marker: { color: sortedBarColors }
+    }
   ];
 
   return sortedData;

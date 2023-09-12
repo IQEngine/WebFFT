@@ -28,7 +28,7 @@ const subLibraries = [
   NayukiWasmFftWrapperWasm,
   NockertFftWrapperJavascript,
   NayukiFftWrapperJavascript,
-  DntjWebFftWrapperJavascript,
+  DntjWebFftWrapperJavascript
 ];
 
 window.onload = function () {
@@ -87,8 +87,8 @@ window.onload = function () {
       x: xArray,
       y: yArray,
       type: "bar",
-      marker: { color: barColors },
-    },
+      marker: { color: barColors }
+    }
   ];
 
   const layout = {
@@ -98,9 +98,9 @@ window.onload = function () {
         text: "FFTs per Second",
         font: {
           family: "sans serif",
-          size: 18,
-        },
-      },
+          size: 18
+        }
+      }
     },
     annotations: [
       {
@@ -111,8 +111,8 @@ window.onload = function () {
         font: {
           family: "sans serif",
           size: 18,
-          color: "rgba(255,0,0,1)",
-        },
+          color: "rgba(255,0,0,1)"
+        }
       },
       {
         x: 1,
@@ -122,10 +122,10 @@ window.onload = function () {
         font: {
           family: "sans serif",
           size: 18,
-          color: "rgba(0,0,255,1)",
-        },
-      },
-    ],
+          color: "rgba(0,0,255,1)"
+        }
+      }
+    ]
   };
 
   Plotly.newPlot("myPlot", sortDescending(data), layout);

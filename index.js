@@ -1,10 +1,10 @@
-import KissFftWrapperWasm from "./kissfft/webfftWrapper.js";
-import IndutnyFftWrapperJavascript from "./indutny/webfftWrapper.js";
-import DntjWebFftWrapperJavascript from "./dntj/webfftWrapper.js";
-import CrossFftWrapperWasm from "./cross/webfftWrapper.js";
-import NayukiFftWrapperJavascript from "./nayuki/webfftWrapper.js";
-import NayukiWasmFftWrapperWasm from "./nayukic/webfftWrapper.js";
-import NockertFftWrapperJavascript from "./nockert/webfftWrapper.js";
+import KissFftWrapperWasm from "./library/kissfft/webfftWrapper.js";
+import IndutnyFftWrapperJavascript from "./library/indutny/webfftWrapper.js";
+import DntjWebFftWrapperJavascript from "./library/dntj/webfftWrapper.js";
+//import CrossFftWrapperWasm from "./library/cross/webfftWrapper.js";
+import NayukiFftWrapperJavascript from "./library/nayuki/webfftWrapper.js";
+//import NayukiWasmFftWrapperWasm from "./library/nayukic/webfftWrapper.js";
+import NockertFftWrapperJavascript from "./library/nockert/webfftWrapper.js";
 
 class webfft {
   constructor(size) {
@@ -20,15 +20,15 @@ class webfft {
       case "nayukiJavascript":
         fftLibrary = new NayukiFftWrapperJavascript(size);
         break;
-      case "nayuki3Wasm":
-        fftLibrary = new NayukiWasmFftWrapperWasm(size);
-        break;
+      //case "nayuki3Wasm":
+      //  fftLibrary = new NayukiWasmFftWrapperWasm(size);
+      //  break;
       case "kissWasm":
         fftLibrary = new KissFftWrapperWasm(size);
         break;
-      case "crossWasm":
-        fftLibrary = new CrossFftWrapperWasm(size);
-        break;
+      //case "crossWasm":
+      //  fftLibrary = new CrossFftWrapperWasm(size);
+      //  break;
       case "nockertJavascript":
         fftLibrary = new NockertFftWrapperJavascript(size);
         break;
@@ -47,4 +47,6 @@ class webfft {
   }
 }
 
-module.exports = webfft;
+//module.exports = webfft;
+
+export default webfft;
