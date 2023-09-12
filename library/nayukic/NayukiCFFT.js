@@ -75,7 +75,7 @@ var NayukiCModule = function (NayukiCModule) {
       return "[Emscripten Module object]";
     };
   } else if (ENVIRONMENT_IS_SHELL) {
-    if (!Module["print"]) Module["print"] = print;
+    if (!Module["print"] && typeof print != "undefined") Module["print"] = print;
     if (typeof printErr != "undefined") Module["printErr"] = printErr;
     if (typeof read != "undefined") {
       Module["read"] = read;

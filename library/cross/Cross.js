@@ -66,7 +66,7 @@ var CrossModule = function (Module) {
       return "[Emscripten Module object]";
     };
   } else if (ENVIRONMENT_IS_SHELL) {
-    if (!Module["print"]) Module["print"] = print;
+    if (!Module["print"] && typeof print != "undefined") Module["print"] = print;
     if (typeof printErr != "undefined") Module["printErr"] = printErr;
     if (typeof read != "undefined") {
       Module["read"] = read;
@@ -299,7 +299,7 @@ var CrossModule = function (Module) {
     },
     GLOBAL_BASE: 8,
     QUANTUM_SIZE: 4,
-    __dummy__: 0
+    __dummy__: 0,
   };
   Module["Runtime"] = Runtime;
   var __THREW__ = 0;
@@ -358,7 +358,7 @@ var CrossModule = function (Module) {
           writeStringToMemory(str, ret);
         }
         return ret;
-      }
+      },
     };
     var toC = { string: JSfuncs["stringToC"], array: JSfuncs["arrayToC"] };
     ccall = function ccallFunc(ident, returnType, argTypes, args, opts) {
@@ -470,7 +470,7 @@ var CrossModule = function (Module) {
             ? tempDouble > +0
               ? (Math_min(+Math_floor(tempDouble / +4294967296), +4294967295) | 0) >>> 0
               : ~~+Math_ceil((tempDouble - +(~~tempDouble >>> 0)) / +4294967296) >>> 0
-            : 0)
+            : 0),
         ]),
           (HEAP32[ptr >> 2] = tempI64[0]),
           (HEAP32[(ptr + 4) >> 2] = tempI64[1]);
@@ -864,7 +864,7 @@ var CrossModule = function (Module) {
       m: "unsigned long",
       x: "long long",
       y: "unsigned long long",
-      z: "..."
+      z: "...",
     };
     var subs = [];
     var first = true;
@@ -1324,7 +1324,7 @@ var CrossModule = function (Module) {
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     ],
     "i8",
     ALLOC_NONE,
@@ -1479,7 +1479,7 @@ var CrossModule = function (Module) {
     ECANCELED: 125,
     ENOTRECOVERABLE: 131,
     EOWNERDEAD: 130,
-    ESTRPIPE: 86
+    ESTRPIPE: 86,
   };
   function _sysconf(name) {
     switch (name) {
@@ -1703,7 +1703,7 @@ var CrossModule = function (Module) {
     Float32Array: Float32Array,
     Float64Array: Float64Array,
     NaN: NaN,
-    Infinity: Infinity
+    Infinity: Infinity,
   };
   Module.asmLibraryArg = {
     abort: abort,
@@ -1722,7 +1722,7 @@ var CrossModule = function (Module) {
     STACKTOP: STACKTOP,
     STACK_MAX: STACK_MAX,
     tempDoublePtr: tempDoublePtr,
-    ABORT: ABORT
+    ABORT: ABORT,
   }; // EMSCRIPTEN_START_ASM
   var asm = (function (global, env, buffer) {
     "use asm";
@@ -3833,7 +3833,7 @@ var CrossModule = function (Module) {
       establishStackSpace: ra,
       setThrew: sa,
       setTempRet0: va,
-      getTempRet0: wa
+      getTempRet0: wa,
     };
   })(
     // EMSCRIPTEN_END_ASM
