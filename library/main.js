@@ -37,17 +37,6 @@ function genInputComplex32(size) {
   return result;
 }
 
-function genInputReal64(size) {
-  let prng = isaacCSPRNG(seed);
-  var result_r = new Float64Array(size);
-  var result_i = new Float64Array(size);
-  for (var i = 0; i < size; i++) {
-    result_r[i] = prng.random() / 2.0; // -0.5 to 0.5 uniformly distributed
-    result_i[i] = prng.random() / 2.0;
-  }
-  return [result_r, result_i];
-}
-
 //===============
 // Start of FFTs
 //===============
