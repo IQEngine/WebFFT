@@ -4,6 +4,7 @@
   "description": "The fastest FFT on the web!",
   "main": "index.js",
   "scripts": {
+    "build": "webpack --config ./library/webpack.config.js --output-path ./library/dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -29,6 +30,11 @@
   },
   "homepage": "https://github.com/IQEngine/WebFFT#readme",
   "devDependencies": {
-    "prettier": "^3.0.3"
+    "fs": "^0.0.2",
+    "path-browserify": "^1.0.1",
+    "prettier": "^3.0.3",
+    "serve": "^14.2.1",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
   }
 }
