@@ -14,17 +14,6 @@ var num_trials = 1000;
 var fftSize = 1024; //16384;
 const seed = "this is a seed for rng!";
 
-function genInputReal32(size) {
-  let prng = isaacCSPRNG(seed);
-  var result_r = new Float32Array(size);
-  var result_i = new Float32Array(size);
-  for (var i = 0; i < size; i++) {
-    result_r[i] = prng.random() / 2.0; // -0.5 to 0.5 uniformly distributed
-    result_i[i] = prng.random() / 2.0;
-  }
-  return [result_r, result_i];
-}
-
 // interleaved complex (produces 2x the output as genInputReal32 for a given size)
 function genInputComplex32(size) {
   let prng = isaacCSPRNG(seed);
