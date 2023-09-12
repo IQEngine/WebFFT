@@ -103,8 +103,9 @@ A file webfftWrapper.js will exist in all sub-library dirs, so that we can avoid
 
 1. `npm install`
 2. `npm run build`
-3. `serve library -l 8080`
-4. Open your browser to http://localhost:8080 
+3. `npm install --global serve`
+4. `serve library -l 8080`
+5. Open your browser to http://localhost:8080 
 
 ### Other people's benchmarks and comparisons
 
