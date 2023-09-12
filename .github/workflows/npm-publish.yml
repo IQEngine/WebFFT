@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       newversion:
-        description: 'Enter major, minor, or patch)'
+        description: 'Enter major, minor, or patch'
         required: true
 
 env:
