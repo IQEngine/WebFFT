@@ -1,6 +1,6 @@
 import FFT_indutny from "./fft.js";
 
-class IndutnyFftWrapper {
+class IndutnyFftWrapperJavascript {
   constructor(size) {
     this.size = size;
     this.indutnyFft = new FFT_indutny(size);
@@ -14,4 +14,4 @@ class IndutnyFftWrapper {
   }
 }
 
-export default IndutnyFftWrapper;
+export default IndutnyFftWrapperJavascript;
