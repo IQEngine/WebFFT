@@ -23,26 +23,28 @@ function LinksSection() {
           GitHub
         </a>
       </div>
-      <div className="mt-6 grid grid-cols-2 gap-4">
-        <div className="flex items-center">
-          <span className="text-cyber-text-secondary text-2xl">⚡</span>
-          <span className="ml-2">Auto-optimized FFT algorithms</span>
-        </div>
-        <div className="flex items-center">
-          <span className="text-cyber-text-secondary text-2xl">⚡</span>
-          <span className="ml-2">Browser-specific optimizations</span>
-        </div>
-        <div className="flex items-center">
-          <span className="text-cyber-text-secondary text-2xl">⚡</span>
-          <span className="ml-2">SIMD WASM support</span>
-        </div>
-        <div className="flex items-center">
-          <span className="text-cyber-text-secondary text-2xl">⚡</span>
-          <span className="ml-2">Peak performance assurance</span>
-        </div>
-        <div className="flex items-center">
-          <span className="text-cyber-text-secondary text-2xl">⚡</span>
-          <span className="ml-2">Easy npm integration</span>
+      <div className="flex justify-center mt-6">
+        <div className="grid grid-cols-2 gap-4">
+          <div className="flex items-center">
+            <span className="text-cyber-text-secondary text-2xl">⚡</span>
+            <span className="ml-2">Auto-optimized FFT algorithms</span>
+          </div>
+          <div className="flex items-center">
+            <span className="text-cyber-text-secondary text-2xl">⚡</span>
+            <span className="ml-2">Browser-specific optimizations</span>
+          </div>
+          <div className="flex items-center">
+            <span className="text-cyber-text-secondary text-2xl">⚡</span>
+            <span className="ml-2">SIMD WASM support</span>
+          </div>
+          <div className="flex items-center">
+            <span className="text-cyber-text-secondary text-2xl">⚡</span>
+            <span className="ml-2">Peak performance assurance</span>
+          </div>
+          <div className="flex items-center">
+            <span className="text-cyber-text-secondary text-2xl">⚡</span>
+            <span className="ml-2">Easy npm integration</span>
+          </div>
         </div>
       </div>
     </section>
