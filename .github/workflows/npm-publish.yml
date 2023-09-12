@@ -47,6 +47,6 @@ jobs:
         git_username: github.actor
         newversion: ${{ github.event.inputs.newversion }} # passed as interactive variable (see above)
         push_version_commit: false # if your prePublishOnly step pushes git commits, you can omit this input or set it to false.
-        github_token: ${{ secrets.GITHUB_TOKEN }} # built in actions token.  Passed to gh-release if in use.
+        github_token: ${{ secrets.ADMIN_GITHUB_TOKEN }} # built in actions token.  Passed to gh-release if in use.
         npm_token: ${{ secrets.NPM_TOKEN }} # user set secret token generated at npm
     - run: echo ${{ steps.npm-bump.outputs.release_tag }}
