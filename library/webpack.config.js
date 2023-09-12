@@ -2,7 +2,7 @@ const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
-  entry: "./library/main.js",
+  entry: "./library/benchmark.js",
   mode: "production",
   output: {
     filename: "bundle.js",
