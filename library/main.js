@@ -6,10 +6,10 @@ import FFTNayuki from "./nayuki-obj/fft.js";
 import FFTNayukiC from "./nayukic/FFT.js";
 import FFT from "./nockert/complex.js";
 import isaacCSPRNG from "./isaacCSPRNG.js";
-import FFTCross from "./cross/FFT.js";
 import wrappedKissFFT from "./kissfft/webfftWrapper.js";
 import IndutnyFftWrapper from "./indutny/webfftWrapper.js";
 import DntjWebFftWrapper from "./dntj/webfftWrapper.js";
+import CrossFftWrapper from "./cross/webfftWrapper.js";
 import complex_array from "./dntj/complex_array.js";
 
 var num_trials = 1000;
@@ -209,21 +209,21 @@ function dntjJavascript(size) {
 
 // wasm, double precision
 function crossWasm(size) {
-  var fft = new FFTCross(size);
-  const [real, imag] = genInputReal64(size);
+  var fft = new CrossFftWrapper(size);
 
-  for (var i = 0; i < num_trials; ++i) fft.transform(real, imag, false); // Warmup
+  var ci = genInputComplex32(size);
+
+  for (var i = 0; i < num_trials; ++i) fft.fft(ci); // Warmup
 
   var start = performance.now();
   var total = 0.0;
   for (var i = 0; i < num_trials; ++i) {
-    var out = fft.transform(real, imag, false); // last arg is inverse
+    const co = fft.fft(ci); // last arg is inverse
     for (var j = 0; j < size; ++j) {
-      total += Math.sqrt(out.real[j] * out.real[j] + out.imag[j] * out.imag[j]);
+      total += Math.sqrt(co[j * 2] * co[j * 2] + co[j * 2 + 1] * co[j * 2 + 1]);
     }
   }
   var end = performance.now();
-  fft.dispose();
   return [end - start, total];
 }
 
