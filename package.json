@@ -4,6 +4,8 @@
   "description": "The fastest FFT on the web!",
   "main": "index.js",
   "scripts": {
+    "serve": "node ./library/utils/replaceStrings.js library/index.html \"benchmark\" \"dist/bundle\" && serve library -l 8080",
+    "serve_dev": "node ./library/utils/replaceStrings.js library/index.html \"dist/bundle\" \"benchmark\" && serve library -l 8080",
     "build": "webpack --config ./library/webpack.config.js --output-path ./library/dist",
     "test": "echo TODO",
     "prepublishOnly": "git push --follow-tags && gh-release -y",
