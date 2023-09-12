@@ -15,12 +15,12 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
     <section className="mb-6 text-center">
       <h2 className="text-xl">Benchmark your browser</h2>
 
-      <div className="flex justify-center space-x-4 mt-4">
-        <button className="bg-blue-500 text-white px-4 py-2 rounded-md">Run Benchmark</button>
+      <div className="justify-center space-x-4 mt-4">
+        <button className="bg-cyber-secondary text-cyber-text  px-4 py-2 rounded-md">Run Benchmark</button>
 
         <button
           onClick={() => setShowSettings((prev) => !prev)}
-          className="bg-gray-800 text-white px-4 py-2 rounded-md"
+          className="bg-cyber-background1 text-cyber-text px-4 py-2 rounded-md"
         >
           ☰ Settings
         </button>
@@ -28,7 +28,7 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
 
       {showSettings && (
         <div className="mt-4">
-          <div className="flex flex-col items-center mb-2">
+          <div className="items-center mb-2">
             <label htmlFor="fftSize" className="block text-sm">
               FFT Size
             </label>
@@ -38,10 +38,10 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
               name="fftSize"
               value={fftSize}
               onChange={(e) => setFftSize(parseInt(e.target.value))}
-              className="block w-24 mt-1 p-2 border rounded-md text-center"
+              className="block w-24 mt-1 p-2 border rounded-md text-center bg-cyber-background1"
             />
           </div>
-          <div className="flex flex-col items-center mb-2">
+          <div className="items-center mb-2 ">
             <label htmlFor="numIterations" className="block text-sm">
               Number of Iterations
             </label>
@@ -51,7 +51,7 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
               name="numIterations"
               value={numIterations}
               onChange={(e) => setNumIterations(parseInt(e.target.value))}
-              className="block w-24 mt-1 p-2 border rounded-md text-center"
+              className="block w-24 mt-1 p-2 border rounded-md text-center bg-cyber-background1"
             />
           </div>
 

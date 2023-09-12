@@ -31,6 +31,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  font-family: "system-ui", sans-serif;
 }
 
 h1 {
@@ -50,7 +51,7 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: theme("colors.cyber-primary");
 }
 button:focus,
 button:focus-visible {
