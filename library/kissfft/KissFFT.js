@@ -151,7 +151,7 @@ var KissFFTModule = (function () {
           var ret = stackAlloc(arr.length);
           writeArrayToMemory(arr, ret);
           return ret;
-        }
+        },
       };
       function convertReturnValue(ret) {
         if (returnType === "string") return UTF8ToString(ret);
@@ -592,3 +592,4 @@ else if (typeof define === "function" && define["amd"])
     return KissFFTModule;
   });
 else if (typeof exports === "object") exports["KissFFTModule"] = KissFFTModule;
+export default KissFFTModule;

@@ -352,7 +352,7 @@ var NayukiCModule = function (NayukiCModule) {
     },
     GLOBAL_BASE: 8,
     QUANTUM_SIZE: 4,
-    __dummy__: 0
+    __dummy__: 0,
   };
   Module["Runtime"] = Runtime;
   var ABORT = 0;
@@ -394,7 +394,7 @@ var NayukiCModule = function (NayukiCModule) {
           stringToUTF8(str, ret, len);
         }
         return ret;
-      }
+      },
     };
     var toC = { string: JSfuncs["stringToC"], array: JSfuncs["arrayToC"] };
     ccall = function ccallFunc(ident, returnType, argTypes, args, opts) {
@@ -513,7 +513,7 @@ var NayukiCModule = function (NayukiCModule) {
             ? tempDouble > +0
               ? (Math_min(+Math_floor(tempDouble / +4294967296), +4294967295) | 0) >>> 0
               : ~~+Math_ceil((tempDouble - +(~~tempDouble >>> 0)) / +4294967296) >>> 0
-            : 0)
+            : 0),
         ]),
           (HEAP32[ptr >> 2] = tempI64[0]),
           (HEAP32[(ptr + 4) >> 2] = tempI64[1]);
@@ -581,7 +581,7 @@ var NayukiCModule = function (NayukiCModule) {
         typeof _malloc === "function" ? _malloc : Runtime.staticAlloc,
         Runtime.stackAlloc,
         Runtime.staticAlloc,
-        Runtime.dynamicAlloc
+        Runtime.dynamicAlloc,
       ][allocator === undefined ? ALLOC_STATIC : allocator](Math.max(size, singleType ? 1 : types.length));
     }
     if (zeroinit) {
@@ -1121,7 +1121,7 @@ var NayukiCModule = function (NayukiCModule) {
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 3,
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     ],
     "i8",
     ALLOC_NONE,
@@ -1154,7 +1154,7 @@ var NayukiCModule = function (NayukiCModule) {
     Float32Array: Float32Array,
     Float64Array: Float64Array,
     NaN: NaN,
-    Infinity: Infinity
+    Infinity: Infinity,
   };
   Module.asmLibraryArg = {
     abort: abort,
@@ -1168,7 +1168,7 @@ var NayukiCModule = function (NayukiCModule) {
     tempDoublePtr: tempDoublePtr,
     ABORT: ABORT,
     STACKTOP: STACKTOP,
-    STACK_MAX: STACK_MAX
+    STACK_MAX: STACK_MAX,
   }; // EMSCRIPTEN_START_ASM
   var asm = (function (global, env, buffer) {
     "use asm";
@@ -3237,7 +3237,7 @@ var NayukiCModule = function (NayukiCModule) {
       stackRestore: ba,
       _transform_radix2_precalc: ka,
       stackSave: aa,
-      _dispose_f: ja
+      _dispose_f: ja,
     };
   })(
     // EMSCRIPTEN_END_ASM
@@ -3427,3 +3427,5 @@ var NayukiCModule = function (NayukiCModule) {
 if (typeof module === "object" && module.exports) {
   module["exports"] = NayukiCModule;
 }
+
+export default NayukiCModule;
