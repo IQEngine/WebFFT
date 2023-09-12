@@ -1,4 +1,5 @@
 # push-button triggered action that runs npm version {major,minor,patch}, git push --follow-tags and finally npm publish
+# see https://github.com/marketplace/actions/npm-bump for more info
 
 name: Version and Release
 
@@ -6,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       newversion:
-        description: 'Semantic Version Bump Type (major minor patch)'
+        description: 'Enter major, minor, or patch)'
         required: true
 
 env:
