@@ -1,4 +1,3 @@
-import React from "react";
 import GitHubMark from "../assets/github-mark/github-mark-white.svg";
 import NpmLogo from "../assets/npm-logo-red.svg";
 

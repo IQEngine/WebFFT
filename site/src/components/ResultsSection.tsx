@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import HistogramSection from "./HistogramSection";
 
 function ResultsSection() {

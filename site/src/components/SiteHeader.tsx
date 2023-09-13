@@ -1,5 +1,3 @@
-import React from "react";
-
 function SiteHeader() {
   return (
     <header className="p-6 text-center">

@@ -1,8 +1,18 @@
-export function getBrowserVersion() {
-  return navigator.userAgent;
+import { BrowserInfo, detect } from "detect-browser";
+import { BrowserInfoType } from "../types/types";
+
+export function getBrowserInfo(): BrowserInfoType {
+  const browser = detect();
+
+  if (browser && browser.type === "browser") {
+    const { name: browserName, version, os } = browser;
+    return { browserName, version, os };
+  }
+
+  return { browserName: "Unknown", version: "Unknown", os: "Unknown" };
 }
 
-export function checkSIMDSupport() {
+export function checkSIMDSupport(): boolean {
   // This is a naive check and might not work in all browsers
   try {
     const simdCheck = WebAssembly.validate(
@@ -13,8 +23,9 @@ export function checkSIMDSupport() {
         132, 128, 128, 128, 0, 0, 65, 0, 11,
       ])
     );
-    return simdCheck ? "Supported" : "Not supported";
+    return simdCheck;
   } catch (e) {
-    return "Check failed";
+    console.log(e);
+    return false;
   }
 }
