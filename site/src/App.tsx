@@ -1,25 +1,22 @@
 import { useState } from "react";
-import SiteHeader from "./components/SiteHeader";
-import LinksSection from "./components/LinksSection";
-import BenchmarkSection from "./components/BenchmarkSection";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import About from "./components/About";
+import Docs from "./components/Docs";
+import Breadcrumbs from "./components/Breadcrumbs";
+import NotFound from "./components/NotFound";
 
 function App() {
-  const [fftSize, setFftSize] = useState(128);
-  const [numIterations, setNumIterations] = useState(10);
-
   return (
-    <div className="App flex flex-col items-center text-cyber-text bg-cyber-gradient min-h-screen min-w-screen">
-      <SiteHeader />
-      <main className="container mx-auto text-center">
-        <LinksSection />
-        <BenchmarkSection
-          fftSize={fftSize}
-          setFftSize={setFftSize}
-          numIterations={numIterations}
-          setNumIterations={setNumIterations}
-        />
-      </main>
-    </div>
+    <BrowserRouter>
+      <Breadcrumbs />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/docs" element={<Docs />} />
+        <Route path="*" element={<NotFound />} /> // TODO: Make a 404 page
+      </Routes>
+    </BrowserRouter>
   );
 }
 
