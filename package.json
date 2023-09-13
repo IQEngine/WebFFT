@@ -7,7 +7,7 @@
     "serve": "node ./lib/utils/replaceStrings.js lib/index.html \"benchmark\" \"bundle\" && serve lib -l 8080",
     "serve_dev": "node ./lib/utils/replaceStrings.js lib/index.html \"bundle\" \"benchmark\" && serve lib -l 8080",
     "build": "webpack --config ./webpack.config.cjs --output-path ./lib",
-    "test": "echo TODO",
+    "test": "vitest --config ./tests/vitest.config.ts",
     "prepublishOnly": "git push --follow-tags && gh-release -y",
     "version": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING CHANGE:' && git add CHANGELOG.md"
   },
@@ -40,6 +40,8 @@
     "path-browserify": "^1.0.1",
     "prettier": "^3.0.3",
     "serve": "^14.2.1",
+    "vite": "^4.4.9",
+    "vitest": "^0.34.4",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
   },
