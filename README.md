@@ -113,3 +113,7 @@ A file webfftWrapper.js will exist in all sub-library dirs, so that we can avoid
 - https://github.com/scijs/fourier-transform/blob/HEAD/benchmark.md
 - https://thebreakfastpost.com/2015/10/18/ffts-in-javascript/
 - https://toughengineer.github.io/demo/dsp/fft-perf/
+
+### Misc developer tips
+
+Instead of `npm link` you can use this to install the package locally: `npm install -g i .`

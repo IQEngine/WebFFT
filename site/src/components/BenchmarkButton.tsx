@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
 import Button from "./Button";
 import { BrowserInfoType } from "../types/types";
+import webfft from "webfft";
 
 interface BenchmarkButtonProps {
   fftSize: number;
@@ -21,6 +22,10 @@ const BenchmarkButton: React.FC<BenchmarkButtonProps> = ({ fftSize, numIteration
     console.log("Number of Iterations:", numIterations);
     console.log("Browser Info:", browserInfo);
     console.log("SIMD Support:", simdSupport);
+
+    const fft = new webfft(fftSize);
+    const profileObj = fft.profile(); // arg is duration to run profile, in seconds
+    console.log("Results:", profileObj);
   };
 
   return (
