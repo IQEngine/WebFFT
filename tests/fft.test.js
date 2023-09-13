@@ -20,7 +20,7 @@ test("available sublibraries", () => {
 });
 
 test("outputs for all sublibs approx match using different fftsizes", () => {
-  const fftsizes = [4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 16384];
+  const fftsizes = [4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 16384, 32768, 65536, 131072];
   for (let j = 0; j < fftsizes.length; j++) {
     const fftsize = fftsizes[j];
     const fft = new webfft(fftsize);
@@ -48,7 +48,6 @@ test("outputs for all sublibs approx match using different fftsizes", () => {
       for (let k = 0; k < fftsize; ++k) {
         total += Math.sqrt(co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1]);
       }
-      console.log(total - goldenTotal);
       expect(Math.abs(total - goldenTotal)).toBeLessThan(goldenTotal * 1e-7);
     }
   }
