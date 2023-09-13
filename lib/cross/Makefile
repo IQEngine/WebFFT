@@ -1,6 +1,6 @@
 
 Cross.js:	Cross.c Cross.h
-	emcc -O3 --memory-init-file 0 -s NO_FILESYSTEM=1 -s NO_BROWSER=1 -s MODULARIZE=1 -s EXPORT_NAME="'CrossModule'" -s EXPORTED_FUNCTIONS="['_fftCross']" -o Cross.js Cross.c
+	emcc --no-entry Cross.c -o Cross.js -s ENVIRONMENT='web' -s EXPORT_NAME='CrossModule' -s USE_ES6_IMPORT_META=0 -s MODULARIZE=1 -s BINARYEN_ASYNC_COMPILATION=0 -s SINGLE_FILE=1 -s EXPORTED_FUNCTIONS='["_malloc", "_free", "_fftCross"]' -s EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]' -O3
 
 clean:
 	rm -f Cross.js
