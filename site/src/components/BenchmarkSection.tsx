@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Dispatch, SetStateAction, ChangeEvent } from "react";
+import { useState, useEffect, Dispatch, SetStateAction, ChangeEvent } from "react";
 import FFTSizeInput from "./FFTSizeInputButton";
 import ResultsSection from "./ResultsSection";
 import BenchmarkButton from "./BenchmarkButton";
