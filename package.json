@@ -2,7 +2,7 @@
   "name": "webfft",
   "version": "0.0.1",
   "description": "The fastest FFT on the web!",
-  "main": "index.js",
+  "main": "library/index.js",
   "scripts": {
     "serve": "node ./library/utils/replaceStrings.js library/index.html \"benchmark\" \"bundle\" && serve library -l 8080",
     "serve_dev": "node ./library/utils/replaceStrings.js library/index.html \"bundle\" \"benchmark\" && serve library -l 8080",
