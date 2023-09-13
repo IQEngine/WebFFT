@@ -1,5 +1,5 @@
 export default class webfft {
-  constructor(size: number, subLibrary?: string);
+  constructor(size: number, subLibrary?: string, useProfile?: boolean);
   setSubLibrary(subLibrary: string): void;
   fft(inputArr: Float32Array): Float32Array;
   availableSubLibraries(): string[];
