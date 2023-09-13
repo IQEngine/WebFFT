@@ -52,3 +52,34 @@ test("outputs for all sublibs approx match using different fftsizes", () => {
     }
   }
 });
+
+test("fftr", () => {
+  const fftsize = 1024;
+  const fft = new webfft(fftsize);
+
+  const availableSubLibraries = fft.availableSubLibraries();
+
+  const inputArr = new Float32Array(fftsize);
+  for (let i = 0; i < fftsize; i++) {
+    inputArr[i] = i * 1.12312312; // Arbitrary
+  }
+
+  fft.setSubLibrary("indutnyJavascript");
+  let co = fft.fftr(inputArr);
+  let goldenTotal = 0;
+  for (let k = 0; k < fftsize / 2; ++k) {
+    goldenTotal += Math.sqrt(co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1]);
+  }
+  // goldenTotal will be 9147216.377928967
+
+  // Try each sub-library
+  for (let i = 0; i < availableSubLibraries.length; i++) {
+    fft.setSubLibrary(availableSubLibraries[i]);
+    co = fft.fftr(inputArr);
+    let total = 0;
+    for (let k = 0; k < fftsize / 2; ++k) {
+      total += Math.sqrt(co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1]);
+    }
+    expect(Math.abs(total - goldenTotal)).toBeLessThan(goldenTotal * 1e-7);
+  }
+});
