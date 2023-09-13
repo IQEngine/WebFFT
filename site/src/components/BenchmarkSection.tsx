@@ -16,6 +16,8 @@ interface Props {
 }
 
 function BenchmarkSection({ fftSize, setFftSize, duration, setDuration, handleClearAppState }: Props) {
+  const worker = new Worker("worker.tsx", { type: "module" });
+
   const [showSettings, setShowSettings] = useState<boolean>(false);
   const [browserInfo, setBrowserInfo] = useState<BrowserInfoType>({
     browserName: "Unknown",
@@ -30,7 +32,20 @@ function BenchmarkSection({ fftSize, setFftSize, duration, setDuration, handleCl
   useEffect(() => {
     setBrowserInfo(getBrowserInfo());
     setSimdSupport(checkSIMDSupport());
+    // const listener = (data: any) => {
+    //   if (data.type === "UPDATE_SUCCESS") {
+    //     console.log("Results:", data.payload);
+    //     setBenchmarkData(data.payload);
+    //     setProfileResultsLoader(false);
+    //   }
+    // };
+    // worker.addEventListener("message", listener);
   }, []);
+
+  worker.onmessage = function (event: MessageEvent<ProfileResult>) {
+    setBenchmarkData(event.data);
+    setProfileResultsLoader(false);
+  };
 
   const handleDurationChange = (event: ChangeEvent<HTMLInputElement>) => {
     var val = parseInt(event.target.value);
@@ -49,12 +64,12 @@ function BenchmarkSection({ fftSize, setFftSize, duration, setDuration, handleCl
     handleClearAppState(true);
   };
 
-  const handleRunProfile = (_: any) => {
-    const fft = new webfft(fftSize);
-    const profileObj: ProfileResult = fft.profile(duration); // arg is duration to run profile, in seconds
-    console.log("Results:", profileObj);
-    setBenchmarkData(profileObj);
-    setProfileResultsLoader(false);
+  const handleRunProfile = async (_: any) => {
+    // const profileObj: ProfileResult = fft.profile(duration); // arg is duration to run profile, in seconds
+    // console.log("Results:", profileObj);
+    // setBenchmarkData( Profile(fftSize, duration));
+    // setProfileResultsLoader(false);
+    worker.postMessage({ payload: { fftSize, duration } });
   };
 
   const renderBrowserInfo = () => {
