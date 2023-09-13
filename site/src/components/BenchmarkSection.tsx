@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Dispatch, SetStateAction, ChangeEvent } from "react";
 import FFTSizeInput from "./FFTSizeInputButton";
 import ResultsSection from "./ResultsSection";
 import BenchmarkButton from "./BenchmarkButton";
@@ -8,25 +8,37 @@ import { getBrowserInfo, checkSIMDSupport } from "../utils/browserUtils";
 
 interface Props {
   fftSize: number;
-  setFftSize: React.Dispatch<React.SetStateAction<number>>;
+  setFftSize: Dispatch<SetStateAction<number>>;
   numIterations: number;
-  setNumIterations: React.Dispatch<React.SetStateAction<number>>;
+  setNumIterations: Dispatch<SetStateAction<number>>;
 }
 
 function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations }: Props) {
-  const [showSettings, setShowSettings] = React.useState<boolean>(false);
-  const [browserInfo, setBrowserInfo] = React.useState<BrowserInfoType>({
+  const [showSettings, setShowSettings] = useState<boolean>(false);
+  const [browserInfo, setBrowserInfo] = useState<BrowserInfoType>({
     browserName: "Unknown",
     version: "Unknown",
     os: "Unknown",
   });
-  const [simdSupport, setSimdSupport] = React.useState<boolean>(false);
-  const [benchmarkData, setBenchmarkData] = React.useState<MockTestResultsType | null>(null);
+  const [simdSupport, setSimdSupport] = useState<boolean>(false);
+  const [benchmarkData, setBenchmarkData] = useState<MockTestResultsType | null>(null);
+  const [numIterationsError, setNumIterationsError] = useState<boolean>(false);
 
   useEffect(() => {
     setBrowserInfo(getBrowserInfo());
     setSimdSupport(checkSIMDSupport());
   }, []);
+
+  const handleNumIterationsChange = (event: ChangeEvent<HTMLInputElement>) => {
+    var val = parseInt(event.target.value);
+    if (val > 0) {
+      setNumIterations(val);
+      setNumIterationsError(false);
+    } else {
+      setNumIterationsError(true);
+      setNumIterations(0);
+    }
+  };
 
   const renderBrowserInfo = () => {
     if (browserInfo) {
@@ -88,9 +100,14 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
                 id="numIterations"
                 name="numIterations"
                 value={numIterations}
-                onChange={(e) => setNumIterations(parseInt(e.target.value))}
+                onChange={handleNumIterationsChange}
                 className="border rounded-md text-center bg-cyber-background1 border-cyber-primary"
               />
+              {numIterationsError && (
+                <span className="text-cyber-primary">
+                  Invalid Input: Number of interations can only be a positive integer
+                </span>
+              )}
             </div>
 
             <div className="col-span-1 flex flex-col items-center mb-4">
