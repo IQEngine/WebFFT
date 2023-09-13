@@ -2,7 +2,6 @@ import { useState } from "react";
 import SiteHeader from "./components/SiteHeader";
 import LinksSection from "./components/LinksSection";
 import BenchmarkSection from "./components/BenchmarkSection";
-import ResultsSection from "./components/ResultsSection";
 
 function App() {
   const [fftSize, setFftSize] = useState(128);
@@ -19,7 +18,6 @@ function App() {
           numIterations={numIterations}
           setNumIterations={setNumIterations}
         />
-        <ResultsSection />
       </main>
     </div>
   );
