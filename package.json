@@ -44,5 +44,8 @@
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "kissfft-wasm": "^2.0.1"
+  }
 }
