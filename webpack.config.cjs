@@ -6,20 +6,30 @@ module.exports = {
   mode: "production",
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname, "dist")
+    path: path.resolve(__dirname, "dist"),
   },
   resolve: {
+    extensions: [".ts", ".tsx", ".js", ".jsx"],
     fallback: {
-      path: require.resolve("path-browserify")
-    }
+      path: require.resolve("path-browserify"),
+    },
+  },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: "ts-loader", // Use ts-loader for TypeScript files
+        exclude: /node_modules/,
+      },
+    ],
   },
   optimization: {
     minimizer: [
       new TerserPlugin({
         terserOptions: {
-          keep_fnames: true
-        }
-      })
-    ]
-  }
+          keep_fnames: true,
+        },
+      }),
+    ],
+  },
 };
