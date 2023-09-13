@@ -19,7 +19,7 @@ test("available sublibraries", () => {
   expect(availableSubLibraries.length).toBeGreaterThan(1);
 });
 
-test("outputs for all sublibs match", () => {
+test("outputs for all sublibs approx match", () => {
   const fftsize = 1024;
   const fft = new webfft(fftsize);
 
