@@ -4,8 +4,8 @@ function SiteHeader() {
   return (
     <header className="p-6 text-center">
       <div className="mx-auto">
-        <h1 className="text-cyber-text-secondary text-6xl font-extrabold mb-4">
-          <Link to="/" className="hover:text-cyber-text">
+        <h1 className="text-6xl font-extrabold mb-4">
+          <Link to="/" className="hover:text-cyber-text text-cyber-text-secondary">
             WebFFT
           </Link>
         </h1>

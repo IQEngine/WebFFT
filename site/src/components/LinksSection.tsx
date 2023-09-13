@@ -1,5 +1,6 @@
 import GitHubMark from "../assets/github-mark/github-mark-white.svg";
 import NpmLogo from "../assets/npm-logo-red.svg";
+import { Link } from "react-router-dom";
 
 function LinksSection() {
   return (
@@ -21,6 +22,20 @@ function LinksSection() {
           <img src={GitHubMark} alt="GitHub Mark" className="w-6 h-6 inline-block mr-2" />
           GitHub
         </a>
+      </div>
+      <div className="flex flex-col md:flex-row md:justify-center gap-4 w-full max-w-lg mx-auto">
+        <Link
+          to="/docs"
+          className="text-xl items-center justify-center min-w-[220px] min-h-[20px] underline inline-block text-cyber-secondary"
+        >
+          Documentation · v1.0
+        </Link>
+        <Link
+          to="/about"
+          className="text-xl items-center justify-center min-w-[200px] min-h-[20px] pr-4 underline inline-block text-cyber-secondary"
+        >
+          About
+        </Link>
       </div>
       <div className="flex justify-center mt-6">
         <div className="grid grid-cols-2 gap-4">
