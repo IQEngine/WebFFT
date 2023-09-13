@@ -4,6 +4,7 @@ export default class webfft {
   fft(inputArr: Float32Array): Float32Array;
   availableSubLibraries(): string[];
   profile(duration?: number): ProfileResult;
+  checkBrowserCapabilities(): BrowserCapabilities;
 }
 
 export interface ProfileResult {
@@ -11,6 +12,16 @@ export interface ProfileResult {
   subLibraries: string[];
   totalElapsed: number;
   fastestSubLibrary: string;
+}
+
+export interface BrowserCapabilities {
+  browserName: string;
+  browserVersion: string;
+  osName: string;
+  osVersion: string;
+  wasm: boolean;
+  relaxedSimd: boolean;
+  simd: boolean;
 }
 
 export interface WebfftWrapper {

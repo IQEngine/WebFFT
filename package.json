@@ -5,8 +5,8 @@
   "main": "lib/dist/bundle.js",
   "types": "lib/@types/webfft/index.d.ts",
   "scripts": {
-    "serve": "node ./lib/utils/replaceStrings.js lib/index.html \"benchmark\" \"bundle\" && serve lib -l 8080",
-    "serve_dev": "node ./lib/utils/replaceStrings.js lib/index.html \"bundle\" \"benchmark\" && serve lib -l 8080",
+    "serve": "node ./lib/utils/replaceStrings.js lib/index.html \"benchmark\" \"dist/bundle\" && serve lib -l 8080",
+    "serve_dev": "node ./lib/utils/replaceStrings.js lib/index.html \"dist/bundle\" \"benchmark\" && serve lib -l 8080",
     "build": "webpack --config ./webpack.config.cjs --output-path ./lib/dist",
     "test": "vitest --config ./tests/vitest.config.ts"
   },
