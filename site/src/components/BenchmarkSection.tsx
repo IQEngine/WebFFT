@@ -3,8 +3,9 @@ import FFTSizeInput from "./FFTSizeInputButton";
 import ResultsSection from "./ResultsSection";
 import BenchmarkButton from "./BenchmarkButton";
 import Button from "./Button";
-import { BrowserInfoType, MockTestResultsType } from "../types/types";
+import { BrowserInfoType } from "../types/types";
 import { getBrowserInfo, checkSIMDSupport } from "../utils/browserUtils";
+import { ProfileResult } from "webfft";
 
 interface Props {
   fftSize: number;
@@ -22,8 +23,9 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
     os: "Unknown",
   });
   const [simdSupport, setSimdSupport] = useState<boolean>(false);
-  const [benchmarkData, setBenchmarkData] = useState<MockTestResultsType | null>(null);
+  const [benchmarkData, setBenchmarkData] = useState<ProfileResult | null>(null);
   const [numIterationsError, setNumIterationsError] = useState<boolean>(false);
+  const [profileResultsLoader, setProfileResultsLoader] = useState<boolean>(false);
 
   useEffect(() => {
     setBrowserInfo(getBrowserInfo());
@@ -79,6 +81,7 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
             simdSupport={simdSupport}
             setSimdSupport={setSimdSupport}
             setBenchmarkData={setBenchmarkData}
+            setProfileResultsLoader={setProfileResultsLoader}
           />
 
           <Button
@@ -139,7 +142,7 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
           </div>
         )}
       </section>
-      <ResultsSection benchmarkData={benchmarkData} />
+      <ResultsSection benchmarkData={benchmarkData} loading={profileResultsLoader} />
     </div>
   );
 }

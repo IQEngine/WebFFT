@@ -1,39 +1,37 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
-import { MockTestResultsType } from "../types/types";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+import { ProfileResult } from "webfft";
 
 // Registering the components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 type HistogramSectionProps = {
-  data: MockTestResultsType;
+  data: ProfileResult;
 };
 
 function HistogramSection({ data }: HistogramSectionProps) {
   // Create a list of unique labels for the x-axis
-  const labels = Array.from(new Set(data.results.map((item) => `${item.browserInfo.browserName},${item.FFTSize}`)));
+  const labels = data.subLibraries;
 
   // Get the color for each browser
-  const getBrowserColor = (browserName: string) => {
-    switch (browserName) {
-      case "Edge":
-        return `hsl(200, 100%, 50%, 0.75)`;
-      case "Mozilla":
-        return `hsla(320, 80%, 50%, 0.8)`;
-      case "Chrome":
-        return `hsla(50, 100%, 60%, 0.75)`;
-      default:
-        return "hsl(0, 0%, 50%, 0.75)";
+  const getLibraryColor = (libraryName: string) => {
+    if (libraryName.includes("Javascript")) {
+      return `hsl(200, 100%, 50%, 0.75)`; // blue
     }
+    return `hsla(320, 80%, 50%, 0.8)`; // pink
+
+    //`hsla(50, 100%, 60%, 0.75)` yellow
   };
 
   // Create datasets for the bar chart
   const datasets = [
     {
       label: "Test Results",
-      data: data.results.map((item) => item.testResult),
-      backgroundColor: labels.map((label) => getBrowserColor(label.split(",")[0])),
+      data: data.ffsPerSecond,
+      backgroundColor: labels.map((label) =>
+        label == data.fastestSubLibrary ? `hsla(50, 100%, 60%, 0.75)` : getLibraryColor(label)
+      ),
       borderColor: labels.map(() => `hsla(0, 0%, 80%, 0.9)`),
       borderWidth: 1,
     },
