@@ -1,4 +1,4 @@
-import webfft from "../library/index.js";
+import webfft from "../lib/index.js";
 //import webfft from "webfft";
 //const webfft = require("webfft");
 
