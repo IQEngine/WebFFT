@@ -1,5 +1,9 @@
-import React, { useState } from "react";
-import { getBrowserVersion, checkSIMDSupport } from "../utils/browserUtils";
+import React, { useState, useEffect } from "react";
+import FFTSizeInput from "./FFTSizeInputButton";
+import BenchmarkButton from "./BenchmarkButton";
+import Button from "./Button";
+import { BrowserInfoType } from "../types/types";
+import { getBrowserInfo, checkSIMDSupport } from "../utils/browserUtils";
 
 interface Props {
   fftSize: number;
@@ -9,39 +13,69 @@ interface Props {
 }
 
 function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations }: Props) {
-  const [showSettings, setShowSettings] = useState(false);
+  const [showSettings, setShowSettings] = useState<boolean>(false);
+  const [browserInfo, setBrowserInfo] = useState<BrowserInfoType>({
+    browserName: "Unknown",
+    version: "Unknown",
+    os: "Unknown",
+  });
+  const [simdSupport, setSimdSupport] = useState<boolean>(false);
+
+  useEffect(() => {
+    setBrowserInfo(getBrowserInfo());
+    setSimdSupport(checkSIMDSupport());
+  }, []);
+
+  const renderBrowserInfo = () => {
+    if (browserInfo) {
+      const { browserName, version, os } = browserInfo;
+      return (
+        <span className="text-cyber-accent">
+          {browserName}
+          <br />
+          {version ?? ""}
+          <br />
+          {os ?? ""}
+        </span>
+      );
+    }
+    return <span className="text-cyber-accent">Browser not recognized or detected.</span>;
+  };
 
   return (
     <section className="mb-6 text-center">
       <h2 className="text-xl">Benchmark your browser</h2>
 
       <div className="flex justify-center space-x-4 mt-4">
-        <button className="bg-cyber-secondary text-cyber-text px-4 py-2 rounded-md">Run Benchmark</button>
+        <BenchmarkButton
+          fftSize={fftSize}
+          setFftSize={setFftSize}
+          numIterations={numIterations}
+          setNumIterations={setNumIterations}
+          browserInfo={browserInfo}
+          setBrowserInfo={setBrowserInfo}
+          simdSupport={simdSupport}
+          setSimdSupport={setSimdSupport}
+        />
 
-        <button
+        <Button
           onClick={() => setShowSettings((prev) => !prev)}
           className="bg-cyber-background1 border border-cyber-primary text-cyber-text px-4 py-2 rounded-md"
         >
           ☰ Settings
-        </button>
+        </Button>
       </div>
 
       {showSettings && (
-        <div className="flex flex-col items-center mt-4">
-          <div className="flex flex-col items-center w-1/3 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-2 mt-4">
+          <div className="col-span-1 flex flex-col items-center mb-4">
             <label htmlFor="fftSize" className="block text-sm mb-1">
               FFT Size
             </label>
-            <input
-              type="number"
-              id="fftSize"
-              name="fftSize"
-              value={fftSize}
-              onChange={(e) => setFftSize(parseInt(e.target.value))}
-              className="w-24 p-2 border rounded-md text-center bg-cyber-background1 border-cyber-primary"
-            />
+            <FFTSizeInput fftSize={fftSize} setFftSize={setFftSize} />
           </div>
-          <div className="flex flex-col items-center w-1/3 mb-4">
+
+          <div className="col-span-1 flex flex-col items-center mb-4">
             <label htmlFor="numIterations" className="block text-sm mb-1">
               Number of Iterations
             </label>
@@ -51,17 +85,23 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
               name="numIterations"
               value={numIterations}
               onChange={(e) => setNumIterations(parseInt(e.target.value))}
-              className="w-24 p-2 border rounded-md text-center bg-cyber-background1 border-cyber-primary"
+              className="border rounded-md text-center bg-cyber-background1 border-cyber-primary"
             />
           </div>
 
-          <h3 className="text-lg mt-4 mb-2">Browser Information</h3>
-          <p className="text-center">
-            Browser Version: <span>{getBrowserVersion()}</span>
-          </p>
-          <p className="text-center">
-            SIMD Support: <span>{checkSIMDSupport()}</span>
-          </p>
+          <div className="col-span-1 flex flex-col items-center mb-4">
+            <p className="text-center">
+              Browser Information: <br />
+              {renderBrowserInfo()}
+            </p>
+          </div>
+
+          <div className="col-span-1 flex flex-col items-center mb-4">
+            <p className="text-center">
+              SIMD Support: <br />
+              <span className="text-cyber-accent">{simdSupport ? "Supported" : "Not supported"}</span>
+            </p>
+          </div>
         </div>
       )}
     </section>

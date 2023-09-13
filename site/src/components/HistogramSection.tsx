@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 function HistogramSection() {
   return (
     <section className="mb-6 text-center">
