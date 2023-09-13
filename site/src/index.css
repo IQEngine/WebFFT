@@ -29,8 +29,6 @@ a:hover {
 
 body {
   margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
   font-family: "Orbitron", "system-ui", sans-serif;
 }
 
@@ -51,7 +49,7 @@ button {
   transition: border-color theme("colors.cyber-secondary");
 }
 button:hover {
-  border-color: theme("colors.cyber-primary");
+  border-color: theme("colors.cyber-secondary");
 }
 button:focus,
 button:focus-visible {
