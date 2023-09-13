@@ -15,7 +15,7 @@ test("basic usage", () => {
 
 test("available sublibraries", () => {
   const fft = new webfft(1024);
-  const availableSubLibraries = fft.availableSubLibries();
+  const availableSubLibraries = fft.availableSubLibraries();
   expect(availableSubLibraries.length).toBeGreaterThan(1);
 });
 
@@ -23,7 +23,7 @@ test("outputs for all sublibs approx match", () => {
   const fftsize = 1024;
   const fft = new webfft(fftsize);
 
-  const availableSubLibraries = fft.availableSubLibries();
+  const availableSubLibraries = fft.availableSubLibraries();
 
   const inputArr = new Float32Array(fftsize * 2);
   for (let i = 0; i < fftsize * 2; i++) {

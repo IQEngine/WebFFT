@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./Button";
 import { BrowserInfoType, MockTestResultsType } from "../types/types";
-import webfft from "webfft";
+import webfft, { ProfileResult } from "webfft";
 
 interface BenchmarkButtonProps {
   fftSize: number;
@@ -79,7 +79,7 @@ const BenchmarkButton: React.FC<BenchmarkButtonProps> = ({
     console.log(setBenchmarkData);
 
     const fft = new webfft(fftSize);
-    const profileObj = fft.profile(); // arg is duration to run profile, in seconds
+    const profileObj: ProfileResult = fft.profile(); // arg is duration to run profile, in seconds
     console.log("Results:", profileObj);
   };
 
