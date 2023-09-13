@@ -1,4 +1,6 @@
-import webfft from "webfft";
+import webfft from "../index.js";
+//import webfft from "webfft";
+//const webfft = require("webfft");
 
 const fftsize = 1024;
 const fft = new webfft(fftsize);
