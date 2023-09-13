@@ -30,7 +30,8 @@ test("outputs for all sublibs approx match", () => {
     inputArr[i] = i * 1.12312312; // Arbitrary
   }
 
-  let co = fft.fft(inputArr, "indutnyJavascript");
+  fft.setSubLibrary("indutnyJavascript");
+  let co = fft.fft(inputArr);
   let goldenTotal = 0;
   for (let k = 0; k < fftsize; ++k) {
     goldenTotal += Math.sqrt(co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1]);
@@ -39,8 +40,8 @@ test("outputs for all sublibs approx match", () => {
 
   // Try each sub-library
   for (let i = 0; i < availableSubLibraries.length; i++) {
-    const subLib = availableSubLibraries[i];
-    co = fft.fft(inputArr, subLib);
+    fft.setSubLibrary(availableSubLibraries[i]);
+    co = fft.fft(inputArr);
     let total = 0;
     for (let k = 0; k < fftsize; ++k) {
       total += Math.sqrt(co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1]);
