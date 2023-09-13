@@ -70,7 +70,6 @@ test("fftr", () => {
   for (let k = 0; k < fftsize / 2; ++k) {
     goldenTotal += Math.sqrt(co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1]);
   }
-  // goldenTotal will be 9147216.377928967
 
   // Try each sub-library
   for (let i = 0; i < availableSubLibraries.length; i++) {
@@ -78,6 +77,36 @@ test("fftr", () => {
     co = fft.fftr(inputArr);
     let total = 0;
     for (let k = 0; k < fftsize / 2; ++k) {
+      total += Math.sqrt(co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1]);
+    }
+    expect(Math.abs(total - goldenTotal)).toBeLessThan(goldenTotal * 1e-7);
+  }
+});
+
+test("int16 inputs", () => {
+  const fftsize = 1024;
+  const fft = new webfft(fftsize);
+
+  const availableSubLibraries = fft.availableSubLibraries();
+
+  const inputArr = new Int16Array(fftsize * 2);
+  for (let i = 0; i < fftsize * 2; i++) {
+    inputArr[i] = i * 30; // Arbitrary
+  }
+
+  fft.setSubLibrary("indutnyJavascript");
+  let co = fft.fft(inputArr);
+  let goldenTotal = 0;
+  for (let k = 0; k < fftsize; ++k) {
+    goldenTotal += Math.sqrt(co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1]);
+  }
+
+  // Try each sub-library
+  for (let i = 0; i < availableSubLibraries.length; i++) {
+    fft.setSubLibrary(availableSubLibraries[i]);
+    co = fft.fft(inputArr);
+    let total = 0;
+    for (let k = 0; k < fftsize; ++k) {
       total += Math.sqrt(co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1]);
     }
     expect(Math.abs(total - goldenTotal)).toBeLessThan(goldenTotal * 1e-7);
