@@ -11,9 +11,10 @@ interface Props {
   setFftSize: Dispatch<SetStateAction<number>>;
   numIterations: number;
   setNumIterations: Dispatch<SetStateAction<number>>;
+  handleClearAppState: Dispatch<any>;
 }
 
-function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations }: Props) {
+function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations, handleClearAppState }: Props) {
   const [showSettings, setShowSettings] = useState<boolean>(false);
   const [browserInfo, setBrowserInfo] = useState<BrowserInfoType>({
     browserName: "Unknown",
@@ -38,6 +39,12 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
       setNumIterationsError(true);
       setNumIterations(0);
     }
+  };
+
+  const handleClearState = () => {
+    setBenchmarkData(null);
+    setNumIterationsError(false);
+    handleClearAppState(true);
   };
 
   const renderBrowserInfo = () => {
@@ -79,6 +86,12 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
             className="bg-cyber-background1 border border-cyber-primary text-cyber-text px-4 py-2 rounded-md"
           >
             ☰ Settings
+          </Button>
+          <Button
+            onClick={handleClearState}
+            className="bg-cyber-background1 border border-cyber-primary text-cyber-text px-4 py-2 space-x-4 rounded-md"
+          >
+            ❌ Clear
           </Button>
         </div>
 
