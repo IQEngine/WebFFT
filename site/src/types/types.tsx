@@ -7,7 +7,7 @@ type HistogramData = {
 
 type MockDataType = {
   FFTSize: number;
-  numIterations: number;
+  duration: number;
   browserInfo: BrowserInfoType;
   simdSupport: boolean;
   testResult: number;

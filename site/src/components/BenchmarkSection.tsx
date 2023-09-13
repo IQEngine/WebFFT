@@ -5,17 +5,17 @@ import BenchmarkButton from "./BenchmarkButton";
 import Button from "./Button";
 import { BrowserInfoType } from "../types/types";
 import { getBrowserInfo, checkSIMDSupport } from "../utils/browserUtils";
-import { ProfileResult } from "webfft";
+import webfft, { ProfileResult } from "webfft";
 
 interface Props {
   fftSize: number;
   setFftSize: Dispatch<SetStateAction<number>>;
-  numIterations: number;
-  setNumIterations: Dispatch<SetStateAction<number>>;
+  duration: number;
+  setDuration: Dispatch<SetStateAction<number>>;
   handleClearAppState: Dispatch<any>;
 }
 
-function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations, handleClearAppState }: Props) {
+function BenchmarkSection({ fftSize, setFftSize, duration, setDuration, handleClearAppState }: Props) {
   const [showSettings, setShowSettings] = useState<boolean>(false);
   const [browserInfo, setBrowserInfo] = useState<BrowserInfoType>({
     browserName: "Unknown",
@@ -24,7 +24,7 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
   });
   const [simdSupport, setSimdSupport] = useState<boolean>(false);
   const [benchmarkData, setBenchmarkData] = useState<ProfileResult | null>(null);
-  const [numIterationsError, setNumIterationsError] = useState<boolean>(false);
+  const [durationError, setDurationError] = useState<boolean>(false);
   const [profileResultsLoader, setProfileResultsLoader] = useState<boolean>(false);
 
   useEffect(() => {
@@ -32,21 +32,29 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
     setSimdSupport(checkSIMDSupport());
   }, []);
 
-  const handleNumIterationsChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleDurationChange = (event: ChangeEvent<HTMLInputElement>) => {
     var val = parseInt(event.target.value);
     if (val > 0) {
-      setNumIterations(val);
-      setNumIterationsError(false);
+      setDuration(val);
+      setDurationError(false);
     } else {
-      setNumIterationsError(true);
-      setNumIterations(0);
+      setDurationError(true);
+      setDuration(0);
     }
   };
 
   const handleClearState = () => {
     setBenchmarkData(null);
-    setNumIterationsError(false);
+    setDurationError(false);
     handleClearAppState(true);
+  };
+
+  const handleRunProfile = (_: any) => {
+    const fft = new webfft(fftSize);
+    const profileObj: ProfileResult = fft.profile(duration); // arg is duration to run profile, in seconds
+    console.log("Results:", profileObj);
+    setBenchmarkData(profileObj);
+    setProfileResultsLoader(false);
   };
 
   const renderBrowserInfo = () => {
@@ -73,15 +81,12 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
         <div className="flex justify-center space-x-4 mt-4">
           <BenchmarkButton
             fftSize={fftSize}
-            setFftSize={setFftSize}
-            numIterations={numIterations}
-            setNumIterations={setNumIterations}
+            duration={duration}
             browserInfo={browserInfo}
-            setBrowserInfo={setBrowserInfo}
             simdSupport={simdSupport}
-            setSimdSupport={setSimdSupport}
             setBenchmarkData={setBenchmarkData}
             setProfileResultsLoader={setProfileResultsLoader}
+            handleRunProfile={handleRunProfile}
           />
 
           <Button
@@ -108,21 +113,19 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
             </div>
 
             <div className="col-span-1 flex flex-col items-center mb-4">
-              <label htmlFor="numIterations" className="block text-sm mb-1">
-                Number of Iterations
+              <label htmlFor="duration" className="block text-sm mb-1">
+                Duration (seconds)
               </label>
               <input
                 type="number"
-                id="numIterations"
-                name="numIterations"
-                value={numIterations}
-                onChange={handleNumIterationsChange}
+                id="duration"
+                name="duration"
+                value={duration}
+                onChange={handleDurationChange}
                 className="border rounded-md text-center bg-cyber-background1 border-cyber-primary"
               />
-              {numIterationsError && (
-                <span className="text-cyber-primary">
-                  Invalid Input: Number of interations can only be a positive integer
-                </span>
+              {durationError && (
+                <span className="text-cyber-primary">Invalid Input: Duration can only be a positive integer</span>
               )}
             </div>
 
