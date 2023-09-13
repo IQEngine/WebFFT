@@ -1,4 +1,4 @@
-import { BrowserInfo, detect } from "detect-browser";
+import { detect } from "detect-browser";
 import { BrowserInfoType } from "../types/types";
 
 export function getBrowserInfo(): BrowserInfoType {
