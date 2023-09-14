@@ -20,16 +20,37 @@ function ResultsSection({ benchmarkData, loading }: Props) {
         display: false,
       },
       title: {
-        display: true,
+        display: false,
         text: "Test Results",
+      },
+    },
+    scales: {
+      y: {
+        display: true,
+        title: {
+          display: true,
+          font: {
+            size: 16,
+          },
+          color: `hsla(0, 0%, 80%, 0.9)`,
+          text: "FFTs per Second",
+        },
+      },
+      x: {
+        ticks: {
+          font: {
+            size: 16,
+          },
+          color: `hsla(0, 0%, 80%, 0.9)`,
+        },
       },
     },
   };
 
   return (
     <section className="mb-6 text-center">
-      <div className="max-w-lg max-h-screen mx-auto p-4">
-        <h2 className="text-xl">Results</h2>
+      <div className="max-w-2xl max-h-screen mx-auto p-4">
+        {(loading || benchmarkData) && <h2 className="text-xl">Results</h2>}
 
         {loading && (
           <BallTriangle
@@ -45,8 +66,8 @@ function ResultsSection({ benchmarkData, loading }: Props) {
 
         {benchmarkData && (
           <section className="mb-6 text-center">
-            <div className="max-w-lg h-64 mx-auto p-4">
-              <Bar data={benchmarkData} options={options} />
+            <div className="min-h-full mx-auto p-4">
+              <Bar data={benchmarkData} options={options} height={425} />
             </div>
           </section>
         )}
