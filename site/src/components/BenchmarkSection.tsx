@@ -68,13 +68,6 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
   // This will run when you click the run benchmark button
   useEffect(() => {
     if (loading) {
-      // Call to profile function with the necessary parameters will go here
-      console.log("Benchmark run with the following parameters:");
-      console.log("FFT Size:", fftSize);
-      console.log("Number of Iterations:", numIterations);
-      console.log("Browser Info:", browserInfo);
-      console.log("SIMD Support:", simdSupport);
-
       const fft = new webfft(fftSize);
       const profileObj: ProfileResult = fft.profile(1); // arg is duration to run profile, in seconds
       console.log("Results:", profileObj);
