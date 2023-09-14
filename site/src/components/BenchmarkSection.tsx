@@ -65,52 +65,9 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
     return <span className="text-cyber-accent">Browser not recognized or detected.</span>;
   };
 
-  const handleMockData = () => {
-    setBenchmarkData({
-      results: [
-        {
-          FFTSize: 1024,
-          numIterations: 1000,
-          browserInfo: { browserName: "Chrome", version: null, os: null },
-          simdSupport: true,
-          testResult: 100
-        },
-        {
-          FFTSize: 2048,
-          numIterations: 1000,
-          browserInfo: { browserName: "Mozilla", version: null, os: null },
-          simdSupport: true,
-          testResult: 500
-        },
-        {
-          FFTSize: 4096,
-          numIterations: 1000,
-          browserInfo: { browserName: "Edge", version: null, os: null },
-          simdSupport: true,
-          testResult: 1000
-        },
-        {
-          FFTSize: 8192,
-          numIterations: 1000,
-          browserInfo: { browserName: "Edge", version: null, os: null },
-          simdSupport: true,
-          testResult: 1200
-        },
-        {
-          FFTSize: 16384,
-          numIterations: 1000,
-          browserInfo: { browserName: "Chrome", version: null, os: null },
-          simdSupport: true,
-          testResult: 120
-        }
-      ]
-    });
-  };
-
   // This will run when you click the run benchmark button
   useEffect(() => {
     if (loading) {
-      handleMockData();
       // Call to profile function with the necessary parameters will go here
       console.log("Benchmark run with the following parameters:");
       console.log("FFT Size:", fftSize);
