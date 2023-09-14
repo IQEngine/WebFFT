@@ -10,17 +10,17 @@ function Docs(): ReactElement {
   let routes = useRoutes([
     {
       path: "/",
-      element: <GettingStarted components={components} />
+      element: <GettingStarted components={components} />,
     },
     {
       path: "/listoflibs",
-      element: <ListofLibs components={components} />
-    }
+      element: <ListofLibs components={components} />,
+    },
     // add more routes here
   ]);
 
   return (
-    <div className="App flex flex-col items-center text-cyber-text bg-cyber-gradient min-h-screen min-w-screen">
+    <div className="App flex flex-col items-center text-cyber-text min-h-screen min-w-screen">
       <SiteHeader />
       <main className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         <nav className="col-span-1 p-4 rounded-lg mx-auto lg:block hidden">

@@ -1,5 +1,5 @@
 # Use an official Node.js runtime as a parent image
-FROM node:20 as build
+FROM node:20-alpine as build
 
 # Set the working directory to /app
 WORKDIR /app
@@ -16,12 +16,13 @@ WORKDIR /app/lib/
 RUN npm link
 
 WORKDIR /app/site 
-RUN npm link webfft
-RUN npm install
-RUN npm run build
+RUN npm link webfft && \
+    npm install && \
+    npm run build
 
 FROM nginx:alpine
 COPY --from=build /app/site/dist /usr/share/nginx/html
+COPY default.conf /etc/nginx/conf.d/
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
