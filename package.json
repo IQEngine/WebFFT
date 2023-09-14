@@ -1,6 +1,6 @@
 {
   "name": "webfft",
-  "version": "0.0.11",
+  "version": "0.0.14",
   "description": "The fastest FFT on the web!",
   "main": "lib/main.js",
   "types": "lib/@types/webfft/index.d.ts",
