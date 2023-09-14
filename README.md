@@ -65,6 +65,7 @@ A file webfftWrapper.js will exist in all sub-library dirs, so that we can avoid
   - https://github.com/dntj/jsfft (last changed 2019)
 - fourier-transform
   - https://github.com/scijs/fourier-transform (last changed 2018)
+  - real-valued inputs only
   - author compared it to several others https://github.com/scijs/fourier-transform/blob/master/benchmark.md
 - ndarray-fft
   - https://github.com/scijs/ndarray-fft (last changed 2016)
@@ -74,6 +75,7 @@ A file webfftWrapper.js will exist in all sub-library dirs, so that we can avoid
   - https://github.com/zewemli/dsp.js (last changed 2014)
 - fourier
   - https://github.com/drom/fourier (last changed 2021)
+  - has separate functions for each FFT size, making it difficult to use/wrap
 - ml-fft
   - https://github.com/mljs/fft (last changed 2020)
 - Nockert
