@@ -10,9 +10,9 @@ function App() {
     <BrowserRouter>
       <Breadcrumbs />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/docs/*" element={<Docs />} />
+        <Route index element={<Home />} errorElement={<NotFound />} />
+        <Route path="about" element={<About />} errorElement={<NotFound />} />
+        <Route path="docs/*" element={<Docs />} errorElement={<NotFound />} />
         <Route path="*" element={<NotFound />} /> // TODO: Make a 404 page
       </Routes>
     </BrowserRouter>
