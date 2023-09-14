@@ -4,11 +4,11 @@ import LinksSection from "./LinksSection";
 import BenchmarkSection from "./BenchmarkSection";
 
 function Home() {
-  const [fftSize, setFftSize] = useState(128);
+  const [fftSize, setFftSize] = useState(1024);
   const [numIterations, setNumIterations] = useState(10);
 
   const handleClearState = (_: any) => {
-    setFftSize(128);
+    setFftSize(1024);
     setNumIterations(10);
   };
 

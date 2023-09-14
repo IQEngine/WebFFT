@@ -8,7 +8,7 @@ export default class webfft {
 }
 
 export interface ProfileResult {
-  ffsPerSecond: number[];
+  fftsPerSecond: number[];
   subLibraries: string[];
   totalElapsed: number;
   fastestSubLibrary: string;

@@ -1,8 +1,8 @@
 {
   "name": "webfft",
-  "version": "0.0.3",
+  "version": "0.0.11",
   "description": "The fastest FFT on the web!",
-  "main": "lib/dist/bundle.js",
+  "main": "lib/main.js",
   "types": "lib/@types/webfft/index.d.ts",
   "scripts": {
     "serve": "node ./lib/utils/replaceStrings.js lib/index.html \"benchmark\" \"dist/bundle\" && serve lib -l 8080",
@@ -44,8 +44,5 @@
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
   },
-  "type": "module",
-  "dependencies": {
-    "kissfft-wasm": "^2.0.1"
-  }
+  "type": "module"
 }

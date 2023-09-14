@@ -2,7 +2,7 @@ import { useState, useEffect, Dispatch, SetStateAction, ChangeEvent } from "reac
 import FFTSizeInput from "./FFTSizeInputButton";
 import ResultsSection from "./ResultsSection";
 import Button from "./Button";
-import { BrowserInfoType, MockTestResultsType } from "../types/types";
+import { BrowserInfoType } from "../types/types";
 import { getBrowserInfo, checkSIMDSupport } from "../utils/browserUtils";
 import webfft, { ProfileResult } from "webfft";
 import { BallTriangle } from "react-loader-spinner";
@@ -23,7 +23,7 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
     os: "Unknown"
   });
   const [simdSupport, setSimdSupport] = useState<boolean>(false);
-  const [benchmarkData, setBenchmarkData] = useState<MockTestResultsType | null>(null);
+  const [benchmarkData, setBenchmarkData] = useState<any>(null);
   const [numIterationsError, setNumIterationsError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -121,6 +121,34 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
       const fft = new webfft(fftSize);
       const profileObj: ProfileResult = fft.profile(1); // arg is duration to run profile, in seconds
       console.log("Results:", profileObj);
+
+      // Get the color for each browser
+      const getBarColor = (label: string) => {
+        if (label.includes("Wasm")) return `hsl(200, 100%, 50%, 0.75)`;
+        if (label.includes("Javascript")) return `hsla(320, 80%, 50%, 0.8)`;
+        return `hsla(100, 80%, 50%, 0.8)`; // shouldn't get here
+      };
+
+      // Create a list of unique labels for the x-axis
+      const newLabels = profileObj.subLibraries;
+
+      // Create datasets for the bar chart
+      const datasets = [
+        {
+          label: "Results",
+          data: profileObj.fftsPerSecond,
+          backgroundColor: newLabels.map((label) => getBarColor(label)),
+          borderColor: newLabels.map(() => `hsla(0, 0%, 80%, 0.9)`),
+          borderWidth: 1
+        }
+      ];
+
+      setBenchmarkData({
+        labels: newLabels,
+        datasets: datasets
+      });
+
+      setLoading(false);
     }
   }, [loading]);
 
@@ -212,7 +240,7 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
         )}
       </div>
 
-      <ResultsSection benchmarkData={benchmarkData} setLoading={setLoading} />
+      <ResultsSection benchmarkData={benchmarkData} />
     </div>
   );
 }
