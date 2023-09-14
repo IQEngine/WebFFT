@@ -8,6 +8,7 @@
     "esModuleInterop": true,
     "allowJs": true,
     "typeRoots": ["./node_modules/@types", "../lib/@types"],
+    "types": ["web"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -27,6 +28,6 @@
       "webfft": ["../lib/@types/webfft/index.d.ts"]
     }
   },
-  "include": ["src"],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
