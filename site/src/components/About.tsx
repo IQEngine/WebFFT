@@ -15,11 +15,11 @@ function About() {
         </p>
 
         <br></br>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mx-auto w-full">
+        <div className="flex">
           <div className="flex flex-col items-center mx-auto">
             <a href="https://github.com/777arc">
               <img
-                className="rounded-3xl max-w-xs max-h-xs"
+                className="rounded-3xl w-16"
                 src="https://github.com/777arc.png"
                 alt="Marc's profile picture"
               ></img>
@@ -29,7 +29,7 @@ function About() {
           <div className="flex flex-col items-center mx-auto">
             <a href="https://github.com/lmiguelgato">
               <img
-                className="rounded-3xl max-w-xs max-h-xs"
+                className="rounded-3xl w-16"
                 src="https://github.com/lmiguelgato.png"
               ></img>
               Luis
@@ -38,7 +38,7 @@ function About() {
           <div className="flex flex-col items-center mx-auto">
             <a href="https://github.com/chadp777">
               <img
-                className="rounded-3xl max-w-xs max-h-xs"
+                className="rounded-3xl w-16"
                 src="https://github.com/chadp777.png"
               ></img>
               Chad
@@ -47,7 +47,7 @@ function About() {
           <div className="flex flex-col items-center mx-auto">
             <a href="https://github.com/mcontractor12">
               <img
-                className="rounded-3xl max-w-xs max-h-xs"
+                className="rounded-3xl w-16"
                 src="https://github.com/mcontractor12.png"
               ></img>
               Maheen
@@ -56,7 +56,7 @@ function About() {
           <div className="flex flex-col items-center mx-auto">
             <a href="https://github.com/faikwokms">
               <img
-                className="rounded-3xl max-w-xs max-h-xs"
+                className="rounded-3xl w-16"
                 src="https://github.com/faikwokms.png"
               ></img>
               Fai
@@ -65,7 +65,7 @@ function About() {
           <div className="flex flex-col items-center mx-auto">
             <a href="https://github.com/10sae">
               <img
-                className="rounded-3xl max-w-xs max-h-xs"
+                className="rounded-3xl w-16"
                 src="https://github.com/10sae.png"
               ></img>
               Tensae
@@ -74,7 +74,7 @@ function About() {
           <div className="flex flex-col items-center mx-auto">
             <a href="https://github.com/robotastic">
               <img
-                className="rounded-3xl max-w-xs max-h-xs"
+                className="rounded-3xl w-16"
                 src="https://github.com/robotastic.png"
               ></img>
               Luke
@@ -83,7 +83,7 @@ function About() {
           <div className="flex flex-col items-center mx-auto">
             <a href="https://github.com/Nepomuceno">
               <img
-                className="rounded-3xl max-w-xs max-h-xs"
+                className="rounded-3xl w-16"
                 src="https://github.com/Nepomuceno.png"
               ></img>
               Gabriel
