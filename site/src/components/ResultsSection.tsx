@@ -31,7 +31,7 @@ function ResultsSection({ benchmarkData }: Props) {
 
         {benchmarkData && (
           <section className="mb-6 text-center">
-            <div className="max-w-lg max-h-96 mx-auto p-4">
+            <div className="max-w-lg h-64 mx-auto p-4">
               <Bar data={benchmarkData} options={options} />
             </div>
           </section>
