@@ -4,7 +4,7 @@ export default class webfft {
   fft(inputArr: Float32Array): Float32Array;
   availableSubLibraries(): string[];
   profile(duration?: number): ProfileResult;
-  checkBrowserCapabilities(): BrowserCapabilities;
+  checkBrowserCapabilities(): Promise<BrowserCapabilities>;
 }
 
 export interface ProfileResult {

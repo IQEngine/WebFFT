@@ -1,10 +1,14 @@
-import { useState, useEffect, Dispatch, SetStateAction, ChangeEvent } from "react";
+import {
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+  ChangeEvent,
+} from "react";
 import FFTSizeInput from "./FFTSizeInputButton";
 import ResultsSection from "./ResultsSection";
 import Button from "./Button";
-import { BrowserInfoType } from "../types/types";
-import { getBrowserInfo, checkSIMDSupport } from "../utils/browserUtils";
-import { ProfileResult } from "webfft";
+import webfft, { BrowserCapabilities, ProfileResult } from "webfft";
 
 interface Props {
   fftSize: number;
@@ -14,21 +18,48 @@ interface Props {
   handleClearAppState: Dispatch<any>;
 }
 
-function BenchmarkSection({ fftSize, setFftSize, duration, setDuration, handleClearAppState }: Props) {
+function BenchmarkSection({
+  fftSize,
+  setFftSize,
+  duration,
+  setDuration,
+  handleClearAppState,
+}: Props) {
   const [showSettings, setShowSettings] = useState<boolean>(false);
-  const [browserInfo, setBrowserInfo] = useState<BrowserInfoType>({
+  const [browserCapabilities, setBrowserInfo] = useState<BrowserCapabilities>({
     browserName: "Unknown",
-    version: "Unknown",
-    os: "Unknown",
+    browserVersion: "Unknown",
+    osName: "Unknown",
+    osVersion: "Unknown",
+    wasm: false,
+    relaxedSimd: false,
+    simd: false,
   });
   const [simdSupport, setSimdSupport] = useState<boolean>(false);
+  const [relaxedSimdSupport, setRelaxedSimdSupport] = useState<boolean>(false);
+  const [wasmSupport, setWasmSupport] = useState<boolean>(false);
   const [benchmarkData, setBenchmarkData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    setBrowserInfo(getBrowserInfo());
-    setSimdSupport(checkSIMDSupport());
+    const webfftInstance = new webfft(128);
+    webfftInstance
+      .checkBrowserCapabilities()
+      .then((browserResult) => {
+        setBrowserInfo(browserResult);
+      })
+      .catch((error) => {
+        console.error("Failed to check browser capabilities:", error);
+      });
   }, []);
+
+  useEffect(() => {
+    if (browserCapabilities) {
+      setSimdSupport(browserCapabilities.simd);
+      setRelaxedSimdSupport(browserCapabilities.relaxedSimd);
+      setWasmSupport(browserCapabilities.wasm);
+    }
+  }, [browserCapabilities]);
 
   const handleDurationChange = (event: ChangeEvent<HTMLInputElement>) => {
     var val = parseInt(event.target.value);
@@ -45,26 +76,37 @@ function BenchmarkSection({ fftSize, setFftSize, duration, setDuration, handleCl
   };
 
   const renderBrowserInfo = () => {
-    if (browserInfo) {
-      const { browserName, version, os } = browserInfo;
+    if (browserCapabilities) {
       return (
-        <span className="text-cyber-accent">
-          {browserName}
-          <br />
-          {version ?? ""}
-          <br />
-          {os ?? ""}
-        </span>
+        <div className="text-cyber-accent">
+          <div>
+            <strong>Browser: </strong>
+            {browserCapabilities.browserName ?? "Unknown"}{" "}
+            {<span>{browserCapabilities.browserVersion}</span> ?? ""}
+          </div>
+          <div>
+            <strong>OS: </strong>
+            {browserCapabilities.osName ?? "Unknown"}{" "}
+            {<span>{browserCapabilities.osVersion}</span> ?? ""}
+          </div>
+        </div>
       );
     }
-    return <span className="text-cyber-accent">Browser not recognized or detected.</span>;
+    return (
+      <span className="text-cyber-accent">
+        Browser not recognized or detected.
+      </span>
+    );
   };
 
   // This will run when you click the run benchmark button
   useEffect(() => {
     if (loading) {
       // allow UI to update before starting long running task
-      const fftWorker = new Worker(new URL("../utils/webworker.tsx", import.meta.url), { type: "module" });
+      const fftWorker = new Worker(
+        new URL("../utils/webworker.tsx", import.meta.url),
+        { type: "module" },
+      );
 
       fftWorker.postMessage([fftSize, duration]);
 
@@ -140,14 +182,14 @@ function BenchmarkSection({ fftSize, setFftSize, duration, setDuration, handleCl
         {showSettings && (
           <div className="grid grid-cols-1 md:grid-cols-4 gap-2 mt-4">
             <div className="col-span-1 flex flex-col items-center mb-4">
-              <label htmlFor="fftSize" className="block text-sm mb-1">
+              <label htmlFor="fftSize" className="block text-base mb-1">
                 FFT Size
               </label>
               <FFTSizeInput fftSize={fftSize} setFftSize={setFftSize} />
             </div>
 
             <div className="col-span-1 flex flex-col items-center mb-4">
-              <label htmlFor="duration" className="block text-sm mb-1">
+              <label htmlFor="duration" className="block text-base mb-1">
                 Duration to Run Benchmark in Seconds
               </label>
               <input
@@ -160,18 +202,29 @@ function BenchmarkSection({ fftSize, setFftSize, duration, setDuration, handleCl
               />
             </div>
 
-            <div className="col-span-1 flex flex-col items-center mb-4">
-              <p className="text-center">
+            <div className="col-span-2 flex flex-col items-center mb-4 space-y-2">
+              <span className="text-center">
                 Browser Information: <br />
                 {renderBrowserInfo()}
-              </p>
-            </div>
-
-            <div className="col-span-1 flex flex-col items-center mb-4">
-              <p className="text-center">
+              </span>
+              <span className="text-center">
                 SIMD Support: <br />
-                <span className="text-cyber-accent">{simdSupport ? "Supported" : "Not supported"}</span>
-              </p>
+                <span className="text-cyber-accent">
+                  {simdSupport ? "Supported" : "Not supported"}
+                </span>
+              </span>
+              <span className="text-center">
+                Relaxed SIMD: <br />
+                <span className="text-cyber-accent">
+                  {relaxedSimdSupport ? "Enabled" : "Disabled"}
+                </span>
+              </span>
+              <span className="text-center">
+                WASM Support: <br />
+                <span className="text-cyber-accent">
+                  {wasmSupport ? "Supported" : "Not supported"}
+                </span>
+              </span>
             </div>
           </div>
         )}

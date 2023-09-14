@@ -5,7 +5,7 @@ function About() {
     <div className="App flex flex-col items-center text-cyber-text bg-cyber-gradient min-h-screen min-w-screen">
       <SiteHeader />
       <main className="!font-system container mx-auto text-center">
-        <p className="text-2xl py-4 text-cyber-text-secondary"> About WebFFT</p>
+        <h3 className="text-cyber-text-secondary"> About WebFFT</h3>
 
         <p className="text-cyber-text px-4 py-4">
           WebFFT started as part of a Microsoft internal Hackathon in 2023, motivated by the lack of actively maintained
