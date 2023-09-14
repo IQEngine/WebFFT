@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import webfft from "../lib/index.js";
+import webfft from "../lib/main.js";
 
 test("basic usage", () => {
   const fftsize = 1024;

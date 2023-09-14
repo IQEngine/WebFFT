@@ -7,8 +7,8 @@ interface FFTSizeInputProps {
 }
 
 const FFTSizeInput: React.FC<FFTSizeInputProps> = ({ fftSize, setFftSize }) => {
-  const maxFFTSize = 16384; // Setting max limit to a reasonable power of 2
-  const minFFTSize = 2; // Setting min limit to a reasonable power of 2
+  const maxFFTSize = 131072; // Setting max limit to a reasonable power of 2
+  const minFFTSize = 4; // Setting min limit to a reasonable power of 2
 
   const incrementFFTSize = () => {
     if (fftSize < maxFFTSize) {

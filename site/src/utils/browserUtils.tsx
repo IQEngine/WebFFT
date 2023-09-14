@@ -5,7 +5,11 @@ export function getBrowserInfo(): BrowserInfoType {
   const browser = detect();
 
   if (browser && browser.type === "browser") {
-    const { name: browserName, version, os } = browser;
+    let { name: browserName, version, os } = browser;
+    console.log(os);
+    if (os === "Windows 10") {
+      os = "Windows 10/11";
+    }
     return { browserName, version, os };
   }
 
@@ -20,7 +24,7 @@ export function checkSIMDSupport(): boolean {
         0, 97, 115, 109, 1, 0, 0, 0, 1, 133, 128, 128, 128, 0, 1, 127, 1, 127, 3, 130, 128, 128, 128, 0, 1, 0, 4, 132,
         128, 128, 128, 0, 1, 112, 0, 0, 5, 131, 128, 128, 128, 0, 1, 0, 1, 6, 129, 128, 128, 128, 0, 0, 7, 146, 128,
         128, 128, 0, 2, 6, 109, 101, 109, 111, 114, 121, 2, 0, 4, 109, 97, 105, 110, 0, 0, 10, 138, 128, 128, 128, 0, 1,
-        132, 128, 128, 128, 0, 0, 65, 0, 11,
+        132, 128, 128, 128, 0, 0, 65, 0, 11
       ])
     );
     return simdCheck;

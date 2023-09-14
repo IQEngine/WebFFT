@@ -1,19 +1,25 @@
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
+const webpack = require("webpack");
 
 module.exports = {
-  entry: "./lib/benchmark.js",
+  entry: "./lib/index.js",
   mode: "production",
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist")
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"],
+    extensions: [".ts", ".tsx", ".js", ".jsx", ".cjs"],
     fallback: {
       path: require.resolve("path-browserify")
     }
   },
+  plugins: [
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 1
+    })
+  ],
   module: {
     rules: [
       {

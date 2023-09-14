@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import webfft from "../lib/index.js";
+import webfft from "../lib/main.js";
 
 test("run profile", () => {
   const duration = 0.1;
