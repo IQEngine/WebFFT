@@ -6,7 +6,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        cyber: ["Orbitron", "sans-serif"],
+        cyber: ["Orbitron", "system-ui", "sans-serif"],
+        system: ["Segoe UI", "system-ui", "sans-serif"],
       },
       colors: {
         "cyber-background1": "hsl(0, 0%, 5%)",

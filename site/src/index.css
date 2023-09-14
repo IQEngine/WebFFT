@@ -73,7 +73,8 @@ button:focus-visible {
 @media (min-width: 640px) {
   span,
   body,
-  p {
+  p,
+  label {
     @apply text-base;
   }
   h1 {
@@ -82,13 +83,17 @@ button:focus-visible {
   h2 {
     @apply text-3xl;
   }
+  h3 {
+    @apply text-2xl;
+  }
 }
 
 /* md: apply styles for screens ≥768px */
 @media (min-width: 768px) {
   span,
   body,
-  p {
+  p,
+  label {
     @apply text-xl;
   }
   h1 {
@@ -97,13 +102,17 @@ button:focus-visible {
   h2 {
     @apply text-4xl;
   }
+  h3 {
+    @apply text-3xl;
+  }
 }
 
 /* lg: apply styles for screens ≥1024px */
 @media (min-width: 1024px) {
   span,
   body,
-  p {
+  p,
+  label {
     @apply text-xl;
   }
   h1 {
@@ -111,5 +120,8 @@ button:focus-visible {
   }
   h2 {
     @apply text-5xl;
+  }
+  h3 {
+    @apply text-4xl;
   }
 }
