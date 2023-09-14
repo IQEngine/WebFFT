@@ -16,7 +16,7 @@ function Breadcrumbs() {
           {pathnames.map((value, index) => {
             const to = `/${pathnames.slice(0, index + 1).join("/")}`;
             return (
-              <div key={to} className="mx-2">
+              <div key={to} className="mx-2 text-cyber-text">
                 {">"}{" "}
                 <div onClick={() => navigate(to)} className="inline text-cyber-secondary cursor-pointer">
                   {value.charAt(0).toUpperCase() + value.slice(1)}

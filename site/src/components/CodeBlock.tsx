@@ -1,10 +1,10 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 interface CodeBlockProps {
   language: string;
-  children: ReactNode;
+  children: string | string[];
 }
 
 const CodeBlock: React.FC<CodeBlockProps> = ({ language, children }) => {
