@@ -16,10 +16,10 @@ function Docs(): ReactElement {
   ]);
 
   return (
-    <div className="flex flex-col items-center text-cyber-text bg-cyber-gradient min-h-screen w-full">
+    <div className="App flex flex-col items-center text-cyber-text bg-cyber-gradient min-h-screen min-w-screen">
       <SiteHeader />
-      <div className="container grid grid-cols-4 h-full w-full max-w-7x2 p-4">
-        <nav className="col-span-1 p-4 rounded-lg mx-auto">
+      <main className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+        <nav className="col-span-1 p-4 rounded-lg mx-auto lg:block hidden">
           <ul className="list-none pl-0">
             <span className="font">Overview</span>
             <li>
@@ -30,10 +30,10 @@ function Docs(): ReactElement {
             {/* add more links here */}
           </ul>
         </nav>
-        <div className="col-span-3 p-0 shadow prose flex-grow">
+        <div className="col-span-3 md:col-span-2 p-0 prose">
           <Suspense fallback={<div>Loading...</div>}>{routes}</Suspense>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

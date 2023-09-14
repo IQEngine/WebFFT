@@ -7,7 +7,7 @@ function Breadcrumbs() {
   const pathnames = location.pathname.split("/").filter((x) => x);
 
   return (
-    <div className="absolute top-0 left-0 p-4 flex items-center">
+    <div className="absolute top-0 left-0 p-4 lg:flex items-center hidden">
       {pathnames.length > 0 ? (
         <>
           <div onClick={() => navigate("/")} className="text-cyber-secondary cursor-pointer">
