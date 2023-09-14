@@ -2,7 +2,7 @@
 
 Our library is essentially a metalibrary containing many FFT libraries, both javascript and webassembly based. We'll refer to these as sub-libraries.
 
-There will be a default sub-library that is used, but if you run `profile()`, it will benchmark them all and use the best for future calls.
+There will be a default sub-library that is used, but if you run `profile()` it will benchmark them all and use the best for future calls.
 
 As part of importing the library we will run a check to see if wasm is even supported, so the profiler and default can know which pool to pull from.
 
@@ -98,13 +98,11 @@ A file webfftWrapper.js will exist in all sub-library dirs, so that we can avoid
 
 ### How to build and run our benchmarks
 
-```bash
 1. `npm install`
 2. `npm run build`
 3. `npm install --global serve`
 4. `npm run serve`
-5. Open your browser to http://localhost:8080 
-```
+5. `Open your browser to http://localhost:8080`
 
 ### Other people's benchmarks and comparisons
 
