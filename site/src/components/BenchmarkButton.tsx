@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "./Button";
 import { BrowserInfoType, MockTestResultsType } from "../types/types";
 import webfft, { ProfileResult } from "webfft";
@@ -9,7 +9,6 @@ interface BenchmarkButtonProps {
   numIterations: number;
   setNumIterations: React.Dispatch<React.SetStateAction<number>>;
   browserInfo: BrowserInfoType;
-  setBrowserInfo: React.Dispatch<React.SetStateAction<BrowserInfoType>>;
   simdSupport: boolean;
   setSimdSupport: React.Dispatch<React.SetStateAction<boolean>>;
   setBenchmarkData: React.Dispatch<React.SetStateAction<MockTestResultsType | null>>;
@@ -21,10 +20,9 @@ const BenchmarkButton: React.FC<BenchmarkButtonProps> = ({
   numIterations,
   setNumIterations,
   browserInfo,
-  setBrowserInfo,
   simdSupport,
   setSimdSupport,
-  setBenchmarkData,
+  setBenchmarkData
 }) => {
   const handleMockData = () => {
     setBenchmarkData({
@@ -34,37 +32,37 @@ const BenchmarkButton: React.FC<BenchmarkButtonProps> = ({
           numIterations: 1000,
           browserInfo: { browserName: "Chrome", version: null, os: null },
           simdSupport: true,
-          testResult: 100,
+          testResult: 100
         },
         {
           FFTSize: 2048,
           numIterations: 1000,
           browserInfo: { browserName: "Mozilla", version: null, os: null },
           simdSupport: true,
-          testResult: 500,
+          testResult: 500
         },
         {
           FFTSize: 4096,
           numIterations: 1000,
           browserInfo: { browserName: "Edge", version: null, os: null },
           simdSupport: true,
-          testResult: 1000,
+          testResult: 1000
         },
         {
           FFTSize: 8192,
           numIterations: 1000,
           browserInfo: { browserName: "Edge", version: null, os: null },
           simdSupport: true,
-          testResult: 1200,
+          testResult: 1200
         },
         {
           FFTSize: 16384,
           numIterations: 1000,
           browserInfo: { browserName: "Chrome", version: null, os: null },
           simdSupport: true,
-          testResult: 120,
-        },
-      ],
+          testResult: 120
+        }
+      ]
     });
   };
 

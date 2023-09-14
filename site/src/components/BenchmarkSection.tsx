@@ -19,7 +19,7 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
   const [browserInfo, setBrowserInfo] = useState<BrowserInfoType>({
     browserName: "Unknown",
     version: "Unknown",
-    os: "Unknown",
+    os: "Unknown"
   });
   const [simdSupport, setSimdSupport] = useState<boolean>(false);
   const [benchmarkData, setBenchmarkData] = useState<MockTestResultsType | null>(null);
@@ -75,7 +75,6 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
             numIterations={numIterations}
             setNumIterations={setNumIterations}
             browserInfo={browserInfo}
-            setBrowserInfo={setBrowserInfo}
             simdSupport={simdSupport}
             setSimdSupport={setSimdSupport}
             setBenchmarkData={setBenchmarkData}

@@ -1,10 +1,3 @@
-type HistogramData = {
-  label: string;
-  backgroundColor: string;
-  borderColor: string;
-  data: number[];
-};
-
 type MockDataType = {
   FFTSize: number;
   numIterations: number;
