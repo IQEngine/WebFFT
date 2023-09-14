@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MockTestResultsType } from "../types/types";
 import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
@@ -6,7 +6,12 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 // Registering the components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-function ResultsSection({ benchmarkData }: { benchmarkData: MockTestResultsType | null }) {
+interface Props {
+  benchmarkData: MockTestResultsType | null;
+  setLoading: any;
+}
+
+function ResultsSection({ benchmarkData, setLoading }: Props) {
   const [chartData, setChartData] = useState<any>(null);
 
   useEffect(() => {
@@ -31,6 +36,10 @@ function ResultsSection({ benchmarkData }: { benchmarkData: MockTestResultsType 
         labels: newLabels,
         datasets: datasets
       });
+
+      setLoading(false);
+    } else {
+      setChartData(null);
     }
   }, [benchmarkData]);
 
