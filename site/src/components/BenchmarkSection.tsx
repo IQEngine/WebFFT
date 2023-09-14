@@ -10,12 +10,12 @@ import { BallTriangle } from "react-loader-spinner";
 interface Props {
   fftSize: number;
   setFftSize: Dispatch<SetStateAction<number>>;
-  numIterations: number;
-  setNumIterations: Dispatch<SetStateAction<number>>;
+  duration: number;
+  setDuration: Dispatch<SetStateAction<number>>;
   handleClearAppState: Dispatch<any>;
 }
 
-function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations, handleClearAppState }: Props) {
+function BenchmarkSection({ fftSize, setFftSize, duration, setDuration, handleClearAppState }: Props) {
   const [showSettings, setShowSettings] = useState<boolean>(false);
   const [browserInfo, setBrowserInfo] = useState<BrowserInfoType>({
     browserName: "Unknown",
@@ -24,7 +24,6 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
   });
   const [simdSupport, setSimdSupport] = useState<boolean>(false);
   const [benchmarkData, setBenchmarkData] = useState<any>(null);
-  const [numIterationsError, setNumIterationsError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -32,20 +31,17 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
     setSimdSupport(checkSIMDSupport());
   }, []);
 
-  const handleNumIterationsChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleDurationChange = (event: ChangeEvent<HTMLInputElement>) => {
     var val = parseInt(event.target.value);
-    if (val > 0) {
-      setNumIterations(val);
-      setNumIterationsError(false);
+    if (val > 1) {
+      setDuration(val);
     } else {
-      setNumIterationsError(true);
-      setNumIterations(0);
+      setDuration(1);
     }
   };
 
   const handleClearState = () => {
     setBenchmarkData(null);
-    setNumIterationsError(false);
     handleClearAppState(true);
   };
 
@@ -69,7 +65,7 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
   useEffect(() => {
     if (loading) {
       const fft = new webfft(fftSize);
-      const profileObj: ProfileResult = fft.profile(1); // arg is duration to run profile, in seconds
+      const profileObj: ProfileResult = fft.profile(duration); // arg is duration to run profile, in seconds
       console.log("Results:", profileObj);
 
       // Get the color for each browser
@@ -141,22 +137,17 @@ function BenchmarkSection({ fftSize, setFftSize, numIterations, setNumIterations
             </div>
 
             <div className="col-span-1 flex flex-col items-center mb-4">
-              <label htmlFor="numIterations" className="block text-sm mb-1">
-                Number of Iterations
+              <label htmlFor="duration" className="block text-sm mb-1">
+                Duration to Run Benchmark in Seconds
               </label>
               <input
                 type="number"
-                id="numIterations"
-                name="numIterations"
-                value={numIterations}
-                onChange={handleNumIterationsChange}
-                className="border rounded-md text-center bg-cyber-background1 border-cyber-primary"
+                id="duration"
+                name="duration"
+                value={duration}
+                onChange={handleDurationChange}
+                className="border rounded-md text-center bg-cyber-background1 border-cyber-primary w-32"
               />
-              {numIterationsError && (
-                <span className="text-cyber-primary">
-                  Invalid Input: Number of interations can only be a positive integer
-                </span>
-              )}
             </div>
 
             <div className="col-span-1 flex flex-col items-center mb-4">

@@ -5,11 +5,11 @@ import BenchmarkSection from "./BenchmarkSection";
 
 function Home() {
   const [fftSize, setFftSize] = useState(1024);
-  const [numIterations, setNumIterations] = useState(10);
+  const [duration, setDuration] = useState(1);
 
   const handleClearState = (_: any) => {
     setFftSize(1024);
-    setNumIterations(10);
+    setDuration(1);
   };
 
   return (
@@ -20,8 +20,8 @@ function Home() {
         <BenchmarkSection
           fftSize={fftSize}
           setFftSize={setFftSize}
-          numIterations={numIterations}
-          setNumIterations={setNumIterations}
+          duration={duration}
+          setDuration={setDuration}
           handleClearAppState={handleClearState}
         />
       </main>
