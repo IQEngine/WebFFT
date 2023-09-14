@@ -4,8 +4,7 @@ import ResultsSection from "./ResultsSection";
 import Button from "./Button";
 import { BrowserInfoType } from "../types/types";
 import { getBrowserInfo, checkSIMDSupport } from "../utils/browserUtils";
-import webfft, { ProfileResult } from "webfft";
-import { BallTriangle } from "react-loader-spinner";
+import { ProfileResult } from "webfft";
 
 interface Props {
   fftSize: number;
@@ -116,6 +115,7 @@ function BenchmarkSection({ fftSize, setFftSize, duration, setDuration, handleCl
         <div className="flex justify-center space-x-4 mt-4">
           <Button
             onClick={() => {
+              setBenchmarkData(null);
               setLoading(true);
             }}
             className="bg-cyber-secondary text-cyber-text px-4 py-2 rounded-md"
@@ -177,21 +177,7 @@ function BenchmarkSection({ fftSize, setFftSize, duration, setDuration, handleCl
         )}
       </section>
 
-      <div className="max-w-lg max-h-96 mx-auto p-4">
-        {loading && (
-          <BallTriangle
-            height={150}
-            width={150}
-            radius={6}
-            color="#4fa94d"
-            ariaLabel="ball-triangle-loading"
-            wrapperStyle={{ justifyContent: "center" }}
-            visible={true}
-          />
-        )}
-      </div>
-
-      <ResultsSection benchmarkData={benchmarkData} />
+      <ResultsSection benchmarkData={benchmarkData} loading={loading} />
     </div>
   );
 }
