@@ -1,7 +1,7 @@
 {
   "name": "webfft",
-  "version": "0.0.15",
-  "description": "The fastest FFT on the web!",
+  "version": "0.0.16",
+  "description": "The Fastest Fourier Transform on the Web! 🚀🚀",
   "main": "lib/main.js",
   "types": "lib/@types/webfft/index.d.ts",
   "scripts": {
