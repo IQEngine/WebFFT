@@ -50,7 +50,7 @@ function ResultsSection({ benchmarkData, loading }: Props) {
   return (
     <section className="mb-6 text-center">
       <div className="max-w-2xl max-h-screen mx-auto p-4">
-        <h2 className="text-xl">Results</h2>
+        {(loading || benchmarkData) && <h2 className="text-xl">Results</h2>}
 
         {loading && (
           <BallTriangle
