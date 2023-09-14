@@ -4,14 +4,18 @@ import components from "./MarkdownComponents";
 import { useRoutes, Link } from "react-router-dom";
 
 const GettingStarted = lazy(() => import("../docs/GettingStarted.mdx"));
-// const OtherDoc = lazy(() => import("../docs/OtherDoc.mdx"));
+const ListofLibs = lazy(() => import("../docs/ListofLibs.mdx"));
 
 function Docs(): ReactElement {
   let routes = useRoutes([
     {
       path: "/",
-      element: <GettingStarted components={components} />,
+      element: <GettingStarted components={components} />
     },
+    {
+      path: "/listoflibs",
+      element: <ListofLibs components={components} />
+    }
     // add more routes here
   ]);
 
@@ -21,10 +25,14 @@ function Docs(): ReactElement {
       <main className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         <nav className="col-span-1 p-4 rounded-lg mx-auto lg:block hidden">
           <ul className="list-none pl-0">
-            <span className="font">Overview</span>
             <li>
               <Link to="/docs" className="block py-2">
-                Get Started
+                Usage
+              </Link>
+            </li>
+            <li>
+              <Link to="/docs/listoflibs" className="block py-2">
+                List of Libraries
               </Link>
             </li>
             {/* add more links here */}

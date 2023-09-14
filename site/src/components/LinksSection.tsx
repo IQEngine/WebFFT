@@ -23,16 +23,16 @@ function LinksSection() {
           GitHub
         </a>
       </div>
-      <div className="flex flex-col md:flex-row md:justify-center gap-4 w-full max-w-lg mx-auto">
+      <div className="flex flex-col md:justify-center w-full max-w-lg mx-auto gap-3">
         <Link
           to="/docs"
-          className="text-xl items-center justify-center min-w-[220px] min-h-[20px] underline inline-block text-cyber-secondary"
+          className="text-xl items-center justify-center min-w-[220px] min-h-[20px] inline-block text-cyber-secondary"
         >
-          Documentation · v1.0
+          Documentation
         </Link>
         <Link
           to="/about"
-          className="text-xl items-center justify-center min-w-[200px] min-h-[20px] pr-4 underline inline-block text-cyber-secondary"
+          className="text-xl items-center justify-center min-w-[200px] min-h-[20px] pr-4 inline-block text-cyber-secondary"
         >
           About
         </Link>
