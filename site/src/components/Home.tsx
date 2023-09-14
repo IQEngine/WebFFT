@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SiteHeader from "./SiteHeader";
 import LinksSection from "./LinksSection";
 import BenchmarkSection from "./BenchmarkSection";

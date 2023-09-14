@@ -12,7 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/docs" element={<Docs />} />
+        <Route path="/docs/*" element={<Docs />} />
         <Route path="*" element={<NotFound />} /> // TODO: Make a 404 page
       </Routes>
     </BrowserRouter>

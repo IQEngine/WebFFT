@@ -12,6 +12,9 @@
   "dependencies": {
     "@mdx-js/react": "^2.3.0",
     "@mdx-js/rollup": "^2.3.0",
+    "@tailwindcss/typography": "^0.5.10",
+    "@types/react-syntax-highlighter": "^15.5.7",
+    "@vitejs/plugin-react": "^4.0.4",
     "autoprefixer": "^10.4.15",
     "chart.js": "^4.4.0",
     "detect-browser": "^5.3.0",
@@ -20,20 +23,19 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
+    "react-syntax-highlighter": "^15.5.0",
     "tailwindcss": "^3.3.3",
     "webfft": "^0.0.2"
   },
   "devDependencies": {
-    "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
-    "@vitejs/plugin-react": "^4.0.4",
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.2",
-    "vite": "^4.4.5"
+    "vite": "^4.4.9"
   }
 }
