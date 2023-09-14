@@ -85,7 +85,7 @@ function BenchmarkSection({ fftSize, setFftSize, duration, setDuration, handleCl
         // Create datasets for the bar chart
         const datasets = [
           {
-            label: "Results",
+            label: "FFTs per Second",
             data: profileObj.fftsPerSecond,
             backgroundColor: newLabels.map((label) => getBarColor(label)),
             borderColor: newLabels.map(() => `hsla(0, 0%, 80%, 0.9)`),
