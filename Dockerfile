@@ -7,17 +7,17 @@ WORKDIR /app
 # Copy the package.json and package-lock.json files to the container
 COPY package*.json ./
 
-RUN npm install
+#RUN npm install
 
 COPY . .
-RUN npm run build
+#RUN npm run build
 
-WORKDIR /app/lib/
-RUN npm link
+#WORKDIR /app/lib/
+#RUN npm link
 
 WORKDIR /app/site 
-RUN npm link webfft && \
-    npm install && \
+#RUN npm link webfft && \
+RUN npm install && \
     npm run build
 
 FROM nginx:alpine
