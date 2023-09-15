@@ -4,9 +4,12 @@ import {
   CategoryScale,
   LinearScale,
   BarElement,
+  LineController,
+  PointElement,
   Title,
   Tooltip,
   Legend,
+  LineElement,
 } from "chart.js";
 import { BallTriangle } from "react-loader-spinner";
 
@@ -15,6 +18,9 @@ ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
+  LineController,
+  LineElement,
+  PointElement,
   Title,
   Tooltip,
   Legend,
@@ -26,13 +32,35 @@ interface Props {
 }
 
 function ResultsSection({ benchmarkData, loading }: Props) {
+  // Modify and sort benchmark data before using it in the chart
+  if (benchmarkData) {
+    benchmarkData.labels = benchmarkData.labels.map((label: string) =>
+      label.replace(/(javascript|wasm)/gi, ""),
+    );
+
+    const dataPoints = benchmarkData.datasets[0].data;
+    const sortedIndices = dataPoints
+      .map((_: any, index: number) => index)
+      .sort(
+        (a: string | number, b: string | number) =>
+          dataPoints[b] - dataPoints[a],
+      );
+
+    benchmarkData.labels = sortedIndices.map(
+      (index: number) => benchmarkData.labels[index],
+    );
+    benchmarkData.datasets[0].data = sortedIndices.map(
+      (index: number) => dataPoints[index],
+    );
+  }
+
   const options = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
       legend: {
         position: "top" as const,
-        display: false,
+        display: true,
       },
       title: {
         display: false,
@@ -52,9 +80,20 @@ function ResultsSection({ benchmarkData, loading }: Props) {
         },
       },
       x: {
-        ticks: {
+        display: true,
+        stacked: true,
+        title: {
+          display: true,
           font: {
             size: 16,
+          },
+          color: `hsla(0, 0%, 80%, 0.9)`,
+          text: "FFT Algorithms",
+        },
+        ticks: {
+          display: false,
+          font: {
+            size: 10,
           },
           color: `hsla(0, 0%, 80%, 0.9)`,
         },
