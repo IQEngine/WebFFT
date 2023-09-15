@@ -5,6 +5,7 @@ import webfft from "../lib/main.js";
 const fftsize = 1024;
 const fft = new webfft(fftsize);
 const profileObj = fft.profile(2); // duration to run profile, in seconds
+fft.dispose();
 console.log(profileObj);
 console.log("Fastest sub-library:", profileObj.fastestSubLibrary);
 

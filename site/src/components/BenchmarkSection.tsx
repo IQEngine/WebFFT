@@ -51,6 +51,7 @@ function BenchmarkSection({
       .catch((error) => {
         console.error("Failed to check browser capabilities:", error);
       });
+    webfftInstance.dispose();
   }, []);
 
   useEffect(() => {

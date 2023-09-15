@@ -5,6 +5,7 @@ export default class webfft {
   availableSubLibraries(): string[];
   profile(duration?: number): ProfileResult;
   checkBrowserCapabilities(): Promise<BrowserCapabilities>;
+  dispose(): void;
 }
 
 export interface ProfileResult {

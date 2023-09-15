@@ -19,3 +19,5 @@ for (let i = 0; i < fftsize; i++) {
 }
 const outputArrReal = fft.fftr(inputArrReal);
 console.log(outputArrReal);
+
+fft.dispose();

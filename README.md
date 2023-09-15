@@ -104,8 +104,7 @@ A file webfftWrapper.js will exist in all sub-library dirs, so that we can avoid
 ### How to build and run our benchmarks
 
 1. `npm install`
-2. `npm run build`
-3. `npm install --global serve`
+2. `npm install --global serve`
 4. `npm run serve`
 5. Open your browser to http://localhost:8080 
 

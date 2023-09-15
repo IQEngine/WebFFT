@@ -38,6 +38,9 @@ const out = fft.fft(input); // out will be a Float32Array of size 2048
 const out = fft.fft(input, 'indutny');
 //or 
 const out = fft.fft(input, profileResults[0]['SubLibraryName']); // profileResults obj will likely be changed later
+
+// Dispose (release Wasm memory, etc.)
+fft.dispose();
 ```
 
 ### Sub-Library API
