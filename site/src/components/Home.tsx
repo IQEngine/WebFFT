@@ -2,6 +2,8 @@ import { useState } from "react";
 import SiteHeader from "./SiteHeader";
 import LinksSection from "./LinksSection";
 import BenchmarkSection from "./BenchmarkSection";
+import InteractiveSignal from "./InteractiveSignal";
+import webfft from "webfft";
 
 function Home() {
   const [fftSize, setFftSize] = useState(1024);
@@ -24,6 +26,7 @@ function Home() {
           setDuration={setDuration}
           handleClearAppState={handleClearState}
         />
+        <InteractiveSignal />
       </main>
     </div>
   );
