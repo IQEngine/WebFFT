@@ -114,23 +114,34 @@ function BenchmarkSection({
         const profileObj = e.data;
         console.log("Results:", profileObj);
 
-        // Get the color for each browser
-        const getBarColor = (label: string) => {
-          if (label.includes("Wasm")) return `hsl(200, 100%, 50%, 0.75)`;
-          if (label.includes("Javascript")) return `hsla(320, 80%, 50%, 0.8)`;
-          return `hsla(100, 80%, 50%, 0.8)`; // shouldn't get here
-        };
+        const wasmColor = "hsl(200, 100%, 50%, 0.75)";
+        const jsColor = "hsla(320, 80%, 50%, 0.8)";
 
         // Create a list of unique labels for the x-axis
         const newLabels = profileObj.subLibraries;
 
+        // Separate the data into two datasets while maintaining the correct mapping to the x-axis labels
+        const wasmData = newLabels.map((label, index) =>
+          label.includes("Wasm") ? profileObj.fftsPerSecond[index] : null,
+        );
+        const jsData = newLabels.map((label, index) =>
+          label.includes("Javascript") ? profileObj.fftsPerSecond[index] : null,
+        );
+
         // Create datasets for the bar chart
         const datasets = [
           {
-            label: "FFTs per Second",
-            data: profileObj.fftsPerSecond,
-            backgroundColor: newLabels.map((label) => getBarColor(label)),
-            borderColor: newLabels.map(() => `hsla(0, 0%, 80%, 0.9)`),
+            label: "WASM",
+            data: wasmData,
+            backgroundColor: wasmColor,
+            borderColor: "hsla(0, 0%, 80%, 0.9)",
+            borderWidth: 1,
+          },
+          {
+            label: "JavaScript",
+            data: jsData,
+            backgroundColor: jsColor,
+            borderColor: "hsla(0, 0%, 80%, 0.9)",
             borderWidth: 1,
           },
         ];

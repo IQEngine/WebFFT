@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import webfft from "webfft";
-import Plot from "react-plotly.js";
+import { Line } from "react-chartjs-2";
+// @ts-ignore
 import { fftshift } from "fftshift";
 
 function InteractiveSignal() {
@@ -8,12 +9,15 @@ function InteractiveSignal() {
   const [signalStr, setSignalStr] = useState<any>(null);
   const [amplitude, setAmplitude] = useState<number>(20);
   const [frequency, setFrequency] = useState<number>(0.1);
-  const [lastUpdate, setLastUpdate] = useState<any>(null);
+  const [_, setLastUpdate] = useState<any>(null);
   const [update, setUpdate] = useState<number>(0);
-  const [plotData, setPlotData] = useState<Float32Array>();
+  const [plotData, setPlotData] = useState<Float32Array>(new Float32Array());
   const [start, setStart] = useState<boolean>(false);
   const sin = new Float32Array(2 * fftSize);
   const [webfftInstance, setWebfftInstance] = useState<any>(null);
+
+  const textColor = "hsla(0, 0%, 80%, 0.9)";
+  const waveColor = "rgb(34 197 94)";
 
   useEffect(() => {
     setWebfftInstance(new webfft(fftSize));
@@ -64,6 +68,36 @@ function InteractiveSignal() {
     };
   }, []);
 
+  const slidersChanged = useRef(false);
+
+  useEffect(() => {
+    if (start) {
+      slidersChanged.current = false; // Reset the flag when starting
+    }
+  }, [start]);
+
+  const handleAmplitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAmplitude(Number(e.target.value));
+    slidersChanged.current = true;
+  };
+
+  const handleFrequencyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFrequency(Number(e.target.value));
+    slidersChanged.current = true;
+  };
+
+  const handleStop = () => {
+    setStart(false);
+
+    let neutralSignalStr = "M0,75";
+    for (let i = 1; i < fftSize; i++) {
+      neutralSignalStr += ` L${i},75`;
+    }
+    setSignalStr(neutralSignalStr);
+
+    setPlotData(new Float32Array(fftSize / 2).fill(0));
+  };
+
   /*
   // will trigger the main useeffect to run again
   useEffect(() => {
@@ -78,9 +112,10 @@ function InteractiveSignal() {
 
   return (
     <section className="mb-6 text-center">
-      <div className="w-64 p-4">
-        <label className="mb-3" id="formZoom">
-          <span className="label-text text-base ">Signal Amplitude</span>
+      <div className="max-w-2xl mx-auto p-4 bg-gray-800 rounded-lg shadow-lg">
+        {/* Amplitude Control */}
+        <div className="mb-3 flex justify-between items-center">
+          <span className="text-cyber-text text-base">Signal Amplitude</span>
           <input
             type="range"
             className="range range-xs range-primary"
@@ -88,14 +123,12 @@ function InteractiveSignal() {
             min={0}
             max={20}
             step={0.1}
-            onChange={(e) => {
-              setAmplitude(Number(e.target.value));
-            }}
+            onChange={handleAmplitudeChange}
           />
-        </label>
-        <br></br>
-        <label className="mb-3" id="formZoom">
-          <span className="label-text text-base ">Signal Frequency</span>
+        </div>
+        {/* Frequency Control */}
+        <div className="mb-3 flex justify-between items-center">
+          <span className="text-cyber-text text-base">Signal Frequency</span>
           <input
             type="range"
             className="range range-xs range-primary"
@@ -103,63 +136,101 @@ function InteractiveSignal() {
             min={0.01}
             max={Math.PI * 0.9}
             step={0.01}
-            onChange={(e) => {
-              setFrequency(Number(e.target.value));
+            onChange={handleFrequencyChange}
+          />
+        </div>
+        {/* SVG Plot */}
+        <div className="mb-3 relative w-full h-36 bg-gray-700 rounded-lg p-4">
+          <svg className="w-full h-full" viewBox="0 0 1024 150">
+            <g>
+              <path
+                id="logo-sin-curve"
+                d={signalStr}
+                stroke={waveColor}
+                strokeWidth="0.5"
+                fill="none"
+              />
+            </g>
+          </svg>
+        </div>
+        {/* Start/Stop Button */}
+        <div className="mb-3">
+          <button
+            className="px-4 py-2 text-cyber-text bg-green-500 rounded hover:bg-cyber-accent focus:outline-none"
+            onClick={() => {
+              if (start) {
+                handleStop();
+              } else {
+                setStart(true);
+              }
+            }}
+          >
+            Start/Stop
+          </button>
+        </div>
+        {/* ChartJS Plot */}
+        <div className="mb-3 w-full">
+          <Line
+            data={{
+              labels: Array.from(
+                { length: plotData?.length || 0 },
+                (_, i) => i,
+              ),
+              datasets: [
+                {
+                  label: "Dataset",
+                  data: plotData,
+                  fill: false,
+                  borderColor: waveColor,
+                  borderWidth: 1,
+                  pointRadius: 0,
+                },
+              ],
+            }}
+            options={{
+              plugins: {
+                legend: {
+                  display: false,
+                },
+              },
+              scales: {
+                x: {
+                  display: true,
+                  grid: {
+                    display: false,
+                  },
+                  title: {
+                    display: true,
+                    text: "Frequency",
+                    color: textColor,
+                  },
+                  ticks: {
+                    display: false,
+                    color: textColor,
+                  },
+                },
+                y: {
+                  display: true,
+                  grid: {
+                    display: false,
+                  },
+                  title: {
+                    display: true,
+                    text: "PSD",
+                    color: textColor,
+                  },
+                  ticks: {
+                    display: false,
+                    color: textColor,
+                  },
+                },
+              },
             }}
           />
-        </label>
-        <svg width={fftSize} height="150" viewBox="0 0 1024 150">
-          <g>
-            <path
-              id="logo-sin-curve"
-              d={signalStr}
-              stroke="white"
-              strokeWidth="0.5"
-              fill="none"
-            />
-          </g>
-        </svg>
-
-        <button className="btn btn-primary" onClick={() => setStart(!start)}>
-          Start/Stop
-        </button>
-        <Plot
-          data={[
-            {
-              y: plotData,
-              type: "scatter",
-              name: "I",
-            },
-          ]}
-          layout={{
-            width: 500,
-            height: 300,
-            margin: {
-              l: 0,
-              r: 0,
-              b: 0,
-              t: 0,
-              pad: 0,
-            },
-            dragmode: "pan",
-            showlegend: false,
-            xaxis: {
-              title: "Frequency",
-            },
-            yaxis: {
-              title: "PSD",
-              autorange: false,
-              range: [0, 30000],
-            },
-          }}
-          config={{
-            displayModeBar: false,
-            scrollZoom: true,
-          }}
-        />
+        </div>
       </div>
     </section>
   );
 }
 
-export default InteractiveSignal;
+export default React.memo(InteractiveSignal);
