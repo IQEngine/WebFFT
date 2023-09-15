@@ -3,9 +3,15 @@ name: Create New Release
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
+    push:
+      branches:
+        - main
+      repository:
+        description: 'docker image'
+        value: ${{ jobs.create_pre_release.outputs.repository }}
+      sha:
+        description: 'docker image sha'
+        value: ${{ jobs.create_pre_release.outputs.sha}}
 
 permissions:
   contents: read
