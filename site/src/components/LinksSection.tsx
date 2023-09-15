@@ -11,7 +11,11 @@ function LinksSection() {
           target="_blank"
           className="rounded-lg font-bold text-center py-4 px-6 border border-cyber-primary bg-cyber-background1 text-cyber-text shadow-button flex items-center justify-center min-w-[200px] min-h-[50px]"
         >
-          <img src={NpmLogo} alt="Npm Logo Red" className="w-6 h-6 inline-block mr-2" />
+          <img
+            src={NpmLogo}
+            alt="Npm Logo Red"
+            className="w-6 h-6 inline-block mr-2"
+          />
           NPM
         </a>
         <a
@@ -19,7 +23,11 @@ function LinksSection() {
           target="_blank"
           className="rounded-lg font-bold text-center py-4 px-6 border border-cyber-primary bg-cyber-background1 text-cyber-text shadow-button flex items-center justify-center min-w-[200px] min-h-[50px]"
         >
-          <img src={GitHubMark} alt="GitHub Mark" className="w-6 h-6 inline-block mr-2" />
+          <img
+            src={GitHubMark}
+            alt="GitHub Mark"
+            className="w-6 h-6 inline-block mr-2"
+          />
           GitHub
         </a>
       </div>
@@ -27,12 +35,16 @@ function LinksSection() {
         <Link
           to="/docs"
           className="text-xl items-center justify-center min-w-[220px] min-h-[20px] inline-block text-cyber-secondary"
+          aria-label="Link to Documentation"
+          role="link"
         >
           Documentation
         </Link>
         <Link
           to="/about"
           className="text-xl items-center justify-center min-w-[200px] min-h-[20px] pr-4 inline-block text-cyber-secondary"
+          aria-label="Link to About Page"
+          role="link"
         >
           About
         </Link>

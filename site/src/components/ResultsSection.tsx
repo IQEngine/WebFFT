@@ -1,9 +1,24 @@
 import { Bar } from "react-chartjs-2";
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 import { BallTriangle } from "react-loader-spinner";
 
 // Registering the components
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+);
 
 interface Props {
   benchmarkData: any;
@@ -50,7 +65,14 @@ function ResultsSection({ benchmarkData, loading }: Props) {
   return (
     <section className="mb-6 text-center">
       <div className="max-w-2xl max-h-screen mx-auto p-4">
-        {(loading || benchmarkData) && <h2 className="text-xl">Results</h2>}
+        {(loading || benchmarkData) && (
+          <h2
+            className="text-xl"
+            aria-describedby="Your FFT Benchmark Results Appear Below"
+          >
+            Results
+          </h2>
+        )}
 
         {loading && (
           <BallTriangle
@@ -67,7 +89,13 @@ function ResultsSection({ benchmarkData, loading }: Props) {
         {benchmarkData && (
           <section className="mb-6 text-center">
             <div className="min-h-full mx-auto p-4">
-              <Bar data={benchmarkData} options={options} height={425} />
+              <Bar
+                data={benchmarkData}
+                options={options}
+                height={425}
+                aria-label="Benchmark Histogram Results for FFT per Second by Algorithm"
+                role="img"
+              />
             </div>
           </section>
         )}

@@ -24,16 +24,26 @@ const FFTSizeInput: React.FC<FFTSizeInputProps> = ({ fftSize, setFftSize }) => {
 
   return (
     <div>
-      <Button className="border rounded-md bg-cyber-background1 border-cyber-primary" onClick={decrementFFTSize}>
+      <Button
+        className="border rounded-md bg-cyber-background1 border-cyber-primary"
+        onClick={decrementFFTSize}
+        aria-label="Decrement FFT Size by Power of 2"
+      >
         -
       </Button>
       <input
         type="number"
+        id="fftSize"
         value={fftSize}
         readOnly
         className="w-24 p-2 border rounded-md bg-cyber-background1 border-cyber-primary text-center"
+        aria-label="Input FFT Size - Use Plus and Minus Buttons to Change FFT Size by Power of 2"
       />
-      <Button className="border rounded-md bg-cyber-background1 border-cyber-primary" onClick={incrementFFTSize}>
+      <Button
+        className="border rounded-md bg-cyber-background1 border-cyber-primary"
+        onClick={incrementFFTSize}
+        aria-label="Increment FFT Size by Power of 2"
+      >
         +
       </Button>
     </div>

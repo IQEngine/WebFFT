@@ -5,7 +5,13 @@ function About() {
     <div className="App flex flex-col items-center text-cyber-text min-h-screen min-w-screen">
       <SiteHeader />
       <main className="!font-system container mx-auto text-center">
-        <h3 className="text-cyber-text-secondary"> About WebFFT</h3>
+        <h3
+          className="text-cyber-text-secondary"
+          aria-describedby="Learn more about the WebFFT Team in this Section"
+        >
+          {" "}
+          About WebFFT
+        </h3>
 
         <p className="text-cyber-text px-4 py-4">
           WebFFT started as part of a Microsoft internal Hackathon in 2023,
@@ -31,6 +37,7 @@ function About() {
               <img
                 className="rounded-3xl w-16"
                 src="https://github.com/lmiguelgato.png"
+                alt="Luis's profile picture"
               ></img>
               Luis
             </a>
@@ -40,6 +47,7 @@ function About() {
               <img
                 className="rounded-3xl w-16"
                 src="https://github.com/chadp777.png"
+                alt="Chad's profile picture"
               ></img>
               Chad
             </a>
@@ -49,6 +57,7 @@ function About() {
               <img
                 className="rounded-3xl w-16"
                 src="https://github.com/mcontractor12.png"
+                alt="Maheen's profile picture"
               ></img>
               Maheen
             </a>
@@ -58,6 +67,7 @@ function About() {
               <img
                 className="rounded-3xl w-16"
                 src="https://github.com/faikwokms.png"
+                alt="Fai's profile picture"
               ></img>
               Fai
             </a>
@@ -67,6 +77,7 @@ function About() {
               <img
                 className="rounded-3xl w-16"
                 src="https://github.com/10sae.png"
+                alt="Tensae's profile picture"
               ></img>
               Tensae
             </a>
@@ -76,6 +87,7 @@ function About() {
               <img
                 className="rounded-3xl w-16"
                 src="https://github.com/robotastic.png"
+                alt="Luke's profile picture"
               ></img>
               Luke
             </a>
@@ -85,6 +97,7 @@ function About() {
               <img
                 className="rounded-3xl w-16"
                 src="https://github.com/Nepomuceno.png"
+                alt="Gabriel's profile picture"
               ></img>
               Gabriel
             </a>
