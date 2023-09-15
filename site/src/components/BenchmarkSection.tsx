@@ -113,20 +113,41 @@ function BenchmarkSection({
 
       fftWorker.onmessage = (e: MessageEvent<ProfileResult>) => {
         const profileObj = e.data;
+        console.log(profileObj);
 
         const wasmColor = "hsl(200, 100%, 50%, 0.75)";
         const jsColor = "hsla(320, 80%, 50%, 0.8)";
 
-        // Create a list of unique labels for the x-axis
-        const newLabels = profileObj.subLibraries;
+        const dataWithLabels = profileObj.subLibraries.map((label, index) => ({
+          label: label,
+          value: profileObj.fftsPerSecond[index],
+        }));
 
-        // Separate the data into two datasets while maintaining the correct mapping to the x-axis labels
-        const wasmData = newLabels.map((label, index) =>
-          label.includes("Wasm") ? profileObj.fftsPerSecond[index] : null,
+        // Sort the pairs in descending order based on the data values
+        dataWithLabels.sort((a, b) => b.value - a.value);
+
+        // Create arrays of labels and data, preserving the new order
+        const sortedLabels = dataWithLabels.map((item) => item.label);
+        const sortedData = dataWithLabels.map((item) => item.value);
+
+        // Define the label subsets for each category
+        const wasmLabels = sortedLabels.filter((label) =>
+          label.includes("Wasm"),
         );
-        const jsData = newLabels.map((label, index) =>
-          label.includes("Javascript") ? profileObj.fftsPerSecond[index] : null,
+        const jsLabels = sortedLabels.filter((label) =>
+          label.includes("Javascript"),
         );
+
+        // Create arrays of the WASM and JS data, maintaining the new order, and only including a data point if the label matches the category
+        const wasmData = sortedLabels.map((label, index) =>
+          wasmLabels.includes(label) ? sortedData[index] : null,
+        );
+
+        const jsData = sortedLabels.map((label, index) =>
+          jsLabels.includes(label) ? sortedData[index] : null,
+        );
+
+        console.log(wasmData, jsData);
 
         // Create datasets for the bar chart
         const datasets = [
@@ -138,7 +159,7 @@ function BenchmarkSection({
             borderWidth: 1,
           },
           {
-            label: "JavaScript",
+            label: "Javascript",
             data: jsData,
             backgroundColor: jsColor,
             borderColor: "hsla(0, 0%, 80%, 0.9)",
@@ -147,7 +168,7 @@ function BenchmarkSection({
         ];
 
         setBenchmarkData({
-          labels: newLabels,
+          labels: sortedLabels,
           datasets: datasets,
         });
 
@@ -207,7 +228,13 @@ function BenchmarkSection({
 
             <div className="col-span-1 flex flex-col items-center mb-4">
               <label className="mb-3" id="formZoom">
-                <span className="label-text text-base mb-1">Duration to Run Benchmark: <span className="label-text text-base text-cyber-accent"> {duration} seconds</span></span>
+                <span className="label-text text-base mb-1">
+                  Duration to Run Benchmark:{" "}
+                  <span className="label-text text-base text-cyber-accent">
+                    {" "}
+                    {duration} seconds
+                  </span>
+                </span>
                 <input
                   type="range"
                   className="range range-xs range-primary"
@@ -215,7 +242,7 @@ function BenchmarkSection({
                   min={0.1}
                   max={10}
                   step={0.1}
-                  onChange={(e) => setDuration(parseFloat(e.target.value))}
+                  onChange={handleDurationChange}
                 />
               </label>
             </div>
