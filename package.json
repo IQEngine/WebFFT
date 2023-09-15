@@ -1,12 +1,11 @@
 {
   "name": "webfft",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "The Fastest Fourier Transform on the Web! 🚀🚀",
   "main": "lib/main.js",
   "types": "lib/@types/webfft/index.d.ts",
   "scripts": {
-    "serve": "node ./lib/utils/replaceStrings.js lib/index.html \"benchmark\" \"dist/bundle\" && serve lib -l 8080",
-    "serve_dev": "node ./lib/utils/replaceStrings.js lib/index.html \"dist/bundle\" \"benchmark\" && serve lib -l 8080",
+    "serve": "serve lib -l 8080",
     "build": "webpack --config ./webpack.config.cjs --output-path ./lib/dist",
     "test": "vitest --config ./tests/vitest.config.ts"
   },

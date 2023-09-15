@@ -11,12 +11,14 @@ test("basic usage", () => {
   const outputArr = fft.fft(inputArr);
   expect(outputArr[0]).not.toBe(0);
   expect(outputArr.length).toBe(2 * fftsize);
+  fft.dispose();
 });
 
 test("available sublibraries", () => {
   const fft = new webfft(1024);
   const availableSubLibraries = fft.availableSubLibraries();
   expect(availableSubLibraries.length).toBeGreaterThan(1);
+  fft.dispose();
 });
 
 test("outputs for all sublibs approx match using different fftsizes", () => {
@@ -57,6 +59,8 @@ test("outputs for all sublibs approx match using different fftsizes", () => {
       }
       expect(Math.abs(total - goldenTotal)).toBeLessThan(goldenTotal * 1e-7);
     }
+
+    fft.dispose();
   }
 });
 
@@ -90,6 +94,8 @@ test("fftr", () => {
     }
     expect(Math.abs(total - goldenTotal)).toBeLessThan(goldenTotal * 1e-7);
   }
+
+  fft.dispose();
 });
 
 test("int16 inputs", () => {
@@ -122,4 +128,6 @@ test("int16 inputs", () => {
     }
     expect(Math.abs(total - goldenTotal)).toBeLessThan(goldenTotal * 1e-7);
   }
+
+  fft.dispose();
 });
