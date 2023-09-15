@@ -1,5 +1,5 @@
 ---
-name: Create New Release
+name: Create New Website Release
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 jobs:
-  create_new_release:
+  create_new_website_release:
     if: github.repository == 'IQEngine/WebFFT'
     permissions:
       contents: write
@@ -19,7 +19,7 @@ jobs:
       packages: write
     runs-on: ubuntu-latest
     environment:
-      name: "WebFFT"
+      name: "WebFFT-Website"
       url: https://webfft.com
     steps:
       - name: Checkout the repository
