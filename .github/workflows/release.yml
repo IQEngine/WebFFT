@@ -19,7 +19,7 @@ jobs:
       packages: write
     runs-on: ubuntu-latest
     environment:
-      name: "WebFFT.com"
+      name: "WebFFT"
       url: https://webfft.com
     steps:
       - name: Checkout the repository
