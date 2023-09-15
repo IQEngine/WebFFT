@@ -1,0 +1,29 @@
+# Node modules
+node_modules
+npm-debug.log
+
+# Git directory and files
+.git
+.gitignore
+
+# Environment files
+.env
+
+# Build directory
+dist
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editor directories and files
+.idea
+*.swp
+*.swo
+*.swl
+*.swm
+*.swn
+*.swk
+*.swp
+.vscode/
+*.sublime*
