@@ -37,26 +37,16 @@ function ResultsSection({ benchmarkData, loading }: Props) {
     benchmarkData.labels = benchmarkData.labels.map((label: string) =>
       label.replace(/(javascript|wasm)/gi, ""),
     );
-
-    //   const dataPoints = benchmarkData.datasets[0].data;
-    //   const sortedIndices = dataPoints
-    //     .map((_: any, index: number) => index)
-    //     .sort(
-    //       (a: string | number, b: string | number) =>
-    //         dataPoints[b] - dataPoints[a],
-    //     );
-
-    //   benchmarkData.labels = sortedIndices.map(
-    //     (index: number) => benchmarkData.labels[index],
-    //   );
-    //   benchmarkData.datasets[0].data = sortedIndices.map(
-    //     (index: number) => dataPoints[index],
-    //   );
   }
 
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    elements: {
+      bar: {
+        borderWidth: 5,
+      },
+    },
     plugins: {
       legend: {
         position: "top" as const,
@@ -69,7 +59,10 @@ function ResultsSection({ benchmarkData, loading }: Props) {
     },
     scales: {
       y: {
-        display: true,
+        grid: {
+          display: true,
+          color: `hsla(0, 0%, 80%, 0.9)`,
+        },
         title: {
           display: true,
           font: {
@@ -80,7 +73,12 @@ function ResultsSection({ benchmarkData, loading }: Props) {
         },
       },
       x: {
-        display: true,
+        stacked: true,
+        grid: {
+          display: true,
+          offset: true,
+          color: `hsla(0, 0%, 80%, 0.9)`,
+        },
         title: {
           display: true,
           font: {
@@ -102,7 +100,7 @@ function ResultsSection({ benchmarkData, loading }: Props) {
 
   return (
     <section className="mb-6 text-center">
-      <div className="max-w-2xl max-h-screen mx-auto p-4">
+      <div className="max-w-2xl max-h-screen mx-auto p-0">
         {(loading || benchmarkData) && (
           <h2
             className="text-xl"
@@ -126,7 +124,7 @@ function ResultsSection({ benchmarkData, loading }: Props) {
 
         {benchmarkData && (
           <section className="mb-6 text-center">
-            <div className="min-h-full mx-auto p-4">
+            <div className="min-h-full mx-auto p-0">
               <Bar
                 data={benchmarkData}
                 options={options}

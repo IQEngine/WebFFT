@@ -112,7 +112,25 @@ function InteractiveSignal() {
 
   return (
     <section className="mb-6 text-center">
+      <h2 className="text-xl" aria-describedby="See our WebFFT in action!">
+        WebFFT In Action!
+      </h2>
       <div className="max-w-2xl mx-auto p-4 bg-gray-800 rounded-lg shadow-lg">
+        {/* Start/Stop Button */}
+        <div className="mb-3">
+          <button
+            className="px-4 py-2 text-cyber-text bg-green-500 rounded hover:bg-cyber-accent focus:outline-none"
+            onClick={() => {
+              if (start) {
+                handleStop();
+              } else {
+                setStart(true);
+              }
+            }}
+          >
+            Start/Stop
+          </button>
+        </div>
         {/* Amplitude Control */}
         <div className="mb-3 flex justify-between items-center">
           <span className="text-cyber-text text-base">Signal Amplitude</span>
@@ -152,21 +170,6 @@ function InteractiveSignal() {
               />
             </g>
           </svg>
-        </div>
-        {/* Start/Stop Button */}
-        <div className="mb-3">
-          <button
-            className="px-4 py-2 text-cyber-text bg-green-500 rounded hover:bg-cyber-accent focus:outline-none"
-            onClick={() => {
-              if (start) {
-                handleStop();
-              } else {
-                setStart(true);
-              }
-            }}
-          >
-            Start/Stop
-          </button>
         </div>
         {/* ChartJS Plot */}
         <div className="mb-3 w-full">

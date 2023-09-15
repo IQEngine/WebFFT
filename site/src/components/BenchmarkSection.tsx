@@ -113,7 +113,6 @@ function BenchmarkSection({
 
       fftWorker.onmessage = (e: MessageEvent<ProfileResult>) => {
         const profileObj = e.data;
-        console.log(profileObj);
 
         const wasmColor = "hsl(200, 100%, 50%, 0.75)";
         const jsColor = "hsla(320, 80%, 50%, 0.8)";
@@ -146,8 +145,6 @@ function BenchmarkSection({
         const jsData = sortedLabels.map((label, index) =>
           jsLabels.includes(label) ? sortedData[index] : null,
         );
-
-        console.log(wasmData, jsData);
 
         // Create datasets for the bar chart
         const datasets = [
