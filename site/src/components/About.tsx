@@ -23,7 +23,7 @@ function About() {
         <br></br>
         <div className="flex">
           <div className="flex flex-col items-center mx-auto">
-            <a href="https://github.com/777arc">
+            <a href="https://github.com/777arc" target="_blank">
               <img
                 className="rounded-3xl w-16"
                 src="https://github.com/777arc.png"
@@ -33,7 +33,7 @@ function About() {
             </a>
           </div>
           <div className="flex flex-col items-center mx-auto">
-            <a href="https://github.com/lmiguelgato">
+            <a href="https://github.com/lmiguelgato" target="_blank">
               <img
                 className="rounded-3xl w-16"
                 src="https://github.com/lmiguelgato.png"
@@ -43,7 +43,7 @@ function About() {
             </a>
           </div>
           <div className="flex flex-col items-center mx-auto">
-            <a href="https://github.com/chadp777">
+            <a href="https://github.com/chadp777" target="_blank">
               <img
                 className="rounded-3xl w-16"
                 src="https://github.com/chadp777.png"
@@ -53,7 +53,7 @@ function About() {
             </a>
           </div>
           <div className="flex flex-col items-center mx-auto">
-            <a href="https://github.com/mcontractor12">
+            <a href="https://github.com/mcontractor12" target="_blank">
               <img
                 className="rounded-3xl w-16"
                 src="https://github.com/mcontractor12.png"
@@ -63,7 +63,7 @@ function About() {
             </a>
           </div>
           <div className="flex flex-col items-center mx-auto">
-            <a href="https://github.com/faikwokms">
+            <a href="https://github.com/faikwokms" target="_blank">
               <img
                 className="rounded-3xl w-16"
                 src="https://github.com/faikwokms.png"
@@ -73,7 +73,7 @@ function About() {
             </a>
           </div>
           <div className="flex flex-col items-center mx-auto">
-            <a href="https://github.com/10sae">
+            <a href="https://github.com/10sae" target="_blank">
               <img
                 className="rounded-3xl w-16"
                 src="https://github.com/10sae.png"
@@ -83,7 +83,7 @@ function About() {
             </a>
           </div>
           <div className="flex flex-col items-center mx-auto">
-            <a href="https://github.com/robotastic">
+            <a href="https://github.com/robotastic" target="_blank">
               <img
                 className="rounded-3xl w-16"
                 src="https://github.com/robotastic.png"
@@ -93,7 +93,7 @@ function About() {
             </a>
           </div>
           <div className="flex flex-col items-center mx-auto">
-            <a href="https://github.com/Nepomuceno">
+            <a href="https://github.com/Nepomuceno" target="_blank">
               <img
                 className="rounded-3xl w-16"
                 src="https://github.com/Nepomuceno.png"
