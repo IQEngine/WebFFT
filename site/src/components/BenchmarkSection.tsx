@@ -206,38 +206,38 @@ function BenchmarkSection({
             </div>
 
             <div className="col-span-1 flex flex-col items-center mb-4">
-              <label htmlFor="duration" className="block text-base mb-1">
-                Duration to Run Benchmark in Seconds
+              <label className="mb-3" id="formZoom">
+                <span className="label-text text-base mb-1">Duration to Run Benchmark: <span className="label-text text-base text-cyber-accent"> {duration} seconds</span></span>
+                <input
+                  type="range"
+                  className="range range-xs range-primary"
+                  value={duration}
+                  min={0.1}
+                  max={10}
+                  step={0.1}
+                  onChange={(e) => setDuration(parseFloat(e.target.value))}
+                />
               </label>
-              <input
-                type="number"
-                id="duration"
-                name="duration"
-                value={duration}
-                onChange={handleDurationChange}
-                className="border rounded-md text-center bg-cyber-background1 border-cyber-primary w-32"
-                aria-label="Input Duration to Run Benchmark in Seconds"
-              />
             </div>
 
             <div className="col-span-2 flex flex-col items-center mb-4 space-y-2">
-              <span className="text-center">
+              <span className="text-center text-base label-text">
                 Browser Information: <br />
                 {renderBrowserInfo()}
               </span>
-              <span className="text-center">
+              <span className="text-center text-base label-text">
                 SIMD Support: <br />
                 <span className="text-cyber-accent">
                   {simdSupport ? "Supported" : "Not supported"}
                 </span>
               </span>
-              <span className="text-center">
+              <span className="text-center text-base label-text">
                 Relaxed SIMD: <br />
                 <span className="text-cyber-accent">
                   {relaxedSimdSupport ? "Enabled" : "Disabled"}
                 </span>
               </span>
-              <span className="text-center">
+              <span className="text-center text-base label-text">
                 WASM Support: <br />
                 <span className="text-cyber-accent">
                   {wasmSupport ? "Supported" : "Not supported"}
