@@ -20,7 +20,10 @@ test("available sublibraries", () => {
 });
 
 test("outputs for all sublibs approx match using different fftsizes", () => {
-  const fftsizes = [4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 16384, 32768, 65536, 131072];
+  const fftsizes = [
+    4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768,
+    16384, 32768, 65536, 131072,
+  ];
   for (let j = 0; j < fftsizes.length; j++) {
     const fftsize = fftsizes[j];
     const fft = new webfft(fftsize);
@@ -36,7 +39,9 @@ test("outputs for all sublibs approx match using different fftsizes", () => {
     let co = fft.fft(inputArr);
     let goldenTotal = 0;
     for (let k = 0; k < fftsize; ++k) {
-      goldenTotal += Math.sqrt(co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1]);
+      goldenTotal += Math.sqrt(
+        co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1],
+      );
     }
     // goldenTotal will be 9147216.377928967
 
@@ -46,7 +51,9 @@ test("outputs for all sublibs approx match using different fftsizes", () => {
       co = fft.fft(inputArr);
       let total = 0;
       for (let k = 0; k < fftsize; ++k) {
-        total += Math.sqrt(co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1]);
+        total += Math.sqrt(
+          co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1],
+        );
       }
       expect(Math.abs(total - goldenTotal)).toBeLessThan(goldenTotal * 1e-7);
     }
@@ -68,7 +75,9 @@ test("fftr", () => {
   let co = fft.fftr(inputArr);
   let goldenTotal = 0;
   for (let k = 0; k < fftsize / 2; ++k) {
-    goldenTotal += Math.sqrt(co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1]);
+    goldenTotal += Math.sqrt(
+      co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1],
+    );
   }
 
   // Try each sub-library
@@ -98,7 +107,9 @@ test("int16 inputs", () => {
   let co = fft.fft(inputArr);
   let goldenTotal = 0;
   for (let k = 0; k < fftsize; ++k) {
-    goldenTotal += Math.sqrt(co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1]);
+    goldenTotal += Math.sqrt(
+      co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1],
+    );
   }
 
   // Try each sub-library
