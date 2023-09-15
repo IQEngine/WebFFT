@@ -38,20 +38,20 @@ function ResultsSection({ benchmarkData, loading }: Props) {
       label.replace(/(javascript|wasm)/gi, ""),
     );
 
-    const dataPoints = benchmarkData.datasets[0].data;
-    const sortedIndices = dataPoints
-      .map((_: any, index: number) => index)
-      .sort(
-        (a: string | number, b: string | number) =>
-          dataPoints[b] - dataPoints[a],
-      );
+    //   const dataPoints = benchmarkData.datasets[0].data;
+    //   const sortedIndices = dataPoints
+    //     .map((_: any, index: number) => index)
+    //     .sort(
+    //       (a: string | number, b: string | number) =>
+    //         dataPoints[b] - dataPoints[a],
+    //     );
 
-    benchmarkData.labels = sortedIndices.map(
-      (index: number) => benchmarkData.labels[index],
-    );
-    benchmarkData.datasets[0].data = sortedIndices.map(
-      (index: number) => dataPoints[index],
-    );
+    //   benchmarkData.labels = sortedIndices.map(
+    //     (index: number) => benchmarkData.labels[index],
+    //   );
+    //   benchmarkData.datasets[0].data = sortedIndices.map(
+    //     (index: number) => dataPoints[index],
+    //   );
   }
 
   const options = {
@@ -81,7 +81,6 @@ function ResultsSection({ benchmarkData, loading }: Props) {
       },
       x: {
         display: true,
-        stacked: true,
         title: {
           display: true,
           font: {
@@ -91,7 +90,7 @@ function ResultsSection({ benchmarkData, loading }: Props) {
           text: "FFT Algorithms",
         },
         ticks: {
-          display: false,
+          display: true,
           font: {
             size: 10,
           },
