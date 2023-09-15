@@ -113,7 +113,6 @@ function BenchmarkSection({
 
       fftWorker.onmessage = (e: MessageEvent<ProfileResult>) => {
         const profileObj = e.data;
-        console.log("Results:", profileObj);
 
         const wasmColor = "hsl(200, 100%, 50%, 0.75)";
         const jsColor = "hsla(320, 80%, 50%, 0.8)";

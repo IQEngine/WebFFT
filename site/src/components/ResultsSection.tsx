@@ -32,7 +32,6 @@ interface Props {
 }
 
 function ResultsSection({ benchmarkData, loading }: Props) {
-  console.log(benchmarkData);
   // Modify and sort benchmark data before using it in the chart
   if (benchmarkData) {
     benchmarkData.labels = benchmarkData.labels.map((label: string) =>
@@ -54,8 +53,6 @@ function ResultsSection({ benchmarkData, loading }: Props) {
       (index: number) => dataPoints[index],
     );
   }
-
-  console.log(benchmarkData);
 
   const options = {
     responsive: true,
