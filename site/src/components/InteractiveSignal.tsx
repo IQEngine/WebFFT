@@ -13,78 +13,28 @@ function InteractiveSignal() {
   const [update, setUpdate] = useState<number>(0);
   const [plotData, setPlotData] = useState<Float32Array>(new Float32Array());
   const [start, setStart] = useState<boolean>(false);
-  const sin = new Float32Array(2 * fftSize);
-  const [webfftInstance, setWebfftInstance] = useState<any>(null);
-
+  const fftWorker = useRef<Worker>();
   const textColor = "hsla(0, 0%, 80%, 0.9)";
   const waveColor = "rgb(34 197 94)";
-
-  useEffect(() => {
-    setWebfftInstance(new webfft(fftSize));
-  }, []);
-
-  useEffect(() => {
-    if (webfftInstance) {
-      //webfftInstance.setSubLibrary("indutnyJavascript");
-      webfftInstance.profile(0.5);
-    }
-  }, [webfftInstance]);
-
-  useEffect(() => {
-    if (start) {
-      const y0 = 75;
-      let sinString = "M " + 0 + "," + y0;
-
-      sin.fill(0);
-      const t = new Date().getTime();
-
-      for (let i = 0; i < fftSize; i++) {
-        const sample =
-          2 * amplitude * Math.sin(frequency * i + t) +
-          (Math.random() - 0.5) * 50;
-        sinString += " L " + i + "," + (y0 + sample);
-        sin[2 * i] = sample;
-      }
-
-      setSignalStr(sinString);
-      const psd = webfftInstance.fft(sin);
-      const mag = new Float32Array(fftSize);
-      for (let i = 0; i < fftSize; i++) {
-        mag[i] = Math.sqrt(
-          psd[2 * i] * psd[2 * i] + psd[2 * i + 1] * psd[2 * i + 1],
-        );
-      }
-      setPlotData(fftshift(mag).slice(fftSize / 2, fftSize));
-      setLastUpdate(performance.now());
-    }
-  }, [amplitude, frequency, update]);
-
-  useEffect(() => {
-    const timerId = setInterval(() => {
-      setUpdate(Math.random());
-    }, 50); // in ms
-    return function cleanup() {
-      clearInterval(timerId);
-    };
-  }, []);
-
+  const startRef = useRef(false);
   const slidersChanged = useRef(false);
 
   useEffect(() => {
-    if (start) {
-      slidersChanged.current = false; // Reset the flag when starting
-    }
+    // Initialization of the worker when the component mounts
+    fftWorker.current = new Worker(
+      new URL("../utils/webworker.tsx", import.meta.url),
+      { type: "module" },
+    );
+
+    return () => {
+      // Cleanup function to terminate the worker when the component unmounts
+      fftWorker.current?.terminate();
+    };
+  }, []);
+
+  useEffect(() => {
+    startRef.current = start; // Keep the ref updated with the latest value of the start state
   }, [start]);
-
-  const handleAmplitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAmplitude(Number(e.target.value));
-    slidersChanged.current = true;
-  };
-
-  const handleFrequencyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFrequency(Number(e.target.value));
-    slidersChanged.current = true;
-  };
 
   const handleStop = () => {
     setStart(false);
@@ -98,8 +48,39 @@ function InteractiveSignal() {
     setPlotData(new Float32Array(fftSize / 2).fill(0));
   };
 
-  /*
-  // will trigger the main useeffect to run again
+  useEffect(() => {
+    if (start && fftWorker.current) {
+      fftWorker.current.postMessage({
+        type: "FFT_CALCULATION",
+        amplitude,
+        frequency,
+      });
+
+      fftWorker.current.onmessage = (e: MessageEvent<any>) => {
+        if (!startRef.current) return; // If the start state has changed, ignore the message
+        const data = e.data;
+
+        if (data.type === "FFT_RESULT") {
+          setSignalStr(data.sinString);
+          setPlotData(
+            fftshift(data.mag).slice(data.mag.length / 2, data.mag.length),
+          );
+          setLastUpdate(performance.now());
+        }
+      };
+      return () => {
+        if (!start) {
+          handleStop();
+          fftWorker.current?.terminate();
+          fftWorker.current = new Worker(
+            new URL("../utils/webworker.tsx", import.meta.url),
+            { type: "module" },
+          );
+        }
+      };
+    }
+  }, [amplitude, frequency, update, start]);
+
   useEffect(() => {
     const timerId = setInterval(() => {
       setUpdate(Math.random());
@@ -108,7 +89,20 @@ function InteractiveSignal() {
       clearInterval(timerId);
     };
   }, []);
-  */
+
+  useEffect(() => {
+    slidersChanged.current = false;
+  }, [start]);
+
+  const handleAmplitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAmplitude(Number(e.target.value));
+    slidersChanged.current = true;
+  };
+
+  const handleFrequencyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFrequency(Number(e.target.value));
+    slidersChanged.current = true;
+  };
 
   return (
     <section className="mb-6 text-center">

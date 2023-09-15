@@ -4,6 +4,7 @@ import {
   Dispatch,
   SetStateAction,
   ChangeEvent,
+  useRef,
 } from "react";
 import FFTSizeInput from "./FFTSizeInputButton";
 import ResultsSection from "./ResultsSection";
@@ -40,6 +41,11 @@ function BenchmarkSection({
   const [wasmSupport, setWasmSupport] = useState<boolean>(false);
   const [benchmarkData, setBenchmarkData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const fftWorker = useRef<Worker>(
+    new Worker(new URL("../utils/webworker.tsx", import.meta.url), {
+      type: "module",
+    }),
+  );
 
   useEffect(() => {
     const webfftInstance = new webfft(128);
@@ -104,14 +110,13 @@ function BenchmarkSection({
   useEffect(() => {
     if (loading) {
       // allow UI to update before starting long running task
-      const fftWorker = new Worker(
-        new URL("../utils/webworker.tsx", import.meta.url),
-        { type: "module" },
-      );
+      fftWorker.current.postMessage({
+        type: "PROFILE",
+        fftSize,
+        duration,
+      });
 
-      fftWorker.postMessage([fftSize, duration]);
-
-      fftWorker.onmessage = (e: MessageEvent<ProfileResult>) => {
+      fftWorker.current.onmessage = (e: MessageEvent<ProfileResult>) => {
         const profileObj = e.data;
 
         const wasmColor = "hsl(200, 100%, 50%, 0.75)";
@@ -173,7 +178,11 @@ function BenchmarkSection({
       };
 
       return () => {
-        fftWorker.terminate();
+        fftWorker.current.terminate();
+        fftWorker.current = new Worker(
+          new URL("../utils/webworker.tsx", import.meta.url),
+          { type: "module" },
+        );
       };
     }
   }, [loading, fftSize, duration]);
