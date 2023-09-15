@@ -20,7 +20,7 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: theme("colors.cyber-secondary");
   text-decoration: inherit;
 }
 a:hover {
@@ -140,5 +140,20 @@ button:focus-visible {
   }
   h3 {
     @apply text-4xl;
+  }
+}
+
+/* Chrome */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  body {
+    -webkit-text-size-adjust: 100%;
+  }
+}
+
+/* Firefox */
+@-moz-document url-prefix() {
+  body {
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 }

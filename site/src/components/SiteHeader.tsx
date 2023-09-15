@@ -5,7 +5,12 @@ function SiteHeader() {
     <header className="p-6 text-center">
       <div className="mx-auto">
         <h1 className="text-6xl font-extrabold mb-4">
-          <Link to="/" className="hover:text-cyber-text text-cyber-text-secondary">
+          <Link
+            to="/"
+            className="hover:text-cyber-text text-cyber-text-secondary"
+            aria-label="Link to Return to Home Page"
+            role="link"
+          >
             WebFFT
           </Link>
         </h1>

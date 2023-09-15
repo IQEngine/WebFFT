@@ -152,7 +152,12 @@ function BenchmarkSection({
   return (
     <div>
       <section className="mb-6 text-center">
-        <h2 className="text-xl">Benchmark your browser</h2>
+        <h2
+          className="text-xl"
+          aria-describedby="Test FFTs per Second in this Benchmark Section"
+        >
+          Benchmark your browser
+        </h2>
 
         <div className="flex justify-center space-x-4 mt-4">
           <Button
@@ -161,6 +166,7 @@ function BenchmarkSection({
               setLoading(true);
             }}
             className="bg-cyber-secondary text-cyber-text px-4 py-2 rounded-md"
+            aria-label="Run Benchmark Test Button"
           >
             Run Benchmark
           </Button>
@@ -168,12 +174,14 @@ function BenchmarkSection({
           <Button
             onClick={() => setShowSettings((prev) => !prev)}
             className="bg-cyber-background1 border border-cyber-primary text-cyber-text px-4 py-2 rounded-md"
+            aria-label="Show Settings Button"
           >
             ☰ Settings
           </Button>
           <Button
             onClick={handleClearState}
             className="bg-cyber-background1 border border-cyber-primary text-cyber-text px-4 py-2 space-x-4 rounded-md"
+            aria-label="Clear Benchmark Results Button"
           >
             ❌ Clear
           </Button>
@@ -182,9 +190,7 @@ function BenchmarkSection({
         {showSettings && (
           <div className="grid grid-cols-1 md:grid-cols-4 gap-2 mt-4">
             <div className="col-span-1 flex flex-col items-center mb-4">
-              <label htmlFor="fftSize" className="block text-base mb-1">
-                FFT Size
-              </label>
+              <span className="block text-base mb-1">FFT Size</span>
               <FFTSizeInput fftSize={fftSize} setFftSize={setFftSize} />
             </div>
 
@@ -199,6 +205,7 @@ function BenchmarkSection({
                 value={duration}
                 onChange={handleDurationChange}
                 className="border rounded-md text-center bg-cyber-background1 border-cyber-primary w-32"
+                aria-label="Input Duration to Run Benchmark in Seconds"
               />
             </div>
 
