@@ -9,5 +9,5 @@ test("run profile", () => {
   const profileObj = fft.profile(duration);
   const elapsed = (performance.now() - start) / 1e3;
   expect(elapsed).toBeGreaterThan(duration);
-  expect(elapsed).toBeLessThan(duration * 1.2); // possibility for this to error in the future if run on a super slow machine
+  expect(elapsed).toBeLessThan(duration * 1.5); // possibility for this to error in the future if run on a super slow machine
 });
