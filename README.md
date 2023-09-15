@@ -43,6 +43,8 @@ const out = fft.fft(input, 'indutny');
 //or 
 const out = fft.fft(input, profileResults[0]['SubLibraryName']); // profileResults obj will likely be changed later
 
+// Dispose (release Wasm memory, etc.)
+fft.dispose();
 ```
 
 ### Sub-Library API
