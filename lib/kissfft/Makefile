@@ -15,4 +15,4 @@ KissFFT.js: kiss_fft.c kiss_fft.h
 
 .PHONY: clean
 clean:
-	rm matrixMultiply.wasm matrixMultiply.js
+	rm KissFFT.js

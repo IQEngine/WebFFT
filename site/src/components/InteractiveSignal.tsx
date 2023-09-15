@@ -8,50 +8,73 @@ function InteractiveSignal() {
   const [signalStr, setSignalStr] = useState<any>(null);
   const [amplitude, setAmplitude] = useState<number>(20);
   const [frequency, setFrequency] = useState<number>(0.1);
-  const [updateRate, setUpdateRate] = useState<number>(0);
   const [lastUpdate, setLastUpdate] = useState<any>(null);
   const [update, setUpdate] = useState<number>(0);
   const [plotData, setPlotData] = useState<Float32Array>();
+  const [start, setStart] = useState<boolean>(false);
   const sin = new Float32Array(2 * fftSize);
+  const [webfftInstance, setWebfftInstance] = useState<any>(null);
 
-  const webfftInstance = new webfft(fftSize);
-
-  // run profiler once at load
   useEffect(() => {
-    webfftInstance.profile(0.5);
+    setWebfftInstance(new webfft(fftSize));
   }, []);
 
   useEffect(() => {
-    const y0 = 50;
-    let sinString = "M " + 0 + "," + y0;
-
-    sin.fill(0);
-    const t = new Date().getTime();
-
-    for (let i = 0; i < fftSize; i++) {
-      const sample =
-        2 * amplitude * Math.sin(frequency * i + t) +
-        (Math.random() - 0.5) * 50;
-      sinString += " L " + i + "," + (y0 + sample);
-      sin[2 * i] = sample;
+    if (webfftInstance) {
+      //webfftInstance.setSubLibrary("indutnyJavascript");
+      webfftInstance.profile(0.5);
     }
+  }, [webfftInstance]);
 
-    setSignalStr(sinString);
-    const psd = webfftInstance.fft(sin);
-    const mag = new Float32Array(fftSize);
-    for (let i = 0; i < fftSize; i++) {
-      mag[i] = Math.sqrt(
-        psd[2 * i] * psd[2 * i] + psd[2 * i + 1] * psd[2 * i + 1],
-      );
+  useEffect(() => {
+    if (start) {
+      const y0 = 75;
+      let sinString = "M " + 0 + "," + y0;
+
+      sin.fill(0);
+      const t = new Date().getTime();
+
+      for (let i = 0; i < fftSize; i++) {
+        const sample =
+          2 * amplitude * Math.sin(frequency * i + t) +
+          (Math.random() - 0.5) * 50;
+        sinString += " L " + i + "," + (y0 + sample);
+        sin[2 * i] = sample;
+      }
+
+      setSignalStr(sinString);
+      const psd = webfftInstance.fft(sin);
+      const mag = new Float32Array(fftSize);
+      for (let i = 0; i < fftSize; i++) {
+        mag[i] = Math.sqrt(
+          psd[2 * i] * psd[2 * i] + psd[2 * i + 1] * psd[2 * i + 1],
+        );
+      }
+      setPlotData(fftshift(mag).slice(fftSize / 2, fftSize));
+      setLastUpdate(performance.now());
     }
-    setPlotData(fftshift(mag).slice(fftSize / 2, fftSize));
-    setUpdateRate(Math.round(1000 / (performance.now() - lastUpdate)));
-    setLastUpdate(performance.now());
   }, [amplitude, frequency, update]);
 
   useEffect(() => {
-    setUpdate(Math.random()); // will trigger this useeffect to run again
-  }, [plotData]);
+    const timerId = setInterval(() => {
+      setUpdate(Math.random());
+    }, 50); // in ms
+    return function cleanup() {
+      clearInterval(timerId);
+    };
+  }, []);
+
+  /*
+  // will trigger the main useeffect to run again
+  useEffect(() => {
+    const timerId = setInterval(() => {
+      setUpdate(Math.random());
+    }, 50); // in ms
+    return function cleanup() {
+      clearInterval(timerId);
+    };
+  }, []);
+  */
 
   return (
     <section className="mb-6 text-center">
@@ -85,7 +108,7 @@ function InteractiveSignal() {
             }}
           />
         </label>
-        <svg width={fftSize} height="100" viewBox="0 0 1024 100">
+        <svg width={fftSize} height="150" viewBox="0 0 1024 150">
           <g>
             <path
               id="logo-sin-curve"
@@ -96,7 +119,10 @@ function InteractiveSignal() {
             />
           </g>
         </svg>
-        <div className="whitespace-nowrap">Update Rate: {updateRate} fps</div>
+
+        <button className="btn btn-primary" onClick={() => setStart(!start)}>
+          Start/Stop
+        </button>
         <Plot
           data={[
             {
@@ -118,10 +144,10 @@ function InteractiveSignal() {
             dragmode: "pan",
             showlegend: false,
             xaxis: {
-              title: "Time",
+              title: "Frequency",
             },
             yaxis: {
-              title: "Samples",
+              title: "PSD",
               autorange: false,
               range: [0, 30000],
             },
