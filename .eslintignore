@@ -1,0 +1,5 @@
+lib/cross/Cross.js
+lib/dist/bundle.js
+lib/kissfft/KissFFT.js
+lib/nayukic/NayukiCFFT.js
+lib/nockert/complex.js

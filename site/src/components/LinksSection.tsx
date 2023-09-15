@@ -1,5 +1,5 @@
-import GitHubMark from "../assets/github-mark/github-mark-white.svg";
-import NpmLogo from "../assets/npm-logo-red.svg";
+import GitHubMark from "/assets/github-mark/github-mark-white.svg";
+import NpmLogo from "/assets/npm-logo-red.svg";
 import { Link } from "react-router-dom";
 
 function LinksSection() {
