@@ -4,7 +4,7 @@ import webfft from "../lib/main.js";
 test("fft2d validation", () => {
   const fftsize = 1024;
   const outterSize = 128;
-  const fft = new webfft(fftsize);
+  const fft = new webfft(fftsize, "indutnyJavascript");
   let inputArr = [];
   for (let j = 0; j < outterSize; j++) {
     const subArray = new Float32Array(fftsize * 2);
