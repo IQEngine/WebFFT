@@ -9,12 +9,18 @@ test("fft2d validation", () => {
   for (let j = 0; j < outterSize; j++) {
     const subArray = new Float32Array(fftsize * 2);
     for (let i = 0; i < fftsize * 2; i++) {
-      subArray[i] = i * j * 1.12312312; // Arbitrary, but dont change or known correct sum will be wrong
+      subArray[i] = Math.sin(i + j); // Arbitrary, but dont change or known correct sum will be wrong
     }
     inputArr.push(subArray);
   }
   const outputArr = fft.fft2d(inputArr);
   fft.dispose();
+
+  expect(outputArr[0][0]).toBeCloseTo(0.1705339835898485);
+  expect(outputArr[0][1]).toBeCloseTo(-0.17611848087108228);
+
+  expect(outputArr[100][2000]).toBeCloseTo(-0.01635975610207374);
+  expect(outputArr[100][2001]).toBeCloseTo(0.9907842644470186);
 
   // sum the mags
   let sum = 0;
@@ -26,16 +32,7 @@ test("fft2d validation", () => {
       );
     }
   }
-
-  console.log(outputArr[0][0]);
-
-  expect(outputArr[0][0]).toBeCloseTo(9562834790.009773);
-  expect(outputArr[0][1]).toBeCloseTo(9572182623.914913);
-
-  expect(outputArr[100][2000]).toBeCloseTo(-2229791.2265142254);
-  expect(outputArr[100][2001]).toBeCloseTo(-54740.244351726025);
-
-  expect(sum).toBeCloseTo(311804931225.8735); // see below for how this number was found
+  expect(sum).toBeCloseTo(1039851.9120030339); // see below for how this number was found
 });
 
 /*
@@ -47,7 +44,9 @@ outterSize = 128
 inputArr = np.zeros((outterSize, fftsize), np.complex64)
 for j in range(outterSize):
   for i in range(fftsize):
-    inputArr[j][i] = 2*i*j*1.12312312 + 1j*((2*i + 1) * j * 1.12312312)
+    real_part = np.sin((2*i) + j)
+    imag_part = np.sin((2*i + 1) + j)
+    inputArr[j][i] = real_part + 1j * imag_part
 
 out = np.fft.fft2(inputArr)
 
@@ -57,5 +56,14 @@ for i in range(outterSize):
     sum += np.abs(out[i][j])
 
 print(sum)
+print(out[0][0])
+print(out[100][1000])
+
+>>> print(sum)
+1039851.9120030339
+>>> print(out[0][0])
+(0.1705339835898485-0.17611848087108228j)
+>>> print(out[100][1000])
+(-0.01635975610207374+0.9907842644470186j)
 
 */
