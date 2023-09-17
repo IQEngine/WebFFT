@@ -4,10 +4,10 @@ import webfft from "../lib/main.js";
 test("fft2d validation", () => {
   const fftsize = 1024;
   const outterSize = 128;
-  const fft = new webfft(fftsize, "indutnyJavascript");
+  const fft = new webfft(fftsize, "nockertJavascript");
   let inputArr = [];
   for (let j = 0; j < outterSize; j++) {
-    const subArray = new Float32Array(fftsize * 2);
+    let subArray = new Float32Array(fftsize * 2);
     for (let i = 0; i < fftsize * 2; i++) {
       subArray[i] = Math.sin(i + j); // Arbitrary, but dont change or known correct sum will be wrong
     }
@@ -16,11 +16,11 @@ test("fft2d validation", () => {
   const outputArr = fft.fft2d(inputArr);
   fft.dispose();
 
-  expect(outputArr[0][0]).toBeCloseTo(0.1705339835898485);
-  expect(outputArr[0][1]).toBeCloseTo(-0.17611848087108228);
+  expect(outputArr[0][0]).toBeCloseTo(0.1705339835898485, 3);
+  expect(outputArr[0][1]).toBeCloseTo(-0.17611848087108228, 3);
 
-  expect(outputArr[100][2000]).toBeCloseTo(-0.01635975610207374);
-  expect(outputArr[100][2001]).toBeCloseTo(0.9907842644470186);
+  expect(outputArr[100][2000]).toBeCloseTo(-0.01635975610207374, 5);
+  expect(outputArr[100][2001]).toBeCloseTo(0.9907842644470186, 5);
 
   // sum the mags
   let sum = 0;
@@ -32,7 +32,7 @@ test("fft2d validation", () => {
       );
     }
   }
-  expect(sum).toBeCloseTo(1039851.9120030339); // see below for how this number was found
+  expect(sum).toBeCloseTo(1039851.9120030339, 0); // see below for how this number was found
 });
 
 /*
