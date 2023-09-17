@@ -1,10 +1,11 @@
 import { expect, test } from "vitest";
 import webfft from "../lib/main.js";
 
-test("fft2d validation", () => {
+test("fft2d validation which also validates 1d fft values", () => {
   const fftsize = 1024;
   const outterSize = 128;
-  const fft = new webfft(fftsize, "nockertJavascript");
+  
+  
   let inputArr = [];
   for (let j = 0; j < outterSize; j++) {
     let subArray = new Float32Array(fftsize * 2);
@@ -13,6 +14,12 @@ test("fft2d validation", () => {
     }
     inputArr.push(subArray);
   }
+
+  const availableSubLibraries = fft.availableSubLibraries();
+  for (let i = 0; i < availableSubLibraries.length; i++) {
+
+  const fft = new webfft(fftsize, "nockertJavascript");
+
   const outputArr = fft.fft2d(inputArr);
   fft.dispose();
 
