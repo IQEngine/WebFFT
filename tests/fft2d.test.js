@@ -4,8 +4,8 @@ import webfft from "../lib/main.js";
 test("fft2d validation which also validates 1d fft values", () => {
   const fftsize = 1024;
   const outterSize = 128;
-  
-  
+
+  // Create input
   let inputArr = [];
   for (let j = 0; j < outterSize; j++) {
     let subArray = new Float32Array(fftsize * 2);
@@ -15,31 +15,31 @@ test("fft2d validation which also validates 1d fft values", () => {
     inputArr.push(subArray);
   }
 
-  const availableSubLibraries = fft.availableSubLibraries();
+  const unusedft = new webfft(16); // doesnt matter
+  const availableSubLibraries = unusedft.availableSubLibraries();
   for (let i = 0; i < availableSubLibraries.length; i++) {
+    const fft = new webfft(fftsize, availableSubLibraries[i]);
+    const outputArr = fft.fft2d(inputArr);
+    fft.dispose();
 
-  const fft = new webfft(fftsize, "nockertJavascript");
+    expect(outputArr[0][0]).toBeCloseTo(0.1705339835898485, 3);
+    expect(outputArr[0][1]).toBeCloseTo(-0.17611848087108228, 3);
 
-  const outputArr = fft.fft2d(inputArr);
-  fft.dispose();
+    expect(outputArr[100][2000]).toBeCloseTo(-0.01635975610207374, 5);
+    expect(outputArr[100][2001]).toBeCloseTo(0.9907842644470186, 5);
 
-  expect(outputArr[0][0]).toBeCloseTo(0.1705339835898485, 3);
-  expect(outputArr[0][1]).toBeCloseTo(-0.17611848087108228, 3);
-
-  expect(outputArr[100][2000]).toBeCloseTo(-0.01635975610207374, 5);
-  expect(outputArr[100][2001]).toBeCloseTo(0.9907842644470186, 5);
-
-  // sum the mags
-  let sum = 0;
-  for (let i = 0; i < outterSize; i++) {
-    for (let j = 0; j < fftsize; j++) {
-      sum += Math.sqrt(
-        outputArr[i][j * 2] * outputArr[i][j * 2] +
-          outputArr[i][j * 2 + 1] * outputArr[i][j * 2 + 1],
-      );
+    // sum the mags
+    let sum = 0;
+    for (let i = 0; i < outterSize; i++) {
+      for (let j = 0; j < fftsize; j++) {
+        sum += Math.sqrt(
+          outputArr[i][j * 2] * outputArr[i][j * 2] +
+            outputArr[i][j * 2 + 1] * outputArr[i][j * 2 + 1],
+        );
+      }
     }
+    expect(sum).toBeCloseTo(1039851.9120030339, 0); // see below for how this number was found
   }
-  expect(sum).toBeCloseTo(1039851.9120030339, 0); // see below for how this number was found
 });
 
 /*
