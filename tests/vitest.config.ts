@@ -6,5 +6,6 @@ export default defineConfig({
     coverage: {
       provider: "v8",
     },
+    environment: "jsdom", // to be able to unit test localStorage
   },
 });

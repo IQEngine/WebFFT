@@ -167,3 +167,46 @@ test("1000th element matches for all", () => {
 
   fft.dispose();
 });
+
+test("non power of 2 size", () => {
+  expect(() => {
+    const fft = new webfft(1023);
+  }).toThrowError();
+
+  const fft2 = new webfft(1024);
+
+  // fft
+  const inputArray = new Float32Array(1023 * 2);
+  inputArray.fill(0);
+  expect(() => {
+    fft2.fft(inputArray);
+  }).toThrowError();
+
+  // fftr
+  const inputArray2 = new Float32Array(1023);
+  expect(() => {
+    fft2.fftr(inputArray2);
+  }).toThrowError();
+
+  // fft2d inner
+  const inputArray3 = [new Float32Array(1023 * 2), new Float32Array(1023 * 2)];
+  expect(() => {
+    fft2.fft2d(inputArray3);
+  }).toThrowError();
+
+  // fft2d outter
+  const inputArray4 = [
+    new Float32Array(1024 * 2),
+    new Float32Array(1024 * 2),
+    new Float32Array(1024 * 2),
+  ];
+  expect(() => {
+    fft2.fft2d(inputArray4);
+  }).toThrowError();
+});
+
+test("invalid sublibrary", () => {
+  expect(() => {
+    const fft = new webfft(1024, "notasublibrary");
+  }).toThrowError();
+});
