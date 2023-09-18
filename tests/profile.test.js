@@ -2,7 +2,7 @@ import { expect, test } from "vitest";
 import webfft from "../lib/main.js";
 
 test("run profile", () => {
-  const duration = 0.1;
+  const duration = 2;
   const fftsize = 1024;
   const fft = new webfft(fftsize);
   const start = performance.now();
