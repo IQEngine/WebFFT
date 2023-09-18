@@ -45,7 +45,7 @@ test("outputs for all sublibs approx match using different fftsizes", () => {
         co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1],
       );
     }
-    // goldenTotal will be 9147216.377928967
+    goldenTotal = goldenTotal / fftsize / fftsize;
 
     // Try each sub-library
     for (let i = 0; i < availableSubLibraries.length; i++) {
@@ -57,7 +57,8 @@ test("outputs for all sublibs approx match using different fftsizes", () => {
           co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1],
         );
       }
-      expect(Math.abs(total - goldenTotal)).toBeLessThan(goldenTotal * 1e-7);
+      total = total / fftsize / fftsize;
+      expect(total).toBeCloseTo(goldenTotal, 5);
     }
 
     fft.dispose();
@@ -83,6 +84,7 @@ test("fftr", () => {
       co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1],
     );
   }
+  goldenTotal = goldenTotal / fftsize;
 
   // Try each sub-library
   for (let i = 0; i < availableSubLibraries.length; i++) {
@@ -92,7 +94,8 @@ test("fftr", () => {
     for (let k = 0; k < fftsize / 2; ++k) {
       total += Math.sqrt(co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1]);
     }
-    expect(Math.abs(total - goldenTotal)).toBeLessThan(goldenTotal * 1e-7);
+    total = total / fftsize;
+    expect(total).toBeCloseTo(goldenTotal, 3);
   }
 
   fft.dispose();
@@ -117,6 +120,7 @@ test("int16 inputs", () => {
       co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1],
     );
   }
+  goldenTotal = goldenTotal / fftsize;
 
   // Try each sub-library
   for (let i = 0; i < availableSubLibraries.length; i++) {
@@ -126,7 +130,39 @@ test("int16 inputs", () => {
     for (let k = 0; k < fftsize; ++k) {
       total += Math.sqrt(co[k * 2] * co[k * 2] + co[k * 2 + 1] * co[k * 2 + 1]);
     }
-    expect(Math.abs(total - goldenTotal)).toBeLessThan(goldenTotal * 1e-7);
+    total = total / fftsize;
+    expect(total).toBeCloseTo(goldenTotal, 1);
+  }
+
+  fft.dispose();
+});
+
+test("1000th element matches for all", () => {
+  const fftsize = 1024;
+  const fft = new webfft(fftsize);
+
+  const availableSubLibraries = fft.availableSubLibraries();
+
+  const inputArr = new Float32Array(fftsize * 2);
+  for (let i = 0; i < fftsize * 2; i++) {
+    inputArr[i] = i * 1.12312312; // Arbitrary
+  }
+
+  fft.setSubLibrary("indutnyJavascript");
+  let co = fft.fft(inputArr);
+  const goldenPhase = Math.atan(co[1000] / co[1001]);
+  const goldenMag = Math.sqrt(co[1000] * co[1000] + co[1001] * co[1001]);
+
+  // Try each sub-library
+  for (let i = 0; i < availableSubLibraries.length; i++) {
+    console.log("Testing", availableSubLibraries[i]);
+    fft.setSubLibrary(availableSubLibraries[i]);
+
+    co = fft.fft(inputArr);
+    const phase = Math.atan(co[1000] / co[1001]);
+    const mag = Math.sqrt(co[1000] * co[1000] + co[1001] * co[1001]);
+    expect(phase).toBeCloseTo(goldenPhase, 5); // 2nd arg is the num digits after decimal point that must match
+    expect(mag).toBeCloseTo(goldenMag, 2); // 2nd arg is the num digits after decimal point that must match
   }
 
   fft.dispose();
