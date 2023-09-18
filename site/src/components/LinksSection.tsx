@@ -53,6 +53,10 @@ function LinksSection() {
         <div className="grid grid-cols-2 gap-4">
           <div className="flex items-center">
             <span className="text-cyber-text-secondary text-2xl">⚡</span>
+            <span className="ml-2">1d, 2d, complex, real</span>
+          </div>
+          <div className="flex items-center">
+            <span className="text-cyber-text-secondary text-2xl">⚡</span>
             <span className="ml-2">Auto-optimized FFT algorithms</span>
           </div>
           <div className="flex items-center">
@@ -69,7 +73,7 @@ function LinksSection() {
           </div>
           <div className="flex items-center">
             <span className="text-cyber-text-secondary text-2xl">⚡</span>
-            <span className="ml-2">Easy npm integration</span>
+            <span className="ml-2">Easy integration</span>
           </div>
         </div>
       </div>
