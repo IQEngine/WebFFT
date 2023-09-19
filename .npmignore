@@ -1,0 +1,10 @@
+/site
+Dockerfile
+default.conf
+.prettierrc
+.eslintrc.json
+.eslintignore
+/.vscode
+.dockerignore
+/coverage
+/.github
