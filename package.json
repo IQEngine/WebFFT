@@ -1,6 +1,6 @@
 {
   "name": "webfft",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "description": "The Fastest Fourier Transform on the Web! 🚀🚀",
   "main": "lib/main.js",
   "types": "lib/@types/webfft/index.d.ts",
