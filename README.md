@@ -6,6 +6,8 @@ The Fastest Fourier Transform on the Web!
 
 [Documentation](https://webfft.com/docs)
 
+We welcome feedback via GitHub Issues and PRs!
+
 ## Overview
 
 WebFFT is a metalibrary containing many FFT libraries, both javascript and webassembly based. We'll refer to these as sub-libraries.
