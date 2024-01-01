@@ -4,7 +4,6 @@ KissFFT.js: kiss_fft.c kiss_fft.h
 	  --pre-js locateFile.js  \
 	  -s ENVIRONMENT='web'  \
 	  -s EXPORT_NAME='KissFFTModule'  \
-	  -s USE_ES6_IMPORT_META=0  \
 	  -s MODULARIZE=1 \
 	  -s BINARYEN_ASYNC_COMPILATION=1 \
 	  -s SINGLE_FILE=1 \
