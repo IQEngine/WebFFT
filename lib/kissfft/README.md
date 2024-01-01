@@ -15,5 +15,4 @@ cd emsdk
 source ./emsdk_env.sh
 cd to this dir
 make
-replace the last four lines with `export default KissFFTModule;`
 ```

@@ -4,7 +4,6 @@ NayukiCFFT.js:	fft.c fft.h
 	     --memory-init-file 0 \
 	     -s PRECISE_F32=1 \
 	 	 -s ENVIRONMENT='web'  \
-		 -s USE_ES6_IMPORT_META=0  \
 		 -s MODULARIZE=1 \
 		 -s BINARYEN_ASYNC_COMPILATION=1 \
 		 -s SINGLE_FILE=1 \
