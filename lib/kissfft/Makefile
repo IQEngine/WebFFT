@@ -1,6 +1,5 @@
 KissFFT.js: kiss_fft.c kiss_fft.h
 	emcc --no-entry kiss_fft.c -o KissFFT.mjs  \
-	  --pre-js locateFile.js  \
 	  -s ENVIRONMENT='web'  \
 	  -s EXPORT_NAME='KissFFTModule'  \
 	  -s MODULARIZE=1 \
