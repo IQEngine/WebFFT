@@ -13,8 +13,7 @@ source ./emsdk_env.sh
 ```bash
 cd emsdk
 source ./emsdk_env.sh
-cd benchmarking/kissfftmarc
+cd to this dir
 make
-mv KissFFT.wasm ../KissFFT.wasm
-serve -l 8080
+replace the last four lines with `export default KissFFTModule;`
 ```
