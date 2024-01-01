@@ -1,7 +1,5 @@
-KissFFT.wasm: KissFFT.js
 KissFFT.js: kiss_fft.c kiss_fft.h
-	emcc --no-entry kiss_fft.c -o KissFFT.js  \
-	  --pre-js locateFile.js  \
+	emcc --no-entry kiss_fft.c -o KissFFT.mjs  \
 	  -s ENVIRONMENT='web'  \
 	  -s EXPORT_NAME='KissFFTModule'  \
 	  -s MODULARIZE=1 \
@@ -14,4 +12,4 @@ KissFFT.js: kiss_fft.c kiss_fft.h
 
 .PHONY: clean
 clean:
-	rm KissFFT.js
+	rm KissFFT.mjs
