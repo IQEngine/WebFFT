@@ -1,4 +1,4 @@
-import{j as s}from"./index-d9682b1d.js";function e(i){const n=Object.assign({h2:"h2",h3:"h3",ul:"ul",li:"li",a:"a"},i.components);return s.jsxs(s.Fragment,{children:[s.jsx(n.h2,{children:"Existing web FFT libs"}),`
+import{j as s}from"./index-770953e7.js";function e(i){const n=Object.assign({h2:"h2",h3:"h3",ul:"ul",li:"li",a:"a"},i.components);return s.jsxs(s.Fragment,{children:[s.jsx(n.h2,{children:"Existing web FFT libs"}),`
 `,s.jsx(n.h3,{children:"Javascript-Based"}),`
 `,s.jsxs(n.ul,{children:[`
 `,s.jsxs(n.li,{children:["fft.js aka indutny",`

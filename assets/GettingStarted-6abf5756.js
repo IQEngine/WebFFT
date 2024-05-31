@@ -1,4 +1,4 @@
-import{j as e}from"./index-d9682b1d.js";function r(t){const n=Object.assign({h2:"h2",p:"p",pre:"pre",code:"code",h3:"h3"},t.components);return e.jsxs(e.Fragment,{children:[e.jsx(n.h2,{children:"Overview"}),`
+import{j as e}from"./index-770953e7.js";function r(t){const n=Object.assign({h2:"h2",p:"p",pre:"pre",code:"code",h3:"h3"},t.components);return e.jsxs(e.Fragment,{children:[e.jsx(n.h2,{children:"Overview"}),`
 `,e.jsx(n.p,{children:"WebFFT is a metalibrary containing many FFT libraries, both javascript and webassembly based. We'll refer to these as sub-libraries."}),`
 `,e.jsx(n.p,{children:"There is a default sub-library that is used, but if you run"}),`
 `,e.jsx(n.pre,{children:e.jsx(n.code,{className:"language-javascript",children:`import webfft from "webfft";
