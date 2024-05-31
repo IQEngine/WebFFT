@@ -44,11 +44,9 @@ Any changes you make to the source code will be reflected in real-time in the br
 
 ### Building for Production
 
-To create an optimized production build, use:
+Deploy site (currently served through github pages) using `cd site && npm run deploy`
 
-```bash
-npm run build
-```
+The way it works is, `npm run build` will build the static content and put it in /dist
 
 ## Further Configuration and Expansion
 

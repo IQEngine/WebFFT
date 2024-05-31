@@ -74,6 +74,8 @@ fft.dispose(); // cleanup wasm
 
 ### Other Notes
 
+Deploy site using `cd site && npm run deploy`
+
 Use fftr() for real-valued input, the output will still be complex but only the positive frequencies will be returned.
 
 You don't have to pass fft/fftr/fft2d typed arrays, they can be regular javascript arrays.

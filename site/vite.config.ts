@@ -11,6 +11,7 @@ export default defineConfig({
     include: ["react/jsx-runtime"],
     exclude: ["@mdx-js/react"],
   },
+  base: "/WebFFT",
   plugins: [
     {
       enforce: "pre",
