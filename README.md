@@ -74,7 +74,7 @@ fft.dispose(); // cleanup wasm
 
 ### Other Notes
 
-Deploy site using `cd site && npm run deploy`
+Deploy site using `cd site && npm run deploy`, and make sure in github pages settings it uses "deploy from a branch" and gh-pages is selected as the branch, because npm run deploy runs the gh-pages command which publishes the site to gh-pages branch by default.
 
 Use fftr() for real-valued input, the output will still be complex but only the positive frequencies will be returned.
 

@@ -1,6 +1,5 @@
 {
   "name": "site",
-  "homepage": "https://IQEngine.github.io/WebFFT",
   "private": true,
   "version": "0.0.0",
   "type": "module",

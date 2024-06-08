@@ -11,7 +11,7 @@ export default defineConfig({
     include: ["react/jsx-runtime"],
     exclude: ["@mdx-js/react"],
   },
-  base: "/WebFFT",
+  base: "/", // for custom domain set to / as per https://vitejs.dev/guide/static-deploy.html#github-pages
   plugins: [
     {
       enforce: "pre",
