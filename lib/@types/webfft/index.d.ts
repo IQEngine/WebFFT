@@ -36,3 +36,4 @@ export interface CrossFftWrapperWasm extends WebfftWrapper {}
 export interface NayukiFftWrapperJavascript extends WebfftWrapper {}
 export interface NayukiWasmFftWrapperWasm extends WebfftWrapper {}
 export interface NockertFftWrapperJavascript extends WebfftWrapper {}
+export interface WasmFftWrapperWasm extends WebfftWrapper {}
