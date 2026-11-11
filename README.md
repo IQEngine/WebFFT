@@ -2,10 +2,6 @@
 
 The Fastest Fourier Transform on the Web!
 
-[Try it out](https://webfft.com/)
-
-[Documentation](https://webfft.com/docs)
-
 We welcome feedback via GitHub Issues and PRs!
 
 ## Overview
